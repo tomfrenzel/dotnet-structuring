@@ -43,9 +43,9 @@ Run ```build.bat``` to build the Project. The Output files will be located in th
 ## Usage
 
 The Usage is basically self-explaining. Here are some screenshots of the Program:
-![General](https://github.com/tomfrenzel/dotnet-structuring/samples/screenshots/general.png)
-![Options](https://github.com/tomfrenzel/dotnet-structuring/samples/screenshots/options.png)
-![Finish](https://github.com/tomfrenzel/dotnet-structuring/samples/screenshots/finish.png)
+![General](https://github.com/tomfrenzel/dotnet-structuring/blob/master/samples/screenshots/general.png)
+![Options](https://github.com/tomfrenzel/dotnet-structuring/blob/master/samples/screenshots/options.png)
+![Finish](https://github.com/tomfrenzel/dotnet-structuring/blob/master/samples/screenshots/finish.png)
 
 ## Built With
 
