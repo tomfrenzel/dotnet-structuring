@@ -1,0 +1,30 @@
+language: csharp
+mono: none
+sudo: required
+os: windows
+
+solution: src/dotnet-structuring.csproj
+
+before_script:
+    - export PATH="$PATH:$HOME/.dotnet/tools"
+
+script:
+    - choco install dotnetcore-sdk
+    - choco install opencover.portable
+    - choco install codecov
+    - dotnet --version
+    - dotnet restore
+    - dotnet build src/dotnet-structuring.csproj
+    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[src*]* -[dotnet-structuring*]*" -output:"MyProject_coverage.xml" -oldstyle
+    - codecov -f "MyProject_coverage.xml"
+
+install:
+    - dotnet restore src/dotnet-structuring.csproj
+global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+    - DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+cache:
+  directories:
+    - "$HOME/.nuget/packages"
+    - "$HOME/.local/share/NuGet/Cache"

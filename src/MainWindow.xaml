@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotnet_structuring"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="dotnet-structuring" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="OutputBox" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="202" IsReadOnly="True" Text="Console Output" Padding="2,2,2,2" Focusable="False" Cursor="IBeam"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="OutputBox" Margin="10,222,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="202" IsReadOnly="True" Text="Console Output" Padding="2,2,2,2" Focusable="False" Cursor="IBeam"/>
         <TabControl x:Name="Tabs" Margin="10,10,10,226" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="Tab_Changed">
             <TabItem Header="General" IsSelected="True">
                 <Grid>
