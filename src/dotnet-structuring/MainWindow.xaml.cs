@@ -1,4 +1,5 @@
 ﻿using dotnet_structuring.library;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,14 +28,20 @@ namespace dotnet_structuring
         }
         Variables Variables = new Variables();
         Execute Execute = new library.Execute();
-        public void ExecButton_Click(object sender, RoutedEventArgs e)
+        public async void ExecButton_Click(object sender, RoutedEventArgs e)
         {
             OutputBox.Clear();
 
             //Write commands to .bat File
-            Execute.CreateScript(CommandSummaryBox.Text);
-
-            OutputBox.Text = Execute.CreateScript(CommandSummaryBox.Text);
+            var result = await Execute.CreateScriptAsync(CommandSummaryBox.Text);            
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (result[i] != null && result[i] != "" && result[i] != "\r\n")
+                {
+                    OutputBox.AppendText(result[i] + "\r\n");
+                }
+            }
+           // OutputBox.Append(Execute.CreateScriptAsync(CommandSummaryBox.Text)[2]);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
@@ -146,6 +153,10 @@ namespace dotnet_structuring
         //Open "Select Folder" Dialog
         public void SelectPathButton_Click(object sender, RoutedEventArgs e)
         {
+            var blup = new OpenFileDialog();
+            blup.Filter = "Directory|*.this.directory";
+            blup.ShowDialog();
+
             var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
             if (dialog.ShowDialog(this).GetValueOrDefault())
             {

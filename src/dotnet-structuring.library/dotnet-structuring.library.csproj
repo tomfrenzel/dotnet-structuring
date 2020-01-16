@@ -5,4 +5,8 @@
     <RootNamespace>dotnet_structuring.library</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="RunProcessAsTask" Version="1.2.4" />
+  </ItemGroup>
+
 </Project>

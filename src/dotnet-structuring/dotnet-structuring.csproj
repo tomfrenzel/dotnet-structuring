@@ -29,6 +29,7 @@
   <ItemGroup>
     <PackageReference Include="Codecov" Version="1.9.0" />
     <PackageReference Include="Ookii.Dialogs" Version="1.0.0" />
+    <PackageReference Include="RunProcessAsTask" Version="1.2.4" />
   </ItemGroup>
 
   <ItemGroup>

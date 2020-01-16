@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using RunProcessAsTask;
 
 namespace dotnet_structuring.library
 {
     public class Execute
     {
-        public string CreateScript(string commands)
+        public async Task<string[]> CreateScriptAsync(string commands)
         {
-            string ConsoleOutput;
             using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine("dotnet-structoring.bat")))
             {
                 outputFile.WriteLine(commands);
@@ -19,20 +20,21 @@ namespace dotnet_structuring.library
             }
 
             //Execute structoring script
-            using (Process compiler = new Process())
+            var processStartInfo = new ProcessStartInfo
             {
-                compiler.StartInfo.FileName = "dotnet-structoring.bat";
-                //compiler.StartInfo.Arguments = "dir";
-                compiler.StartInfo.UseShellExecute = false;
-                compiler.StartInfo.RedirectStandardOutput = true;
-                compiler.StartInfo.CreateNoWindow = true;
-                compiler.Start();
+                FileName = "dotnet-structoring.bat",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true
+            };
 
-                compiler.WaitForExit();
-                ConsoleOutput = compiler.StandardOutput.ReadToEnd();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                var processResults = await ProcessEx.RunAsync(processStartInfo);
+                //File.WriteAllText("C:/log.txt", processResults.StandardOutput);
+                return processResults.StandardOutput;
             }
-            return ConsoleOutput;
         }
-       
+
     }
 }
