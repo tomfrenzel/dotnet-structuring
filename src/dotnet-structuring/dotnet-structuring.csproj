@@ -31,4 +31,8 @@
     <PackageReference Include="Ookii.Dialogs" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet-structuring.library\dotnet-structuring.library.csproj" />
+  </ItemGroup>
+
 </Project>

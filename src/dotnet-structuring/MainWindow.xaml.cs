@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dotnet_structuring.library;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -24,101 +25,21 @@ namespace dotnet_structuring
         {
             InitializeComponent();
         }
-        public string CurrentTab
-        {
-            get;
-            private set;
-        }
-        public string SelectedTemplate
-        {
-            get;
-            set;
-        }
-        public string ProjectType
-        {
-            get;
-            set;
-        }
-        public string Directory
-        {
-            get;
-            set;
-        }
-        public string Artifacts
-        {
-            get;
-            set;
-        }
-        public string Build
-        {
-            get;
-            set;
-        }
-        public string Docs
-        {
-            get;
-            set;
-        }
-        public string Lib
-        {
-            get;
-            set;
-        }
-        public string Packages
-        {
-            get;
-            set;
-        }
-        public string Samples
-        {
-            get;
-            set;
-        }
-        public string Test
-        {
-            get;
-            set;
-        }
-        public string Options
-        {
-            get;
-            set;
-        }
-        public Array FinalCommands
-        {
-            get;
-            set;
-        }
-
-        private void ExecButton_Click(object sender, RoutedEventArgs e)
+        Variables Variables = new Variables();
+        Execute Execute = new library.Execute();
+        public void ExecButton_Click(object sender, RoutedEventArgs e)
         {
             OutputBox.Clear();
 
             //Write commands to .bat File
-            using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine("dotnet-structoring.bat")))
-            {
-                    outputFile.WriteLine(CommandSummaryBox.Text);
-            }
+            Execute.CreateScript(CommandSummaryBox.Text);
 
-            //Execute structoring script
-            using (Process compiler = new Process())
-                {
-                    compiler.StartInfo.FileName = "dotnet-structoring.bat";
-                    //compiler.StartInfo.Arguments = "dir";
-                    compiler.StartInfo.UseShellExecute = false;
-                    compiler.StartInfo.RedirectStandardOutput = true;
-                    compiler.StartInfo.CreateNoWindow = true;
-                compiler.Start();
-
-                    OutputBox.Text = compiler.StandardOutput.ReadToEnd();
-
-                    compiler.WaitForExit();
-                }            
+            OutputBox.Text = Execute.CreateScript(CommandSummaryBox.Text);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
-            ProjectType = ProjectTypeSelector.Text;
-            if (ProjectType == "New Project")
+            Variables.ProjectType = ProjectTypeSelector.Text;
+            if (Variables.ProjectType == "New Project")
             {
                 TemplateSelector.IsEnabled = true;
                 ArtifactsCheckBox.IsEnabled = true;
@@ -152,70 +73,70 @@ namespace dotnet_structuring
                 switch (TemplateSelector.Text)
                 {
                     case "Console Application":
-                        SelectedTemplate = "console";
+                        Variables.SelectedTemplate = "console";
                         break;
                     case "Class library":
-                        SelectedTemplate = "classlib";
+                        Variables.SelectedTemplate = "classlib";
                         break;
                     case "Unit Test Project":
-                        SelectedTemplate = "mstest";
+                        Variables.SelectedTemplate = "mstest";
                         break;
                     case "NUnit 3 Test Project":
-                        SelectedTemplate = "nunit";
+                        Variables.SelectedTemplate = "nunit";
                         break;
                     case "NUnit 3 Test Item":
-                        SelectedTemplate = "nunit-test";
+                        Variables.SelectedTemplate = "nunit-test";
                         break;
                     case "xUnit Test Project":
-                        SelectedTemplate = "xunit";
+                        Variables.SelectedTemplate = "xunit";
                         break;
                     case "Razor Page":
-                        SelectedTemplate = "page";
+                        Variables.SelectedTemplate = "page";
                         break;
                     case "MVC ViewImports":
-                        SelectedTemplate = "viewimports";
+                        Variables.SelectedTemplate = "viewimports";
                         break;
                     case "MVC ViewStart":
-                        SelectedTemplate = "viewstart";
+                        Variables.SelectedTemplate = "viewstart";
                         break;
                     case "ASP.NET Core Empty":
-                        SelectedTemplate = "web";
+                        Variables.SelectedTemplate = "web";
                         break;
                     case "ASP.NET Core Web App (Model-View-Controller)":
-                        SelectedTemplate = "mvc";
+                        Variables.SelectedTemplate = "mvc";
                         break;
                     case "Console":
-                        SelectedTemplate = "console";
+                        Variables.SelectedTemplate = "console";
                         break;
                     case "ASP.NET Core Web App":
-                        SelectedTemplate = "webapp";
+                        Variables.SelectedTemplate = "webapp";
                         break;
                     case "ASP.NET Core with Angular":
-                        SelectedTemplate = "angular";
+                        Variables.SelectedTemplate = "angular";
                         break;
                     case "ASP.NET Core with React.js":
-                        SelectedTemplate = "react";
+                        Variables.SelectedTemplate = "react";
                         break;
                     case "ASP.NET Core with React.js and Redux":
-                        SelectedTemplate = "reactredux";
+                        Variables.SelectedTemplate = "reactredux";
                         break;
                     case "Razor Class Library":
-                        SelectedTemplate = "razorclasslib";
+                        Variables.SelectedTemplate = "razorclasslib";
                         break;
                     case "ASP.NET Core Web API":
-                        SelectedTemplate = "webapi";
+                        Variables.SelectedTemplate = "webapi";
                         break;
                     case "global.json file":
-                        SelectedTemplate = "globaljson";
+                        Variables.SelectedTemplate = "globaljson";
                         break;
                     case "NuGet Config":
-                        SelectedTemplate = "nugetconfig";
+                        Variables.SelectedTemplate = "nugetconfig";
                         break;
                     case "Web Config":
-                        SelectedTemplate = "webconfig";
+                        Variables.SelectedTemplate = "webconfig";
                         break;
                     case "Solution File":
-                        SelectedTemplate = "sln";
+                        Variables.SelectedTemplate = "sln";
                         break;
 
                 }
@@ -233,7 +154,7 @@ namespace dotnet_structuring
         }
         public void PathBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Directory = PathBox.Text;
+            Variables.Directory = PathBox.Text;
             if (PathBox.Text != "")
             {
                 OptionsTab.IsEnabled = true;
@@ -244,95 +165,95 @@ namespace dotnet_structuring
         {
             if (ArtifactsCheckBox.IsChecked == true)
             {
-                Artifacts = "mkdir artifacts";
+                Variables.Artifacts = "mkdir artifacts";
             }
             else
             {
-                Artifacts = "";
+                Variables.Artifacts = "";
             }
         }
         public void BuildCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (BuildCheckBox.IsChecked == true)
             {
-                Build = "mkdir build";
+                Variables.Build = "mkdir build";
             }
             else
             {
-                Build = "";
+                Variables.Build = "";
             }
         }
         public void DocsCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (DocsCheckBox.IsChecked == true)
             {
-                Docs = "mkdir docs";
+                Variables.Docs = "mkdir docs";
             }
             else
             {
-                Docs = "";
+                Variables.Docs = "";
             }
         }
         public void LibCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (LibCheckBox.IsChecked == true)
             {
-                Lib = "mkdir lib";
+                Variables.Lib = "mkdir lib";
             }
             else
             {
-                Lib = "";
+                Variables.Lib = "";
             }
         }
         public void PackagesCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (PackagesCheckBox.IsChecked == true)
             {
-                Packages = "mkdir packages";
+                Variables.Packages = "mkdir packages";
             }
             else
             {
-                Packages = "";
+                Variables.Packages = "";
             }
         }
         public void SamplesCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (SamplesCheckBox.IsChecked == true)
             {
-                Samples = "mkdir samples";
+                Variables.Samples = "mkdir samples";
             }
             else
             {
-                Samples = "";
+                Variables.Samples = "";
             }
         }
         public void TestCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (TestCheckBox.IsChecked == true)
             {
-                Test = "mkdir test";
+                Variables.Test = "mkdir test";
             }
             else
             {
-                Test = "";
+                Variables.Test = "";
             }
         }
         public void DotNetNewOptionsBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (DotNetNewOptionsBox.Text != "")
             {
-                Options = DotNetNewOptionsBox.Text;
+                Variables.Options = DotNetNewOptionsBox.Text;
             }
         }
         public void Tab_Changed(object sender, SelectionChangedEventArgs e)
         {
             TabItem Tab = Tabs.SelectedItem as TabItem;
-            CurrentTab = Tab.Header.ToString();
+            var CurrentTab = Tab.Header.ToString();
 
             //Build  structoring script
             if (CurrentTab == "Finish")
             {
-                string[] FinalCommands = { "cd " + Directory, "mkdir src", Artifacts, Build, Docs, Lib, Samples, Packages, Test, "cd src", "dotnet new " + SelectedTemplate + " " + Options };
+                string[] FinalCommands = { "cd " + Variables.Directory, "mkdir src", Variables.Artifacts, Variables.Build, Variables.Docs, Variables.Lib, Variables.Samples, Variables.Packages, Variables.Test, "cd src", "dotnet new " + Variables.SelectedTemplate + " " + Variables.Options };
                 CommandSummaryBox.Clear();
                 for (int i = 0; i < FinalCommands.Length; i++)
                 {
