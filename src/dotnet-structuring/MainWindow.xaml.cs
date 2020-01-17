@@ -20,6 +20,7 @@ using System.Windows.Shapes;
 
 namespace dotnet_structuring
 {
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -29,19 +30,36 @@ namespace dotnet_structuring
 
         Variables Variables = new Variables();
         Execute Execute = new library.Execute();
-        public async void ExecButton_Click(object sender, RoutedEventArgs e)
-        {
-            OutputBox.Clear();
 
-            //Write commands to .bat File
-            var result = await Execute.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
-            for (int i = 0; i < result.Length; i++)
+        private void WireEventHandlers(Execute e)
+        {
+            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
+            e.LogEvent += handler;
+        }
+
+        public void OnIncommingEventLog(object sender, EventLogger e)
+        {
+
+            for (int i = 0; i < e.logs.Length; i++)
             {
-                if (result[i] != null && result[i] != "" && result[i] != Environment.NewLine)
+                if (e.logs[i] != null && e.logs[i] != "" && e.logs[i] != Environment.NewLine)
                 {
-                    OutputBox.AppendText(result[i] + Environment.NewLine);
+                    OutputBox.AppendText(e.logs[i] + Environment.NewLine);
                 }
             }
+        }
+        public void ExecButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+                OutputBox.Clear();
+            Execute wd = new Execute();
+            WireEventHandlers(wd);
+            wd.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
+            //Execute.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);                //Do some stuff
+
+
+
             // OutputBox.Append(Execute.CreateScriptAsync(CommandSummaryBox.Text)[2]);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
@@ -262,10 +280,10 @@ namespace dotnet_structuring
             //Build  structoring script
             if (CurrentTab == "Finish")
             {
-                Variables.Directories = new string[] { Variables.Directory, "src", Variables.Artifacts, Variables.Build, Variables.Docs, Variables.Lib, Variables.Samples, Variables.Packages, Variables.Test};
+                Variables.Directories = new string[] { Variables.Directory, "src", Variables.Artifacts, Variables.Build, Variables.Docs, Variables.Lib, Variables.Samples, Variables.Packages, Variables.Test };
                 ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
                 Variables.ProjectName = ProjectNameBox.Text;
-                Variables.NETCommand = " new " + Variables.SelectedTemplate + " " + Variables.Options + "-o src/" + ProjectNameBox.Text + " -n " + ProjectNameBox.Text;               
+                Variables.NETCommand = " new " + Variables.SelectedTemplate + " " + Variables.Options + "-o src/" + ProjectNameBox.Text + " -n " + ProjectNameBox.Text;
                 CommandSummaryBox.Clear();
                 for (int i = 1; i < Variables.Directories.Length; i++)
                 {

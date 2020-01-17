@@ -9,12 +9,35 @@ using RunProcessAsTask;
 
 namespace dotnet_structuring.library
 {
+    public delegate void ExecutionHandler(object sender, EventLogger e);
+
+    public class EventLogger : EventArgs
+    {
+        public string[] logs;
+    }
+
     public class Execute
     {
-        public async Task<string[]> CreateScriptAsync(string[] Directories, string Command, string ProjectName)
+        public event ExecutionHandler LogEvent;
+        private void FireEvent(string[] logs)
         {
+            EventLogger log = new EventLogger();
+            log.logs = logs;
+
+            LogEvent?.Invoke(this, log);
+
+            log = null;
+        }
+        public Execute()
+        {
+
+        }
+        public async void CreateScriptAsync(string[] Directories, string Command, string ProjectName)
+        {
+
             var currentWorkingDir = Directories[0] + @"\";
-            List<string> OutputList = new List<string>();
+            List<string> DirectoryOutputList = new List<string>();
+            List<string> CommandOutputList = new List<string>();
             string[] output = new string[] { };
 
 
@@ -29,46 +52,47 @@ namespace dotnet_structuring.library
                 {
                     if (Directory.Exists(DirectoryBeingCreated))
                     {
-                        OutputList.Add("Directory " + DirectoryBeingCreated + " already exists");
+                        DirectoryOutputList.Add("Directory " + DirectoryBeingCreated + " already exists");
 
                     }
                     else
                     {
                         var result = Directory.CreateDirectory(DirectoryBeingCreated);
-                        OutputList.Add("Directory " + result.FullName + " successfully created!");
+                        DirectoryOutputList.Add("Directory " + result.FullName + " successfully created!");
 
                     }
                 }
             }
-
-            if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName)) { 
-            var processStartInfo = new ProcessStartInfo
+            FireEvent(DirectoryOutputList.ToArray());
+            if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
             {
-                WorkingDirectory = currentWorkingDir,
-                FileName = "dotnet",
-                Arguments = Command,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true
-            };
-            using (var cancellationTokenSource = new CancellationTokenSource())
-            {
-                var processResults = await ProcessEx.RunAsync(processStartInfo);
-                //File.WriteAllText("C:/log.txt", processResults.StandardOutput);
-                for (int r = 0; r < processResults.StandardOutput.Length; r++)
+                var processStartInfo = new ProcessStartInfo
                 {
-                    OutputList.Add(processResults.StandardOutput[r]);
+                    WorkingDirectory = currentWorkingDir,
+                    FileName = "dotnet",
+                    Arguments = Command,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                };
+                using (var cancellationTokenSource = new CancellationTokenSource())
+                {
+                    var processResults = await ProcessEx.RunAsync(processStartInfo);
+                    //File.WriteAllText("C:/log.txt", processResults.StandardOutput);
+                    for (int r = 0; r < processResults.StandardOutput.Length; r++)
+                    {
+                        CommandOutputList.Add(processResults.StandardOutput[r]);
+                    }
                 }
             }
-        }
             else
             {
-                OutputList.Add("A Project with this Name already exists!");
+                CommandOutputList.Add("A Project with this Name already exists!");
             }
-            output = OutputList.ToArray();
-            return output;
+            FireEvent(CommandOutputList.ToArray());
 
         }
+
 
     }
 }
