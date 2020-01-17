@@ -26,6 +26,7 @@ namespace dotnet_structuring
         {
             InitializeComponent();
         }
+
         Variables Variables = new Variables();
         Execute Execute = new library.Execute();
         public async void ExecButton_Click(object sender, RoutedEventArgs e)
@@ -33,15 +34,15 @@ namespace dotnet_structuring
             OutputBox.Clear();
 
             //Write commands to .bat File
-            var result = await Execute.CreateScriptAsync(CommandSummaryBox.Text);            
+            var result = await Execute.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
             for (int i = 0; i < result.Length; i++)
             {
-                if (result[i] != null && result[i] != "" && result[i] != "\r\n")
+                if (result[i] != null && result[i] != "" && result[i] != Environment.NewLine)
                 {
-                    OutputBox.AppendText(result[i] + "\r\n");
+                    OutputBox.AppendText(result[i] + Environment.NewLine);
                 }
             }
-           // OutputBox.Append(Execute.CreateScriptAsync(CommandSummaryBox.Text)[2]);
+            // OutputBox.Append(Execute.CreateScriptAsync(CommandSummaryBox.Text)[2]);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
@@ -153,14 +154,11 @@ namespace dotnet_structuring
         //Open "Select Folder" Dialog
         public void SelectPathButton_Click(object sender, RoutedEventArgs e)
         {
-            var blup = new OpenFileDialog();
-            blup.Filter = "Directory|*.this.directory";
-            blup.ShowDialog();
-
-            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
-            if (dialog.ShowDialog(this).GetValueOrDefault())
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
-                PathBox.Text = dialog.SelectedPath;
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                PathBox.Text = dialog.SelectedPath.ToString();
+
             }
         }
         public void PathBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -176,7 +174,7 @@ namespace dotnet_structuring
         {
             if (ArtifactsCheckBox.IsChecked == true)
             {
-                Variables.Artifacts = "mkdir artifacts";
+                Variables.Artifacts = "artifacts";
             }
             else
             {
@@ -187,7 +185,7 @@ namespace dotnet_structuring
         {
             if (BuildCheckBox.IsChecked == true)
             {
-                Variables.Build = "mkdir build";
+                Variables.Build = "build";
             }
             else
             {
@@ -198,7 +196,7 @@ namespace dotnet_structuring
         {
             if (DocsCheckBox.IsChecked == true)
             {
-                Variables.Docs = "mkdir docs";
+                Variables.Docs = "docs";
             }
             else
             {
@@ -209,7 +207,7 @@ namespace dotnet_structuring
         {
             if (LibCheckBox.IsChecked == true)
             {
-                Variables.Lib = "mkdir lib";
+                Variables.Lib = "lib";
             }
             else
             {
@@ -220,7 +218,7 @@ namespace dotnet_structuring
         {
             if (PackagesCheckBox.IsChecked == true)
             {
-                Variables.Packages = "mkdir packages";
+                Variables.Packages = "packages";
             }
             else
             {
@@ -231,7 +229,7 @@ namespace dotnet_structuring
         {
             if (SamplesCheckBox.IsChecked == true)
             {
-                Variables.Samples = "mkdir samples";
+                Variables.Samples = "samples";
             }
             else
             {
@@ -242,7 +240,7 @@ namespace dotnet_structuring
         {
             if (TestCheckBox.IsChecked == true)
             {
-                Variables.Test = "mkdir test";
+                Variables.Test = "test";
             }
             else
             {
@@ -264,15 +262,19 @@ namespace dotnet_structuring
             //Build  structoring script
             if (CurrentTab == "Finish")
             {
-                string[] FinalCommands = { "cd " + Variables.Directory, "mkdir src", Variables.Artifacts, Variables.Build, Variables.Docs, Variables.Lib, Variables.Samples, Variables.Packages, Variables.Test, "cd src", "dotnet new " + Variables.SelectedTemplate + " " + Variables.Options };
+                Variables.Directories = new string[] { Variables.Directory, "src", Variables.Artifacts, Variables.Build, Variables.Docs, Variables.Lib, Variables.Samples, Variables.Packages, Variables.Test};
+                ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
+                Variables.ProjectName = ProjectNameBox.Text;
+                Variables.NETCommand = " new " + Variables.SelectedTemplate + " " + Variables.Options + "-o src/" + ProjectNameBox.Text + " -n " + ProjectNameBox.Text;               
                 CommandSummaryBox.Clear();
-                for (int i = 0; i < FinalCommands.Length; i++)
+                for (int i = 1; i < Variables.Directories.Length; i++)
                 {
-                    if (FinalCommands[i] != null && FinalCommands[i] != "" && FinalCommands[i] != "\r\n")
+                    if (Variables.Directories[i] != null && Variables.Directories[i] != "" && Variables.Directories[i] != Environment.NewLine)
                     {
-                        CommandSummaryBox.AppendText(FinalCommands[i] + "\r\n");
+                        CommandSummaryBox.AppendText("Create Directory: " + Variables.Directories[i] + Environment.NewLine);
                     }
                 }
+                CommandSummaryBox.AppendText("Execute: dotnet" + Variables.NETCommand + Environment.NewLine);
                 CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
             }
         }

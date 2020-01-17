@@ -59,7 +59,17 @@ namespace dotnet_structuring.library
             get;
             set;
         }
-        public Array FinalCommands
+        public string ProjectName
+        {
+            get;
+            set;
+        }
+        public string NETCommand
+        {
+            get;
+            set;
+        }
+        public string[] Directories
         {
             get;
             set;

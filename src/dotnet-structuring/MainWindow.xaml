@@ -10,7 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="OutputBox" Margin="10,222,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="202" IsReadOnly="True" Text="Console Output" Padding="2,2,2,2" Focusable="False" Cursor="IBeam"/>
+        <TextBox x:Name="OutputBox" Margin="10,250,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="174" IsReadOnly="True" Text="Console Output" Padding="2,2,2,2" Focusable="False" Cursor="IBeam"/>
         <TabControl x:Name="Tabs" Margin="10,10,10,226" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="Tab_Changed">
             <TabItem Header="General" IsSelected="True">
                 <Grid>
@@ -50,6 +50,7 @@
                         <ComboBoxItem Content="Web Config"/>
                         <ComboBoxItem Content="Solution File "/>
                     </ComboBox>
+                    <TextBox x:Name="ProjectNameBox" Grid.Column="2" HorizontalAlignment="Left" Margin="107,87,0,0" Text="Project Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="OptionsTab" Header="Options" IsEnabled="False">
@@ -71,13 +72,14 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="FinishTab" Header="Finish" Height="22" Margin="0,0,-4,0" VerticalAlignment="Center" IsEnabled="False" >
-                <Grid Width="774" >
+                <Grid Width="774" Height="179" >
                     <Label Content="Commands to be executed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10"/>
-                    <TextBox x:Name="CommandSummaryBox" HorizontalAlignment="Left" Margin="10,37,0,10" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="394"/>
-                    <Button x:Name="ExecButton" Content="Execute" HorizontalAlignment="Left" Margin="409,0,0,10" VerticalAlignment="Bottom" Click="ExecButton_Click"/>
+                    <TextBox x:Name="CommandSummaryBox" HorizontalAlignment="Left" Margin="10,37,0,20" TextWrapping="Wrap" Width="394"/>
+                    <Button x:Name="ExecButton" Content="Execute" HorizontalAlignment="Left" Margin="409,0,0,20" VerticalAlignment="Bottom" Click="ExecButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
+        <ProgressBar HorizontalAlignment="Center" Height="10" VerticalAlignment="Top" Width="780" Margin="0,235,0,0" Minimum="0" Maximum="100" Name="pbStatus"/>
 
     </Grid>
 </Window>
