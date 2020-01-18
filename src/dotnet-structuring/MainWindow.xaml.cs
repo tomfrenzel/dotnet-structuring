@@ -51,7 +51,7 @@ namespace dotnet_structuring
             OutputBox.Clear();
             Execute wd = new Execute();
             WireEventHandlers(wd);
-            wd.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
+            wd.CreateScript(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
             //Execute.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);                //Do some stuff
 
 

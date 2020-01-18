@@ -32,7 +32,7 @@ namespace dotnet_structuring.library
         {
 
         }
-        public async void CreateScriptAsync(string[] Directories, string Command, string ProjectName)
+        public void CreateScript(string[] Directories, string Command, string ProjectName)
         {
 
             var currentWorkingDir = Directories[0] + @"\";
