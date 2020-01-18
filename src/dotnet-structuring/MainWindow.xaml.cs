@@ -40,19 +40,15 @@ namespace dotnet_structuring
         public void OnIncommingEventLog(object sender, EventLogger e)
         {
 
-            for (int i = 0; i < e.logs.Length; i++)
-            {
-                if (e.logs[i] != null && e.logs[i] != "" && e.logs[i] != Environment.NewLine)
-                {
-                    OutputBox.AppendText(e.logs[i] + Environment.NewLine);
-                }
-            }
+            this.Dispatcher.Invoke(() =>
+                    OutputBox.AppendText(e.logs + Environment.NewLine));
+
         }
         public void ExecButton_Click(object sender, RoutedEventArgs e)
         {
 
 
-                OutputBox.Clear();
+            OutputBox.Clear();
             Execute wd = new Execute();
             WireEventHandlers(wd);
             wd.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);

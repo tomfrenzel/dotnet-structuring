@@ -13,13 +13,13 @@ namespace dotnet_structuring.library
 
     public class EventLogger : EventArgs
     {
-        public string[] logs;
+        public string logs;
     }
 
     public class Execute
     {
         public event ExecutionHandler LogEvent;
-        private void FireEvent(string[] logs)
+        private void FireEvent(string logs)
         {
             EventLogger log = new EventLogger();
             log.logs = logs;
@@ -52,47 +52,48 @@ namespace dotnet_structuring.library
                 {
                     if (Directory.Exists(DirectoryBeingCreated))
                     {
-                        DirectoryOutputList.Add("Directory " + DirectoryBeingCreated + " already exists");
-
+                        FireEvent("Directory " + DirectoryBeingCreated + " already exists");
                     }
                     else
                     {
                         var result = Directory.CreateDirectory(DirectoryBeingCreated);
-                        DirectoryOutputList.Add("Directory " + result.FullName + " successfully created!");
-
+                        FireEvent("Directory " + result.FullName + " successfully created!");
                     }
                 }
             }
-            FireEvent(DirectoryOutputList.ToArray());
             if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
             {
-                var processStartInfo = new ProcessStartInfo
+                Process p = new Process();
+
+                p.StartInfo.WorkingDirectory = currentWorkingDir;
+                p.StartInfo.FileName = "dotnet";
+                p.StartInfo.Arguments = Command;
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.CreateNoWindow = true;
+                p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
                 {
-                    WorkingDirectory = currentWorkingDir,
-                    FileName = "dotnet",
-                    Arguments = Command,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                };
-                using (var cancellationTokenSource = new CancellationTokenSource())
-                {
-                    var processResults = await ProcessEx.RunAsync(processStartInfo);
-                    //File.WriteAllText("C:/log.txt", processResults.StandardOutput);
-                    for (int r = 0; r < processResults.StandardOutput.Length; r++)
-                    {
-                        CommandOutputList.Add(processResults.StandardOutput[r]);
-                    }
-                }
+                    // Prepend line numbers to each line of the output.
+                    FireEvent(e.Data);
+
+                });
+                p.Start();
+                p.BeginOutputReadLine();
+
+
+                //    string[] log = { processResults.Process.OutputDataReceived };
+                //    FireEvent(log);
+                //    for (int r = 0; r < processResults.StandardOutput.Length; r++)
+                //    {
+                //        // string[] log = { processResults.StandardOutput[r] };
+                //        // FireEvent(log);
+                //    }
+
             }
             else
             {
-                CommandOutputList.Add("A Project with this Name already exists!");
+                FireEvent("A Project with this Name already exists!");
             }
-            FireEvent(CommandOutputList.ToArray());
-
         }
-
-
     }
 }
