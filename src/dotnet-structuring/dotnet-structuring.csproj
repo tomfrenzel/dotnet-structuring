@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="Codecov" Version="1.9.0" />
+    <PackageReference Include="HandyControl" Version="2.3.0" />
     <PackageReference Include="RunProcessAsTask" Version="1.2.4" />
   </ItemGroup>
 

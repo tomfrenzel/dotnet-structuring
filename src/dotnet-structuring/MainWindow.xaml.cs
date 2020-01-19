@@ -23,6 +23,7 @@ namespace dotnet_structuring
 
     public partial class MainWindow : Window
     {
+        public string PlaceholderText { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -30,7 +31,8 @@ namespace dotnet_structuring
 
         Variables Variables = new Variables();
         Execute Execute = new library.Execute();
-
+        int LogNum;
+        string CurrentLog;
         private void WireEventHandlers(Execute e)
         {
             ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
@@ -39,24 +41,36 @@ namespace dotnet_structuring
 
         public void OnIncommingEventLog(object sender, EventLogger e)
         {
+            LogNum++;
 
-            this.Dispatcher.Invoke(() =>
-                    OutputBox.AppendText(e.logs + Environment.NewLine));
+            this.Dispatcher.Invoke(() => CurrentLog = e.logs);
+            this.Dispatcher.Invoke(() => OutputBox.AppendText(CurrentLog + Environment.NewLine));
+            if (LogNum < Variables.ProccessAmount)
+            {
+                pbStatus.Value++;
+            }
+            else if (LogNum > Variables.ProccessAmount)
+            {
+                this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = false);
+                Style style = this.FindResource("ProgressBarWarningStripe") as Style;
+                this.Dispatcher.Invoke(() => pbStatus.Style = style);
+               
 
+            }
+            if (CurrentLog == "Done.")
+            {
+                this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = true);
+                this.Dispatcher.Invoke(() => pbStatus.Value = 1);
+                Style style = this.Dispatcher.Invoke(() => this.FindResource("ProgressBarSuccess") as Style);
+                this.Dispatcher.Invoke(() => pbStatus.Style = style);
+            }
         }
         public void ExecButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             OutputBox.Clear();
-            Execute wd = new Execute();
-            WireEventHandlers(wd);
-            wd.CreateScript(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
-            //Execute.CreateScriptAsync(Variables.Directories, Variables.NETCommand, Variables.ProjectName);                //Do some stuff
-
-
-
-            // OutputBox.Append(Execute.CreateScriptAsync(CommandSummaryBox.Text)[2]);
+            Execute OutputLogs = new Execute();
+            WireEventHandlers(OutputLogs);
+            OutputLogs.CreateScript(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
@@ -189,10 +203,12 @@ namespace dotnet_structuring
             if (ArtifactsCheckBox.IsChecked == true)
             {
                 Variables.Artifacts = "artifacts";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Artifacts = "";
+                Variables.ProccessAmount--;
             }
         }
         public void BuildCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -200,10 +216,12 @@ namespace dotnet_structuring
             if (BuildCheckBox.IsChecked == true)
             {
                 Variables.Build = "build";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Build = "";
+                Variables.ProccessAmount--;
             }
         }
         public void DocsCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -211,10 +229,12 @@ namespace dotnet_structuring
             if (DocsCheckBox.IsChecked == true)
             {
                 Variables.Docs = "docs";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Docs = "";
+                Variables.ProccessAmount--;
             }
         }
         public void LibCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -222,10 +242,12 @@ namespace dotnet_structuring
             if (LibCheckBox.IsChecked == true)
             {
                 Variables.Lib = "lib";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Lib = "";
+                Variables.ProccessAmount--;
             }
         }
         public void PackagesCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -233,10 +255,12 @@ namespace dotnet_structuring
             if (PackagesCheckBox.IsChecked == true)
             {
                 Variables.Packages = "packages";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Packages = "";
+                Variables.ProccessAmount--;
             }
         }
         public void SamplesCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -244,10 +268,12 @@ namespace dotnet_structuring
             if (SamplesCheckBox.IsChecked == true)
             {
                 Variables.Samples = "samples";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Samples = "";
+                Variables.ProccessAmount--;
             }
         }
         public void TestCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -255,10 +281,12 @@ namespace dotnet_structuring
             if (TestCheckBox.IsChecked == true)
             {
                 Variables.Test = "test";
+                Variables.ProccessAmount++;
             }
             else
             {
                 Variables.Test = "";
+                Variables.ProccessAmount--;
             }
         }
         public void DotNetNewOptionsBox_TextChanged(object sender, TextChangedEventArgs e)

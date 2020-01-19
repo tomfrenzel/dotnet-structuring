@@ -79,20 +79,20 @@ namespace dotnet_structuring.library
                 });
                 p.Start();
                 p.BeginOutputReadLine();
+                p.EnableRaisingEvents = true;
+                p.Exited += new EventHandler((sender, e) =>
+                {
+                    FireEvent(Environment.NewLine);
+                    FireEvent("Done.");
 
-
-                //    string[] log = { processResults.Process.OutputDataReceived };
-                //    FireEvent(log);
-                //    for (int r = 0; r < processResults.StandardOutput.Length; r++)
-                //    {
-                //        // string[] log = { processResults.StandardOutput[r] };
-                //        // FireEvent(log);
-                //    }
+                });
 
             }
             else
             {
                 FireEvent("A Project with this Name already exists!");
+                FireEvent(Environment.NewLine);
+                FireEvent("Done.");
             }
         }
     }
