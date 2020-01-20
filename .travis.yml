@@ -14,6 +14,7 @@ script:
     - dotnet --version
     - dotnet restore
     - dotnet build src/dotnet-structuring/dotnet-structuring.csproj
+    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -output:".\coverage.xml" -oldstyle
 
 install:
     - dotnet restore src/dotnet-structuring/dotnet-structuring.csproj
@@ -25,6 +26,5 @@ cache:
   directories:
     - "$HOME/.nuget/packages"
     - "$HOME/.local/share/NuGet/Cache"
-test_script:
-    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -output:".\coverage.xml" -oldstyle
+after_success:
     - codecov -f "coverage.xml"
