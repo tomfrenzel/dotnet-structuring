@@ -1,12 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>dotnet_structuring.library</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>dotnet_structuring.lib</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="RunProcessAsTask" Version="1.2.4" />
-  </ItemGroup>
-
+  
 </Project>

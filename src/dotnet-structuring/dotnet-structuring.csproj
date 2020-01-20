@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\dotnet-structuring.lib\dotnet-structuring.library.csproj" />
+    <ProjectReference Include="..\dotnet-structuring.library\dotnet-structuring.library.csproj" />
   </ItemGroup>
 
 </Project>

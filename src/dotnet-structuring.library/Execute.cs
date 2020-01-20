@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using RunProcessAsTask;
 
 namespace dotnet_structuring.library
 {
@@ -45,9 +41,7 @@ namespace dotnet_structuring.library
             //repeat as many times as there are objects inside the array
             for (int i = 1; i < Directories.Length; i++)
             {
-                //make sure that the selected object isn't No. 10 (dotnet new command)
                 var DirectoryBeingCreated = currentWorkingDir + Directories[i];
-                //only execute if currentWorkingDir isn't the same as currentWorkingDir + commands[i]
                 if (DirectoryBeingCreated != currentWorkingDir)
                 {
                     if (Directory.Exists(DirectoryBeingCreated))
