@@ -1,6 +1,5 @@
 language: csharp
 mono: none
-sudo: required
 os: windows
 
 solution: src/dotnet-structuring/dotnet-structuring.csproj
@@ -10,6 +9,7 @@ before_script:
 
 script:
     - choco install dotnetcore-sdk
+    - choco install codecov
     - dotnet --version
     - dotnet restore
     - dotnet build src/dotnet-structuring/dotnet-structuring.csproj
@@ -24,3 +24,6 @@ cache:
   directories:
     - "$HOME/.nuget/packages"
     - "$HOME/.local/share/NuGet/Cache"
+test_script:
+    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -output:".\coverage.xml" -oldstyle
+    - codecov -f "coverage.xml"
