@@ -29,7 +29,7 @@ namespace dotnet_structuring.tests
         public void StandardWinTest()
         {
             _.ProjectName = "TestProject";
-            _.Directory = Directory.GetCurrentDirectory() + @"\temp";
+            _.Directory = Directory.GetCurrentDirectory();
             _.Artifacts = "artifacts";
             _.Build = "build";
             _.Docs = "docs";
@@ -53,15 +53,11 @@ namespace dotnet_structuring.tests
              _.Test,
             };
 
-            Directory.CreateDirectory("temp");
-            
-
             Execute OutputLogs = new Execute();
             WireEventHandlers(OutputLogs);
             OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
 
             Assert.AreEqual("Done.", CurrentLog);
-            Directory.Delete("temp", true);
         }
 
 
