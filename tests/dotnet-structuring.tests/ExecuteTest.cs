@@ -12,7 +12,6 @@ namespace dotnet_structuring.tests
     public class ExecuteTest
     {
         Variables _ = new Variables();
-        int LogNum;
         string CurrentLog;
         private void WireEventHandlers(Execute e)
         {
@@ -29,7 +28,7 @@ namespace dotnet_structuring.tests
         public void StandardWinTest()
         {
             _.ProjectName = "TestProject";
-            _.Directory = Directory.GetCurrentDirectory() + "/temp";
+            _.Directory = new TempDirectory();
             _.Artifacts = "artifacts";
             _.Build = "build";
             _.Docs = "docs";
@@ -52,15 +51,45 @@ namespace dotnet_structuring.tests
              _.Packages,
              _.Test,
             };
-            Directory.CreateDirectory(_.Directory + "/temp");
-            Execute OutputLogs = new Execute();
-            WireEventHandlers(OutputLogs);
-            OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
 
-            Assert.AreEqual("Done.", CurrentLog);
-            Directory.Delete(_.Directory + "/test", true);
+                Execute OutputLogs = new Execute();
+                WireEventHandlers(OutputLogs);
+                OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
+                Assert.AreEqual("Done.", CurrentLog);
+
         }
+        class TempDirectory : IDisposable
+        {
+            public TempDirectory()
+            {
+                path = Path.Combine(
+                    Path.GetTempPath(),
+                    Guid.NewGuid().ToString()
+                );
+                Directory.CreateDirectory(path);
+            }
 
+            readonly string path;
+
+            /// 
+
+            /// Allows the TempDirectory to be used anywhere a string is required.
+            /// 
+            public static implicit operator string(TempDirectory directory)
+            {
+                return directory.path;
+            }
+
+            public override string ToString()
+            {
+                return path;
+            }
+
+            public void Dispose()
+            {
+                Directory.Delete(path, true);
+            }
+        }
 
     }
 }
