@@ -78,6 +78,7 @@ namespace dotnet_structuring.library
                 {
                     FireEvent(Environment.NewLine);
                     FireEvent("Done.");
+
                 });
                 p.WaitForExit();
             }

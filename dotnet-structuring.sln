@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-structuring", "src\dotnet-structuring\dotnet-structuring.csproj", "{3E0FBC34-8410-43B6-BD64-B1C98A4745B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-structuring.tests", "tests\dotnet-structuring.tests\dotnet-structuring.tests.csproj", "{7A9B93D8-1BA5-4D81-B901-060D0D15A0E5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-structuring.library", "src\dotnet-structuring.library\dotnet-structuring.library.csproj", "{0A951090-BD84-45EF-8A20-0944F5436027}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-structuring.tests", "tests\dotnet-structuring.tests\dotnet-structuring.tests.csproj", "{F1734A1C-867A-407B-AC3A-4770C4960344}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{3E0FBC34-8410-43B6-BD64-B1C98A4745B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E0FBC34-8410-43B6-BD64-B1C98A4745B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E0FBC34-8410-43B6-BD64-B1C98A4745B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A9B93D8-1BA5-4D81-B901-060D0D15A0E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A9B93D8-1BA5-4D81-B901-060D0D15A0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A9B93D8-1BA5-4D81-B901-060D0D15A0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A9B93D8-1BA5-4D81-B901-060D0D15A0E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A951090-BD84-45EF-8A20-0944F5436027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A951090-BD84-45EF-8A20-0944F5436027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A951090-BD84-45EF-8A20-0944F5436027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A951090-BD84-45EF-8A20-0944F5436027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1734A1C-867A-407B-AC3A-4770C4960344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1734A1C-867A-407B-AC3A-4770C4960344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1734A1C-867A-407B-AC3A-4770C4960344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1734A1C-867A-407B-AC3A-4770C4960344}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

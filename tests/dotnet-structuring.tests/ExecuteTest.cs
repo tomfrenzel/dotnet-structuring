@@ -1,31 +1,22 @@
 using dotnet_structuring.library;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using NUnit.Framework;
+
 
 namespace dotnet_structuring.tests
 {
-
-    [TestClass]
     public class ExecuteTest
     {
-        Variables _ = new Variables();
-        string CurrentLog;
-        private void WireEventHandlers(Execute e)
+        [SetUp]
+        public void Setup()
         {
-            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, EventLogger e)
-        {
-            CurrentLog = e.logs;
-        }
-
-        [TestMethod]
-        public void StandardWinTest()
+        [Test]
+        public void Test1()
         {
             _.ProjectName = "TestProject";
             _.Directory = new TempDirectory();
@@ -52,10 +43,10 @@ namespace dotnet_structuring.tests
              _.Test,
             };
 
-                Execute OutputLogs = new Execute();
-                WireEventHandlers(OutputLogs);
-                OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
-                Assert.AreEqual("Done.", CurrentLog);
+            Execute OutputLogs = new Execute();
+            WireEventHandlers(OutputLogs);
+            OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
+            Assert.AreEqual("Done.", CurrentLog);
 
         }
         class TempDirectory : IDisposable
@@ -89,6 +80,19 @@ namespace dotnet_structuring.tests
             {
                 Directory.Delete(path, true);
             }
+
+        }
+        Variables _ = new Variables();
+        string CurrentLog;
+        private void WireEventHandlers(Execute e)
+        {
+            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
+            e.LogEvent += handler;
+        }
+
+        public void OnIncommingEventLog(object sender, EventLogger e)
+        {
+            CurrentLog = e.logs;
         }
 
     }
