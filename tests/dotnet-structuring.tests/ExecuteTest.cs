@@ -1,35 +1,25 @@
 using dotnet_structuring.library;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using NUnit.Framework;
+
 
 namespace dotnet_structuring.tests
 {
-
-    [TestClass]
     public class ExecuteTest
     {
-        Variables _ = new Variables();
-        int LogNum;
-        string CurrentLog;
-        private void WireEventHandlers(Execute e)
+        [SetUp]
+        public void Setup()
         {
-            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, EventLogger e)
-        {
-            CurrentLog = e.logs;
-        }
-
-        [TestMethod]
-        public void StandardWinTest()
+        [Test]
+        public void Test1()
         {
             _.ProjectName = "TestProject";
-            _.Directory = Directory.GetCurrentDirectory() + @"\temp";
+            _.Directory = new TempDirectory();
             _.Artifacts = "artifacts";
             _.Build = "build";
             _.Docs = "docs";
@@ -53,17 +43,57 @@ namespace dotnet_structuring.tests
              _.Test,
             };
 
-            Directory.CreateDirectory("temp");
-            
-
             Execute OutputLogs = new Execute();
             WireEventHandlers(OutputLogs);
             OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
-
             Assert.AreEqual("Done.", CurrentLog);
-            Directory.Delete("temp", true);
+
+        }
+        class TempDirectory : IDisposable
+        {
+            public TempDirectory()
+            {
+                path = Path.Combine(
+                    Path.GetTempPath(),
+                    Guid.NewGuid().ToString()
+                );
+                Directory.CreateDirectory(path);
+            }
+
+            readonly string path;
+
+            /// 
+
+            /// Allows the TempDirectory to be used anywhere a string is required.
+            /// 
+            public static implicit operator string(TempDirectory directory)
+            {
+                return directory.path;
+            }
+
+            public override string ToString()
+            {
+                return path;
+            }
+
+            public void Dispose()
+            {
+                Directory.Delete(path, true);
+            }
+
+        }
+        Variables _ = new Variables();
+        string CurrentLog;
+        private void WireEventHandlers(Execute e)
+        {
+            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
+            e.LogEvent += handler;
         }
 
+        public void OnIncommingEventLog(object sender, EventLogger e)
+        {
+            CurrentLog = e.logs;
+        }
 
     }
 }

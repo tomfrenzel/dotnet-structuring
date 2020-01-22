@@ -80,7 +80,7 @@ namespace dotnet_structuring.library
                     FireEvent("Done.");
 
                 });
-
+                p.WaitForExit();
             }
             else
             {
