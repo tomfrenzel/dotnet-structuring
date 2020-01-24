@@ -14,6 +14,7 @@ namespace dotnet_structuring.tests
         Variables _ = new Variables();
         TempDirectory temp = new TempDirectory();
         string CurrentLog;
+        private string SelectedTemplate;
 
         //Setup EventHandler
         private void WireEventHandlers(Execute e)
@@ -41,9 +42,9 @@ namespace dotnet_structuring.tests
             _.Samples = "samples";
             _.Packages = "packages";
             _.Test = "test";
-            _.SelectedTemplate = "console";
+            SelectedTemplate = "console";
             _.Options = "";
-            _.NETCommand = " new " + _.SelectedTemplate + " " + _.Options + "-o src/" + _.ProjectName + " -n " + _.ProjectName;
+            _.NETCommand = " new " + SelectedTemplate + " " + _.Options + "-o src/" + _.ProjectName + " -n " + _.ProjectName;
             _.Directories = new string[]
             {
              _.Directory,
@@ -57,7 +58,7 @@ namespace dotnet_structuring.tests
             };
         }
         [Test]
-        public void FullWindowsTest()
+        public void FullTest()
         {
             Execute OutputLogs = new Execute();
             WireEventHandlers(OutputLogs);
@@ -65,7 +66,7 @@ namespace dotnet_structuring.tests
             Assert.AreEqual("Done.", CurrentLog);
         }
         [Test]
-        public void SecondFullWindowsTest()
+        public void SecondFullTest()
         {
             Execute OutputLogs = new Execute();
             WireEventHandlers(OutputLogs);

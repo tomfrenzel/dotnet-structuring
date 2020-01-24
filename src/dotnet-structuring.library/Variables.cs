@@ -4,16 +4,6 @@ namespace dotnet_structuring.library
 {
     public class Variables
     {
-        public string SelectedTemplate
-        {
-            get;
-            set;
-        }
-        public string ProjectType
-        {
-            get;
-            set;
-        }
         public string Directory
         {
             get;
@@ -74,11 +64,6 @@ namespace dotnet_structuring.library
             get;
             set;
         }
-        public int ProccessAmount
-        {
-            get;
-            set;
-        }
-
+        public int ProccessAmount { get; set; }
     }
 }
