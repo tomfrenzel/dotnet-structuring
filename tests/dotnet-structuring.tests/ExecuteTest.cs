@@ -1,19 +1,20 @@
 using dotnet_structuring.library;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using NUnit.Framework;
+
 
 namespace dotnet_structuring.tests
 {
-
-    [TestClass]
     public class ExecuteTest
     {
+        //Setup Variables
         Variables _ = new Variables();
-        int LogNum;
         string CurrentLog;
+
+        //Setup EventHandler
         private void WireEventHandlers(Execute e)
         {
             ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
@@ -25,11 +26,13 @@ namespace dotnet_structuring.tests
             CurrentLog = e.logs;
         }
 
-        [TestMethod]
-        public void StandardWinTest()
+
+
+        [SetUp]
+        public void Setup()
         {
             _.ProjectName = "TestProject";
-            _.Directory = Directory.GetCurrentDirectory() + @"\temp";
+            _.Directory = new TempDirectory();
             _.Artifacts = "artifacts";
             _.Build = "build";
             _.Docs = "docs";
@@ -37,7 +40,6 @@ namespace dotnet_structuring.tests
             _.Samples = "samples";
             _.Packages = "packages";
             _.Test = "test";
-            _.ProjectType = "New Project";
             _.SelectedTemplate = "console";
             _.Options = "";
             _.NETCommand = " new " + _.SelectedTemplate + " " + _.Options + "-o src/" + _.ProjectName + " -n " + _.ProjectName;
@@ -52,19 +54,23 @@ namespace dotnet_structuring.tests
              _.Packages,
              _.Test,
             };
-
-            Directory.CreateDirectory("temp");
-            
-
+        }
+        [Test]
+        public void FullWindowsTest()
+        {
             Execute OutputLogs = new Execute();
             WireEventHandlers(OutputLogs);
             OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
-
             Assert.AreEqual("Done.", CurrentLog);
-            Directory.Delete("temp", true);
         }
-
-
+        [Test]
+        public void SecondFullWindowsTest()
+        {
+            Execute OutputLogs = new Execute();
+            WireEventHandlers(OutputLogs);
+            OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
+            Assert.AreEqual("Done.", CurrentLog);
+        }
     }
 }
 

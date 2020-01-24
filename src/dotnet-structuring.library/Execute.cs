@@ -20,7 +20,7 @@ namespace dotnet_structuring.library
             EventLogger log = new EventLogger();
             log.logs = logs;
 
-            LogEvent?.Invoke(this, log);
+            LogEvent.Invoke(this, log);
 
             log = null;
         }
@@ -42,7 +42,6 @@ namespace dotnet_structuring.library
             for (int i = 1; i < Directories.Length; i++)
             {
                 var DirectoryBeingCreated = currentWorkingDir + Directories[i];
-                if (DirectoryBeingCreated != currentWorkingDir)
                 {
                     if (Directory.Exists(DirectoryBeingCreated))
                     {
@@ -54,39 +53,39 @@ namespace dotnet_structuring.library
                         FireEvent("Directory " + result.FullName + " successfully created!");
                     }
                 }
-            }
-            if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
-            {
-                Process p = new Process();
-
-                p.StartInfo.WorkingDirectory = currentWorkingDir;
-                p.StartInfo.FileName = "dotnet";
-                p.StartInfo.Arguments = Command;
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.CreateNoWindow = true;
-                p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
                 {
-                    // Prepend line numbers to each line of the output.
-                    FireEvent(e.Data);
+                    Process p = new Process();
 
-                });
-                p.Start();
-                p.BeginOutputReadLine();
-                p.EnableRaisingEvents = true;
-                p.Exited += new EventHandler((sender, e) =>
+                    p.StartInfo.WorkingDirectory = currentWorkingDir;
+                    p.StartInfo.FileName = "dotnet";
+                    p.StartInfo.Arguments = Command;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                    {
+                        // Prepend line numbers to each line of the output.
+                        FireEvent(e.Data);
+
+                    });
+                    p.Start();
+                    p.BeginOutputReadLine();
+                    p.EnableRaisingEvents = true;
+                    p.Exited += new EventHandler((sender, e) =>
+                    {
+                        FireEvent(Environment.NewLine);
+                        FireEvent("Done.");
+
+                    });
+                    p.WaitForExit();
+                }
+                else
                 {
+                    FireEvent("A Project with this Name already exists!");
                     FireEvent(Environment.NewLine);
                     FireEvent("Done.");
-
-                });
-
-            }
-            else
-            {
-                FireEvent("A Project with this Name already exists!");
-                FireEvent(Environment.NewLine);
-                FireEvent("Done.");
+                }
             }
         }
     }
