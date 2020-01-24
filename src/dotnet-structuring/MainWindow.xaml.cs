@@ -54,7 +54,7 @@ namespace dotnet_structuring
                 this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = false);
                 Style style = this.FindResource("ProgressBarWarningStripe") as Style;
                 this.Dispatcher.Invoke(() => pbStatus.Style = style);
-               
+
 
             }
             if (CurrentLog == "Done.")
