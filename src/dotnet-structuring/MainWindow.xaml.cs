@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace dotnet_structuring
     {
         public string PlaceholderText { get; set; }
         public string ProjectType { get; private set; }
+        public int ProccessAmount { get; private set; }
 
         public MainWindow()
         {
@@ -46,8 +48,9 @@ namespace dotnet_structuring
             LogNum++;
 
             this.Dispatcher.Invoke(() => CurrentLog = e.logs);
-            this.Dispatcher.Invoke(() => OutputBox.AppendText(CurrentLog + Environment.NewLine));
-            if (LogNum < Variables.ProccessAmount)
+            this.Dispatcher.Invoke(() => OutputBox.Text += (CurrentLog + Environment.NewLine));
+            this.Dispatcher.Invoke(() => OutputBox.Text = Regex.Replace(OutputBox.Text, @"[\r\n]{2,}", Environment.NewLine));
+            if (LogNum < ProccessAmount)
             {
                 pbStatus.Value++;
             }
@@ -61,13 +64,13 @@ namespace dotnet_structuring
         }
         public void ExecButton_Click(object sender, RoutedEventArgs e)
         {
-            OutputBox.Clear();
+            OutputBox.Text = "";
             Execute OutputLogs = new Execute();
             this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = true);
             Style style = this.FindResource("ProgressBarWarningStripe") as Style;
             this.Dispatcher.Invoke(() => pbStatus.Style = style);
             WireEventHandlers(OutputLogs);
-            OutputLogs.CreateScript(Variables.Directories, Variables.NETCommand, Variables.ProjectName);
+            OutputLogs.CreateScript(Variables.Directories, Variables.NETCommand, Variables.ProjectName, false);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
@@ -131,12 +134,12 @@ namespace dotnet_structuring
             if (ArtifactsCheckBox.IsChecked == true)
             {
                 Variables.Artifacts = "artifacts";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Artifacts = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void BuildCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -144,12 +147,12 @@ namespace dotnet_structuring
             if (BuildCheckBox.IsChecked == true)
             {
                 Variables.Build = "build";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Build = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void DocsCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -157,12 +160,12 @@ namespace dotnet_structuring
             if (DocsCheckBox.IsChecked == true)
             {
                 Variables.Docs = "docs";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Docs = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void LibCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -170,12 +173,12 @@ namespace dotnet_structuring
             if (LibCheckBox.IsChecked == true)
             {
                 Variables.Lib = "lib";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Lib = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void PackagesCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -183,12 +186,12 @@ namespace dotnet_structuring
             if (PackagesCheckBox.IsChecked == true)
             {
                 Variables.Packages = "packages";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Packages = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void SamplesCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -196,12 +199,12 @@ namespace dotnet_structuring
             if (SamplesCheckBox.IsChecked == true)
             {
                 Variables.Samples = "samples";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Samples = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void TestCheckBox_Changed(object sender, RoutedEventArgs e)
@@ -209,12 +212,12 @@ namespace dotnet_structuring
             if (TestCheckBox.IsChecked == true)
             {
                 Variables.Test = "test";
-                Variables.ProccessAmount++;
+                ProccessAmount++;
             }
             else
             {
                 Variables.Test = "";
-                Variables.ProccessAmount--;
+                ProccessAmount--;
             }
         }
         public void DotNetNewOptionsBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -236,15 +239,15 @@ namespace dotnet_structuring
                 ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
                 Variables.ProjectName = ProjectNameBox.Text;
                 Variables.NETCommand = " new " + templates.SelectedTemplate + " " + Variables.Options + "-o src/" + ProjectNameBox.Text + " -n " + ProjectNameBox.Text;
-                CommandSummaryBox.Clear();
+                CommandSummaryBox.Text = "";
                 for (int i = 1; i < Variables.Directories.Length; i++)
                 {
                     if (Variables.Directories[i] != null && Variables.Directories[i] != "" && Variables.Directories[i] != Environment.NewLine)
                     {
-                        CommandSummaryBox.AppendText("Create Directory: " + Variables.Directories[i] + Environment.NewLine);
+                        CommandSummaryBox.Text += ("Create Directory: " + Variables.Directories[i] + Environment.NewLine);
                     }
                 }
-                CommandSummaryBox.AppendText("Execute: dotnet" + Variables.NETCommand + Environment.NewLine);
+                CommandSummaryBox.Text += ("Execute: dotnet" + Variables.NETCommand + Environment.NewLine);
                 CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
             }
         }

@@ -28,7 +28,7 @@ namespace dotnet_structuring.library
         {
 
         }
-        public void CreateScript(string[] Directories, string Command, string ProjectName)
+        public void CreateScript(string[] Directories, string Command, string ProjectName, bool test)
         {
 
             var currentWorkingDir = Directories[0] + @"\";
@@ -41,8 +41,10 @@ namespace dotnet_structuring.library
             //repeat as many times as there are objects inside the array
             for (int i = 1; i < Directories.Length; i++)
             {
-                var DirectoryBeingCreated = currentWorkingDir + Directories[i];
-                
+                if (Directories[i] != null)
+                {
+                    var DirectoryBeingCreated = currentWorkingDir + Directories[i];
+
                     if (Directory.Exists(DirectoryBeingCreated))
                     {
                         FireEvent("Directory " + DirectoryBeingCreated + " already exists");
@@ -52,6 +54,8 @@ namespace dotnet_structuring.library
                         var result = Directory.CreateDirectory(DirectoryBeingCreated);
                         FireEvent("Directory " + result.FullName + " successfully created!");
                     }
+                }
+               
                 
             }
             if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
@@ -80,7 +84,11 @@ namespace dotnet_structuring.library
                     p.Kill();
 
                 });
-
+                if (test == true)
+                {
+                    p.WaitForExit();
+                }
+                
             }
             else
             {

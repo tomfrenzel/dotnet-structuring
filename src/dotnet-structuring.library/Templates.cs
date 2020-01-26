@@ -7,7 +7,7 @@ namespace dotnet_structuring.library
 {
     public class Templates
     {
-        public string SelectedTemplate { get; private set; }
+        public string SelectedTemplate { get; set; }
 
         public void SelcectTemplate(int i)
         {

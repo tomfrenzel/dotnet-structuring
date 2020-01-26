@@ -8,10 +8,11 @@ using NUnit.Framework;
 
 namespace dotnet_structuring.tests
 {
-    public class ExecuteTest
+    public class Test
     {
         //Setup Variables
         Variables _ = new Variables();
+        Templates __ = new Templates();
         TempDirectory temp = new TempDirectory();
         string CurrentLog;
         private string SelectedTemplate;
@@ -29,7 +30,6 @@ namespace dotnet_structuring.tests
         }
 
 
-
         [SetUp]
         public void Setup()
         {
@@ -42,9 +42,7 @@ namespace dotnet_structuring.tests
             _.Samples = "samples";
             _.Packages = "packages";
             _.Test = "test";
-            SelectedTemplate = "console";
             _.Options = "";
-            _.NETCommand = " new " + SelectedTemplate + " " + _.Options + "-o src/" + _.ProjectName + " -n " + _.ProjectName;
             _.Directories = new string[]
             {
              _.Directory,
@@ -60,19 +58,27 @@ namespace dotnet_structuring.tests
         [Test]
         public void FullTest()
         {
-            Execute OutputLogs = new Execute();
-            WireEventHandlers(OutputLogs);
-            OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
+            for (int i = 1; i <= 22; i++)
+            {
+                __.SelcectTemplate(i);
+                _.NETCommand = " new " + __.SelectedTemplate + " " + _.Options + "-o src/" + __.SelectedTemplate.Replace(" ", "_") + " -n " + __.SelectedTemplate.Replace(" ", "_");
+
+                Execute OutputLogs = new Execute();
+                WireEventHandlers(OutputLogs);
+                OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName, true);
+            }
             Assert.AreEqual("Done.", CurrentLog);
         }
         [Test]
-        public void SecondFullTest()
+        public void CauseErrors()
         {
+            __.SelcectTemplate(1);
+            _.NETCommand = " new " + __.SelectedTemplate + " " + _.Options + "-o src/" + __.SelectedTemplate.Replace(" ", "_") + " -n " + __.SelectedTemplate.Replace(" ", "_");
+
             Execute OutputLogs = new Execute();
             WireEventHandlers(OutputLogs);
-            OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName);
+            OutputLogs.CreateScript(_.Directories, _.NETCommand, _.ProjectName, true);
             Assert.AreEqual("Done.", CurrentLog);
-
             Directory.Delete(temp, true);
         }
     }

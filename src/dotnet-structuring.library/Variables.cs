@@ -64,6 +64,5 @@ namespace dotnet_structuring.library
             get;
             set;
         }
-        public int ProccessAmount { get; set; }
     }
 }
