@@ -17,8 +17,10 @@ namespace dotnet_structuring.library
         public event ExecutionHandler LogEvent;
         private void FireEvent(string logs)
         {
-            EventLogger log = new EventLogger();
-            log.logs = logs;
+            EventLogger log = new EventLogger
+            {
+                logs = logs
+            };
 
             LogEvent.Invoke(this, log);
 
