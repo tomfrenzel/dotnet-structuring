@@ -57,8 +57,8 @@ namespace dotnet_structuring.library
                         FireEvent("Directory " + result.FullName + " successfully created!");
                     }
                 }
-               
-                
+
+
             }
             if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
             {
@@ -90,7 +90,7 @@ namespace dotnet_structuring.library
                 {
                     p.WaitForExit();
                 }
-                
+
             }
             else
             {

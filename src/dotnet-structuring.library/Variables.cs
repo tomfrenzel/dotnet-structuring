@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace dotnet_structuring.library
+﻿namespace dotnet_structuring.library
 {
     public class Variables
     {

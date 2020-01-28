@@ -1,8 +1,5 @@
-﻿using dotnet_structuring.library;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Text;
 
 namespace dotnet_structuring
 {
@@ -29,5 +26,5 @@ namespace dotnet_structuring
         }
     }
 
- 
+
 }
