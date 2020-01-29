@@ -36,7 +36,6 @@ namespace dotnet_structuring.library
         public async Task CreateScript(string OutputDirectory, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
 
-            var currentWorkingDir = OutputDirectory + @"\";
             List<string> DirectoryOutputList = new List<string>();
             List<string> CommandOutputList = new List<string>();
             string[] output = new string[] { };
@@ -48,7 +47,7 @@ namespace dotnet_structuring.library
             {
                 if (Directories.ElementAt(i) != null)
                 {
-                    var DirectoryBeingCreated = currentWorkingDir + Directories.ElementAt(i);
+                    var DirectoryBeingCreated = OutputDirectory + @"\" + Directories.ElementAt(i);
 
                     if (Directory.Exists(DirectoryBeingCreated))
                     {
@@ -63,13 +62,13 @@ namespace dotnet_structuring.library
                
                 
             }
-            if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
+            if (!Directory.Exists(OutputDirectory + @"src\" + ProjectName))
             {
                 await Task.Factory.StartNew(() =>
                 {
                     Process p = new Process();
 
-                    p.StartInfo.WorkingDirectory = currentWorkingDir;
+                    p.StartInfo.WorkingDirectory = OutputDirectory;
                     p.StartInfo.FileName = "dotnet";
                     p.StartInfo.Arguments = NETCommand;
                     p.StartInfo.UseShellExecute = false;

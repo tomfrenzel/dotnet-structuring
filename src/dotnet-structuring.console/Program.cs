@@ -10,14 +10,15 @@ namespace dotnet_structuring.console
 {
     class Program
     {
-        public List<string> Directories = new List<string>();
+        static List<string> Directories = new List<string>();
 
-        public static int Main(string[] args)
+        static string NETCommand;
+        public static void Main(string[] args)
         {
-            return new Program().Run(args);
+            new Program().Run(args);
         }
 
-        private int Run(string[] args)
+        private void Run(string[] args)
         {
             // Create a root command with some options
             var rootCommand = new RootCommand();
@@ -40,7 +41,7 @@ namespace dotnet_structuring.console
                         "-output",
                         "Output Directory")
                     {
-                        Argument = new Argument<string>(getDefaultValue: () => @"C:\Dev\")
+                        Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop\Test")
                     },
                     new Option(
                         "--artifacts",
@@ -100,12 +101,14 @@ namespace dotnet_structuring.console
             newCommand.Handler = CommandHandler.Create(handler);
 
             // Parse the incoming args and invoke the handler
-            return rootCommand.InvokeAsync(args).Result;
+            newCommand.InvokeAsync(args).Wait();
         }
 
         public delegate void Del(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
         public static async void DelegateMethod(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
         {
+            
+
             if (artifacts)
             {
                 Directories.Add("artifacts");
@@ -140,30 +143,22 @@ namespace dotnet_structuring.console
             Execute execute = new Execute();
             WireEventHandlers(execute);
             await execute.CreateScript(output, Directories, NETCommand, name);
-
-
-            Console.WriteLine($"The selected Template is: {template}");
-            Console.WriteLine($"The Project name is: {name}");
-            Console.WriteLine($"The output Directory is: {output}");
-            Console.WriteLine($"Build Directory being created?: {build}");
         }
         Del handler = DelegateMethod;
 
 
-        string CurrentLog;
-
-        public string NETCommand { get; private set; }
+        static string CurrentLog;
 
         public static void DelegateMethod(string message)
         { 
         }
-        private void WireEventHandlers(Execute e)
+        public static void WireEventHandlers(Execute e)
         {
             ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
             e.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, EventLogger e)
+        public static void OnIncommingEventLog(object sender, EventLogger e)
         {
 
             CurrentLog = e.logs;
