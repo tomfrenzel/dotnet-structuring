@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dotnet-structuring.console": {
+      "commandName": "Project",
+      "commandLineArgs": "new"
+    }
+  }
+}

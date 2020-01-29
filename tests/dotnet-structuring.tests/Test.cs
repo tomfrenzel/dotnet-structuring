@@ -1,4 +1,6 @@
 using dotnet_structuring.library;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 
@@ -7,10 +9,15 @@ namespace dotnet_structuring.tests
     public class TestSetup
     {
         //Setup Variables
-        Variables _ = new Variables();
         Templates __ = new Templates();
         TempDirectory temp = new TempDirectory();
         public string CurrentLog { get; set; }
+        public string Options { get; private set; }
+        public string NETCommand { get; private set; }
+        public string ProjectName { get; private set; }
+        public string OutputDirectory { get; private set; }
+
+        public List<string> Directories;
 
         //Setup EventHandler
         public void WireEventHandlers(Execute e)
@@ -26,36 +33,34 @@ namespace dotnet_structuring.tests
 
         internal void StandardSetup()
         {
-            _.ProjectName = "TestProject";
-            _.Directory = temp;
-            _.Artifacts = "artifacts";
-            _.Build = "build";
-            _.Docs = "docs";
-            _.Lib = "lib";
-            _.Samples = "samples";
-            _.Packages = "packages";
-            _.Test = "test";
-            _.Options = "";
-            _.Directories = new string[]
-            {
-             _.Directory,
-             _.Artifacts,
-             _.Build,
-             _.Docs,
-             _.Lib,
-             _.Samples,
-             _.Packages,
-             _.Test,
-            };
+            ProjectName = "TestProject";
+            OutputDirectory = temp;
+            string Artifacts = "artifacts";
+            string Build = "build";
+            string Docs = "docs";
+            string Lib = "lib";
+            string Samples = "samples";
+            string Packages = "packages";
+            string Test = "test";
+            Options = "";
+
+            Directories.Add(Artifacts);
+            Directories.Add(Build);
+            Directories.Add(Docs);
+            Directories.Add(Lib);
+            Directories.Add(Samples);
+            Directories.Add(Packages);
+            Directories.Add(Test);
+
         }
-        internal void StandardTest(int i)
+        internal async Task StandardTest(int i)
         {
             StandardSetup();
             __.SelcectTemplate(i);
-            _.NETCommand = " new " + __.SelectedTemplate + " " + _.Options + "-o src/" + __.SelectedTemplate.Replace(" ", "_") + " -n " + __.SelectedTemplate.Replace(" ", "_");
+            NETCommand = " new " + __.SelectedTemplate + " " + Options + "-o src/" + __.SelectedTemplate.Replace(" ", "_") + " -n " + __.SelectedTemplate.Replace(" ", "_");
             Execute ExecuteClass = new Execute();
             WireEventHandlers(ExecuteClass);
-            ExecuteClass.CreateScript(_.Directories, _.NETCommand, _.ProjectName, true);
+            await ExecuteClass.CreateScript(OutputDirectory, Directories, NETCommand, ProjectName);
         }
     }
     [Collection("Create All types of .NET Applications")]
@@ -63,135 +68,135 @@ namespace dotnet_structuring.tests
     {
         TestSetup _ = new TestSetup();
         [Fact]
-        public void console()
+        public async void console()
         {
-            _.StandardTest(1);
+            await _.StandardTest(1);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void classlib()
+        public async void classlib()
         {
-            _.StandardTest(2);
+            await _.StandardTest(2);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void mstest()
+        public async void mstest()
         {
-            _.StandardTest(3);
+            await _.StandardTest(3);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void nunit()
+        public async void nunit()
         {
-            _.StandardTest(4);
+            await _.StandardTest(4);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void nunittest()
+        public async void nunittest()
         {
-            _.StandardTest(5);
+            await _.StandardTest(5);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void xunit()
+        public async void xunit()
         {
-            _.StandardTest(6);
+            await _.StandardTest(6);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void page()
+        public async void page()
         {
-            _.StandardTest(7);
+            await _.StandardTest(7);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void viewimports()
+        public async void viewimports()
         {
-            _.StandardTest(8);
+            await _.StandardTest(8);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void viewstart()
+        public async void viewstart()
         {
-            _.StandardTest(9);
+            await _.StandardTest(9);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void web()
+        public async void web()
         {
-            _.StandardTest(10);
+            await _.StandardTest(10);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void mvc()
+        public async void mvc()
         {
-            _.StandardTest(11);
+            await _.StandardTest(11);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void console2()
+        public async void console2()
         {
-            _.StandardTest(12);
+            await _.StandardTest(12);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void webapp()
+        public async void webapp()
         {
-            _.StandardTest(13);
+            await _.StandardTest(13);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void angular()
+        public async void angular()
         {
-            _.StandardTest(14);
+            await _.StandardTest(14);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void react()
+        public async void react()
         {
-            _.StandardTest(15);
+            await _.StandardTest(15);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void reactredux()
+        public async void reactredux()
         {
-            _.StandardTest(16);
+            await _.StandardTest(16);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void razorclasslib()
+        public async void razorclasslib()
         {
-            _.StandardTest(17);
+            await _.StandardTest(17);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void webapi()
+        public async void webapi()
         {
-            _.StandardTest(18);
+            await _.StandardTest(18);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void globaljson()
+        public async void globaljson()
         {
-            _.StandardTest(19);
+            await _.StandardTest(19);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void nugetconfig()
+        public async void nugetconfig()
         {
-            _.StandardTest(20);
+            await _.StandardTest(20);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void webconfig()
+        public async void webconfig()
         {
-            _.StandardTest(21);
+            await _.StandardTest(21);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
-        public void sln()
+        public async void sln()
         {
-            _.StandardTest(22);
+            await _.StandardTest(22);
             Assert.Equal("Done.", _.CurrentLog);
         }
 
@@ -201,10 +206,10 @@ namespace dotnet_structuring.tests
     {
         TestSetup _ = new TestSetup();
         [Fact]
-        public void DoubleTest()
+        public async void DoubleTest()
         {
-            _.StandardTest(1);
-            _.StandardTest(1);
+            await _.StandardTest(1);
+            await _.StandardTest(1);
             Assert.Equal("A Project with this Name already exists!", _.CurrentLog);
         }
     }

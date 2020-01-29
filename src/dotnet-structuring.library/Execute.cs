@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace dotnet_structuring.library
 {
@@ -30,10 +32,11 @@ namespace dotnet_structuring.library
         {
 
         }
-        public void CreateScript(string[] Directories, string Command, string ProjectName, bool test)
+
+        public async Task CreateScript(string OutputDirectory, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
 
-            var currentWorkingDir = Directories[0] + @"\";
+            var currentWorkingDir = OutputDirectory + @"\";
             List<string> DirectoryOutputList = new List<string>();
             List<string> CommandOutputList = new List<string>();
             string[] output = new string[] { };
@@ -41,11 +44,11 @@ namespace dotnet_structuring.library
 
             //Execute structoring script
             //repeat as many times as there are objects inside the array
-            for (int i = 1; i < Directories.Length; i++)
+            for (int i = 0; i < Directories.Count(); i++)
             {
-                if (Directories[i] != null)
+                if (Directories.ElementAt(i) != null)
                 {
-                    var DirectoryBeingCreated = currentWorkingDir + Directories[i];
+                    var DirectoryBeingCreated = currentWorkingDir + Directories.ElementAt(i);
 
                     if (Directory.Exists(DirectoryBeingCreated))
                     {
@@ -57,39 +60,45 @@ namespace dotnet_structuring.library
                         FireEvent("Directory " + result.FullName + " successfully created!");
                     }
                 }
-
-
+               
+                
             }
             if (!Directory.Exists(currentWorkingDir + @"src\" + ProjectName))
             {
-                Process p = new Process();
-
-                p.StartInfo.WorkingDirectory = currentWorkingDir;
-                p.StartInfo.FileName = "dotnet";
-                p.StartInfo.Arguments = Command;
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.CreateNoWindow = true;
-                p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                await Task.Factory.StartNew(() =>
                 {
-                    // Prepend line numbers to each line of the output.
-                    FireEvent(e.Data);
+                    Process p = new Process();
 
-                });
-                p.Start();
-                p.BeginOutputReadLine();
-                p.EnableRaisingEvents = true;
-                p.Exited += new EventHandler((sender, e) =>
-                {
-                    FireEvent(Environment.NewLine);
-                    FireEvent("Done.");
-                    p.Kill();
+                    p.StartInfo.WorkingDirectory = currentWorkingDir;
+                    p.StartInfo.FileName = "dotnet";
+                    p.StartInfo.Arguments = NETCommand;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                    {
+                        // Prepend line numbers to each line of the output.
+                        FireEvent(e.Data);
 
-                });
-                if (test == true)
-                {
+                    });
+                    p.Start();
+
+                    p.BeginOutputReadLine();
+                    p.EnableRaisingEvents = true;
+                    p.Exited += new EventHandler((sender, e) =>
+                    {
+                        //FireEvent(Environment.NewLine);
+                        FireEvent("Done.");
+                        p.Kill();
+
+                    });
                     p.WaitForExit();
-                }
+                });
+               
+                //if (test == true)
+                //{
+                //    p.WaitForExit();
+                //}
 
             }
             else

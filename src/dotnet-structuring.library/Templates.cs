@@ -1,4 +1,9 @@
-﻿namespace dotnet_structuring.library
+﻿using dotnet_structuring.library;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace dotnet_structuring.library
 {
     public class Templates
     {

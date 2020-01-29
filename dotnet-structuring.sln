@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-structuring", "src\d
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-structuring.library", "src\dotnet-structuring.library\dotnet-structuring.library.csproj", "{0A951090-BD84-45EF-8A20-0944F5436027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-structuring.tests", "tests\dotnet-structuring.tests\dotnet-structuring.tests.csproj", "{F1734A1C-867A-407B-AC3A-4770C4960344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-structuring.tests", "tests\dotnet-structuring.tests\dotnet-structuring.tests.csproj", "{F1734A1C-867A-407B-AC3A-4770C4960344}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-structuring.console", "src\dotnet-structuring.console\dotnet-structuring.console.csproj", "{1BE61D0E-2851-4025-8747-E31E0BFA2483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F1734A1C-867A-407B-AC3A-4770C4960344}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1734A1C-867A-407B-AC3A-4770C4960344}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1734A1C-867A-407B-AC3A-4770C4960344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE61D0E-2851-4025-8747-E31E0BFA2483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE61D0E-2851-4025-8747-E31E0BFA2483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE61D0E-2851-4025-8747-E31E0BFA2483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE61D0E-2851-4025-8747-E31E0BFA2483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

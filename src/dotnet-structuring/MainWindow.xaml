@@ -50,13 +50,15 @@
             </TabItem>
             <TabItem x:Name="OptionsTab" Header="Options" IsEnabled="False">
                 <Grid>
-                    <CheckBox x:Name="ArtifactsCheckBox" Content="Artifacts" HorizontalAlignment="Left" Margin="16,50,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="ArtifactsCheckBox_Changed" Unchecked="ArtifactsCheckBox_Changed" Grid.ColumnSpan="2"/>
-                    <CheckBox x:Name="BuildCheckBox" Content="Build" HorizontalAlignment="Left" Margin="16,70,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="BuildCheckBox_Changed" Unchecked="BuildCheckBox_Changed" Grid.ColumnSpan="2"/>
-                    <CheckBox x:Name="DocsCheckBox" Content="Docs" HorizontalAlignment="Left" Margin="16,90,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="DocsCheckBox_Changed" Unchecked="DocsCheckBox_Changed" Grid.ColumnSpan="2"/>
-                    <CheckBox x:Name="SamplesCheckBox" Content="Samples" HorizontalAlignment="Left" Margin="86,50,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="SamplesCheckBox_Changed" Unchecked="SamplesCheckBox_Changed" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <CheckBox x:Name="PackagesCheckBox" Content="Packages" HorizontalAlignment="Left" Margin="86,70,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="PackagesCheckBox_Changed" Unchecked="PackagesCheckBox_Changed" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <CheckBox x:Name="LibCheckBox" Content="Lib" HorizontalAlignment="Left" Margin="16,110,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="LibCheckBox_Changed" Unchecked="LibCheckBox_Changed" Grid.ColumnSpan="2"/>
-                    <CheckBox x:Name="TestCheckBox" Content="Test" HorizontalAlignment="Left" Margin="86,90,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="TestCheckBox_Changed" Unchecked="TestCheckBox_Changed" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Grid x:Name="options">
+                        <CheckBox x:Name="ArtifactsCheckBox" Content="Artifacts" HorizontalAlignment="Left" Margin="16,50,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
+                        <CheckBox x:Name="BuildCheckBox" Content="Build" HorizontalAlignment="Left" Margin="16,70,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
+                        <CheckBox x:Name="DocsCheckBox" Content="Docs" HorizontalAlignment="Left" Margin="16,90,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
+                        <CheckBox x:Name="SamplesCheckBox" Content="Samples" HorizontalAlignment="Left" Margin="86,50,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1"/>
+                        <CheckBox x:Name="PackagesCheckBox" Content="Packages" HorizontalAlignment="Left" Margin="86,70,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1"/>
+                        <CheckBox x:Name="LibCheckBox" Content="Lib" HorizontalAlignment="Left" Margin="16,110,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
+                        <CheckBox x:Name="TestCheckBox" Content="Test" HorizontalAlignment="Left" Margin="86,90,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    </Grid>
                     <Label Content="Select the Folders you want to be created" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
                     <Label Content="Add options for &quot;dotnet new&quot; command" HorizontalAlignment="Left" Margin="259,10,0,0" VerticalAlignment="Top" Grid.Column="2"/>
                     <TextBox x:Name="DotNetNewOptionsBox" HorizontalAlignment="Left" Margin="259,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" IsEnabled="False" TextChanged="DotNetNewOptionsBox_TextChanged" Grid.Column="2"/>
