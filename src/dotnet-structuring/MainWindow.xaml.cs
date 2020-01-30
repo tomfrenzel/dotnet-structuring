@@ -76,7 +76,7 @@ namespace dotnet_structuring
             Style style = this.FindResource("ProgressBarWarningStripe") as Style;
             this.Dispatcher.Invoke(() => pbStatus.Style = style);
             WireEventHandlers(OutputLogs);
-            await OutputLogs.CreateScript(OutputDirectory, Directories.AsEnumerable(), NETCommand, ProjectName);
+            await OutputLogs.CreateScript(OutputDirectory, Directories, NETCommand, ProjectName);
         }
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
@@ -150,6 +150,8 @@ namespace dotnet_structuring
             //Build  structoring script
             if (CurrentTab == "Finish")
             {
+                Directories.Clear();
+                CommandSummaryBox.Text = "";
                 var children = LogicalTreeHelper.GetChildren(options);
 
                 foreach (var item in children)
@@ -159,27 +161,18 @@ namespace dotnet_structuring
                     {
                         if (checkbox.IsChecked == true)
                         {
-                            Directories.Add(checkbox.Name);
-                        }
-                        else
-                        {
-                            Directories.Remove(checkbox.Name);
+                            Directories.Add(checkbox.Content.ToString());
+                            CommandSummaryBox.Text += ("Create Directory: " + checkbox.Content.ToString() + Environment.NewLine);
                         }
                     }
 
                 }
+
+
 
                 ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
                 ProjectName = ProjectNameBox.Text;
                 NETCommand = " new " + templates.SelectedTemplate + " " + Options + "-o src/" + ProjectNameBox.Text + " -n " + ProjectNameBox.Text;
-                CommandSummaryBox.Text = "";
-                for (int i = 1; i < Directories.Count; i++)
-                {
-                    if (Directories[i] != null && Directories[i] != "" && Directories[i] != Environment.NewLine)
-                    {
-                        CommandSummaryBox.Text += ("Create Directory: " + Directories[i] + Environment.NewLine);
-                    }
-                }
                 CommandSummaryBox.Text += ("Execute: dotnet" + NETCommand + Environment.NewLine);
                 CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
             }

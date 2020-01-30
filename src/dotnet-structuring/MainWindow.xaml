@@ -67,7 +67,7 @@
             <TabItem x:Name="FinishTab" Header="Finish" Height="22" Margin="0,0,-4,0" VerticalAlignment="Center" IsEnabled="False" >
                 <Grid VerticalAlignment="Stretch">
                     <Label Content="Commands to be executed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"/>
-                    <RichTextBox HorizontalAlignment="Left" Margin="0,50,0,0"  Width="394" VerticalAlignment="Top" Height="120">
+                    <RichTextBox HorizontalAlignment="Left" Margin="0,50,0,0"  Width="394" VerticalAlignment="Top" Height="120" Focusable="False" IsReadOnlyCaretVisible="True">
                         <FlowDocument>
                             <Paragraph>
                                 <Run  x:Name="CommandSummaryBox"/>
@@ -76,7 +76,7 @@
                     </RichTextBox>
                     <Button x:Name="ExecButton" Content="Execute" HorizontalAlignment="Right" Margin="0,140,0,0" VerticalAlignment="Top" Click="ExecButton_Click"/>
                     <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Minimum="0" Maximum="1" x:Name="pbStatus" Margin="0,0,0,180"/>
-                    <RichTextBox VerticalAlignment="Bottom" Height="165" Margin="0,0,0,0" IsReadOnly="True" Padding="2,2,2,2" Focusable="False" Cursor="IBeam" VerticalScrollBarVisibility="Auto">
+                    <RichTextBox VerticalAlignment="Bottom" Height="165" Margin="0,0,0,0" IsReadOnly="True" Padding="2,2,2,2" Focusable="False" Cursor="IBeam" VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True">
                         <FlowDocument>
                             <Paragraph>
                                 <Run x:Name="OutputBox" Text="Console Output"/>

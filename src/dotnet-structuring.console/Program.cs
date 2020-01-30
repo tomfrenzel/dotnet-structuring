@@ -41,7 +41,7 @@ namespace dotnet_structuring.console
                         "-output",
                         "Output Directory")
                     {
-                        Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop\Test")
+                        Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop")
                     },
                     new Option(
                         "--artifacts",
@@ -105,7 +105,7 @@ namespace dotnet_structuring.console
         }
 
         public delegate void Del(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
-        public static async void DelegateMethod(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
+        public static void DelegateMethod(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
         {
             
 
@@ -142,16 +142,12 @@ namespace dotnet_structuring.console
 
             Execute execute = new Execute();
             WireEventHandlers(execute);
-            await execute.CreateScript(output, Directories, NETCommand, name);
+            execute.CreateScript(output, Directories, NETCommand, name).Wait();
         }
         Del handler = DelegateMethod;
 
 
         static string CurrentLog;
-
-        public static void DelegateMethod(string message)
-        { 
-        }
         public static void WireEventHandlers(Execute e)
         {
             ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
@@ -164,10 +160,6 @@ namespace dotnet_structuring.console
             CurrentLog = e.logs;
 
             Console.WriteLine(CurrentLog + Environment.NewLine);
-            if (CurrentLog == "Done.")
-            {
-
-            }
         }
     }
 }

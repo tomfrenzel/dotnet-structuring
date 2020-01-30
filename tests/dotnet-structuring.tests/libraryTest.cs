@@ -17,7 +17,7 @@ namespace dotnet_structuring.tests
         public string ProjectName { get; private set; }
         public string OutputDirectory { get; private set; }
 
-        public List<string> Directories;
+        static List<string> Directories = new List<string>();
 
         //Setup EventHandler
         public void WireEventHandlers(Execute e)
@@ -31,31 +31,18 @@ namespace dotnet_structuring.tests
             CurrentLog = e.logs;
         }
 
-        internal void StandardSetup()
+        internal async Task TestTemplate(int i)
         {
             ProjectName = "TestProject";
             OutputDirectory = temp;
-            string Artifacts = "artifacts";
-            string Build = "build";
-            string Docs = "docs";
-            string Lib = "lib";
-            string Samples = "samples";
-            string Packages = "packages";
-            string Test = "test";
-            Options = "";
+            Directories.Add("artifacts");
+            Directories.Add("build");
+            Directories.Add("docs");
+            Directories.Add("lib");
+            Directories.Add("samples");
+            Directories.Add("packages");
+            Directories.Add("test");
 
-            Directories.Add(Artifacts);
-            Directories.Add(Build);
-            Directories.Add(Docs);
-            Directories.Add(Lib);
-            Directories.Add(Samples);
-            Directories.Add(Packages);
-            Directories.Add(Test);
-
-        }
-        internal async Task StandardTest(int i)
-        {
-            StandardSetup();
             __.SelcectTemplate(i);
             NETCommand = " new " + __.SelectedTemplate + " " + Options + "-o src/" + __.SelectedTemplate.Replace(" ", "_") + " -n " + __.SelectedTemplate.Replace(" ", "_");
             Execute ExecuteClass = new Execute();
@@ -70,133 +57,133 @@ namespace dotnet_structuring.tests
         [Fact]
         public async void console()
         {
-            await _.StandardTest(1);
+            await _.TestTemplate(1);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void classlib()
         {
-            await _.StandardTest(2);
+            await _.TestTemplate(2);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void mstest()
         {
-            await _.StandardTest(3);
+            await _.TestTemplate(3);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void nunit()
         {
-            await _.StandardTest(4);
+            await _.TestTemplate(4);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void nunittest()
         {
-            await _.StandardTest(5);
+            await _.TestTemplate(5);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void xunit()
         {
-            await _.StandardTest(6);
+            await _.TestTemplate(6);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void page()
         {
-            await _.StandardTest(7);
+            await _.TestTemplate(7);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void viewimports()
         {
-            await _.StandardTest(8);
+            await _.TestTemplate(8);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void viewstart()
         {
-            await _.StandardTest(9);
+            await _.TestTemplate(9);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void web()
         {
-            await _.StandardTest(10);
+            await _.TestTemplate(10);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void mvc()
         {
-            await _.StandardTest(11);
+            await _.TestTemplate(11);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void console2()
         {
-            await _.StandardTest(12);
+            await _.TestTemplate(12);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void webapp()
         {
-            await _.StandardTest(13);
+            await _.TestTemplate(13);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void angular()
         {
-            await _.StandardTest(14);
+            await _.TestTemplate(14);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void react()
         {
-            await _.StandardTest(15);
+            await _.TestTemplate(15);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void reactredux()
         {
-            await _.StandardTest(16);
+            await _.TestTemplate(16);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void razorclasslib()
         {
-            await _.StandardTest(17);
+            await _.TestTemplate(17);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void webapi()
         {
-            await _.StandardTest(18);
+            await _.TestTemplate(18);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void globaljson()
         {
-            await _.StandardTest(19);
+            await _.TestTemplate(19);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void nugetconfig()
         {
-            await _.StandardTest(20);
+            await _.TestTemplate(20);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void webconfig()
         {
-            await _.StandardTest(21);
+            await _.TestTemplate(21);
             Assert.Equal("Done.", _.CurrentLog);
         }
         [Fact]
         public async void sln()
         {
-            await _.StandardTest(22);
+            await _.TestTemplate(22);
             Assert.Equal("Done.", _.CurrentLog);
         }
 
@@ -208,8 +195,8 @@ namespace dotnet_structuring.tests
         [Fact]
         public async void DoubleTest()
         {
-            await _.StandardTest(1);
-            await _.StandardTest(1);
+            await _.TestTemplate(1);
+            await _.TestTemplate(1);
             Assert.Equal("A Project with this Name already exists!", _.CurrentLog);
         }
     }

@@ -23,19 +23,13 @@ namespace dotnet_structuring.library
             {
                 logs = logs
             };
-
             LogEvent.Invoke(this, log);
-
-            log = null;
-        }
-        public Execute()
-        {
-
         }
 
-        public async Task CreateScript(string OutputDirectory, IEnumerable<string> Directories, string NETCommand, string ProjectName)
+        public async Task CreateScript(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
-
+            Output = Output + @"\" + ProjectName;
+            DirectoryInfo OutputDirectory = new DirectoryInfo(Output);
             List<string> DirectoryOutputList = new List<string>();
             List<string> CommandOutputList = new List<string>();
             string[] output = new string[] { };
@@ -59,16 +53,17 @@ namespace dotnet_structuring.library
                         FireEvent("Directory " + result.FullName + " successfully created!");
                     }
                 }
-               
-                
+
+
             }
-            if (!Directory.Exists(OutputDirectory + @"src\" + ProjectName))
+            DirectoryInfo WorkingDir = new DirectoryInfo(OutputDirectory + @"\src\" + ProjectName);
+            if (!WorkingDir.Exists)
             {
                 await Task.Factory.StartNew(() =>
                 {
                     Process p = new Process();
 
-                    p.StartInfo.WorkingDirectory = OutputDirectory;
+                    p.StartInfo.WorkingDirectory = OutputDirectory.FullName;
                     p.StartInfo.FileName = "dotnet";
                     p.StartInfo.Arguments = NETCommand;
                     p.StartInfo.UseShellExecute = false;
@@ -93,7 +88,7 @@ namespace dotnet_structuring.library
                     });
                     p.WaitForExit();
                 });
-               
+
                 //if (test == true)
                 //{
                 //    p.WaitForExit();
