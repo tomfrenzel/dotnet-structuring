@@ -35,8 +35,8 @@ namespace dotnet_structuring.library
             string[] output = new string[] { };
 
 
-            //Execute structoring script
-            //repeat as many times as there are objects inside the array
+            //Execute structuring script
+            //repeat as many times as there are objects inside the List
             for (int i = 0; i < Directories.Count(); i++)
             {
                 if (Directories.ElementAt(i) != null)
@@ -81,7 +81,6 @@ namespace dotnet_structuring.library
                     p.EnableRaisingEvents = true;
                     p.Exited += new EventHandler((sender, e) =>
                     {
-                        //FireEvent(Environment.NewLine);
                         FireEvent("Done.");
                         p.Kill();
 

@@ -15,10 +15,10 @@ namespace dotnet_structuring.console
         static string NETCommand;
         public static void Main(string[] args)
         {
-            new Program().Run(args);
+            new Program().Setup(args);
         }
 
-        private void Run(string[] args)
+        private void Setup(string[] args)
         {
             // Create a root command with some options
             var rootCommand = new RootCommand();
@@ -101,11 +101,11 @@ namespace dotnet_structuring.console
             newCommand.Handler = CommandHandler.Create(handler);
 
             // Parse the incoming args and invoke the handler
-            newCommand.InvokeAsync(args).Wait();
+            rootCommand.InvokeAsync(args).Wait();
         }
 
-        public delegate void Del(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
-        public static void DelegateMethod(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
+        public delegate void SetupDelegate(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
+        public static void Run(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
         {
             
 
@@ -144,7 +144,7 @@ namespace dotnet_structuring.console
             WireEventHandlers(execute);
             execute.CreateScript(output, Directories, NETCommand, name).Wait();
         }
-        Del handler = DelegateMethod;
+        SetupDelegate handler = Run;
 
 
         static string CurrentLog;
