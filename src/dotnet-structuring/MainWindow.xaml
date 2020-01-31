@@ -9,77 +9,77 @@
         Title="dotnet-structuring" Height="500" Width="850">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TabControl x:Name="Tabs" Margin="10,10,10,10" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="Tab_Changed" VerticalAlignment="Stretch">
             <TabItem Header="General" IsSelected="True">
                 <Grid>
                     <ComboBox x:Name="ProjectTypeSelector" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="149" IsReadOnly="True" DropDownClosed="ProjectTypeSelector_DropDownClosed">
-                        <ComboBoxItem Content="Select Project Type" IsEnabled="False" IsSelected="True"/>
-                        <ComboBoxItem Content="New Project"/>
-                        <ComboBoxItem Content="Existing Project"/>
+                        <ComboBoxItem Content="Select Project Type" IsEnabled="False" IsSelected="True" />
+                        <ComboBoxItem Content="New Project" />
+                        <ComboBoxItem Content="Existing Project" />
                     </ComboBox>
-                    <Button x:Name="SelectPathButton" Content="Open Directory" Margin="0,10,0,0" VerticalAlignment="Top" Click="SelectPathButton_Click" RenderTransformOrigin="0.181,-3.239" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Height="30" Grid.Column="1"/>
-                    <TextBox x:Name="PathBox" HorizontalAlignment="Right" Margin="0,10,110,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" TextChanged="PathBox_TextChanged" Height="30" Grid.Column="1"/>
+                    <Button x:Name="SelectPathButton" Content="Open Directory" Margin="0,10,0,0" VerticalAlignment="Top" Click="SelectPathButton_Click" RenderTransformOrigin="0.181,-3.239" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Height="30" Grid.Column="1" />
+                    <TextBox x:Name="PathBox" HorizontalAlignment="Right" Margin="0,10,110,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" TextChanged="PathBox_TextChanged" Height="30" Grid.Column="1" />
                     <ComboBox x:Name="TemplateSelector" HorizontalAlignment="Left" Margin="164,10,0,0" VerticalAlignment="Top" IsReadOnly="True" IsEnabled="False" DropDownClosed="TemplateSelector_DropDownClosed">
-                        <ComboBoxItem Content="Select Template" IsSelected="True"/>
-                        <ComboBoxItem Content="Console Application"/>
-                        <ComboBoxItem Content="Class library"/>
-                        <ComboBoxItem Content="Unit Test Project"/>
-                        <ComboBoxItem Content="NUnit 3 Test Project"/>
-                        <ComboBoxItem Content="NUnit 3 Test Item"/>
-                        <ComboBoxItem Content="xUnit Test Project"/>
-                        <ComboBoxItem Content="Razor Page"/>
-                        <ComboBoxItem Content="MVC ViewImports"/>
-                        <ComboBoxItem Content="MVC ViewStart"/>
-                        <ComboBoxItem Content="ASP.NET Core Empty"/>
-                        <ComboBoxItem Content="ASP.NET Core Web App (Model-View-Controller)"/>
-                        <ComboBoxItem Content="ASP.NET Core Web App"/>
-                        <ComboBoxItem Content="ASP.NET Core with Angular"/>
-                        <ComboBoxItem Content="ASP.NET Core with React.js"/>
-                        <ComboBoxItem Content="ASP.NET Core with React.js and Redux"/>
-                        <ComboBoxItem Content="Razor Class Library"/>
-                        <ComboBoxItem Content="ASP.NET Core Web API"/>
-                        <ComboBoxItem Content="global.json file"/>
-                        <ComboBoxItem Content="NuGet Config"/>
-                        <ComboBoxItem Content="Web Config"/>
-                        <ComboBoxItem Content="Solution File "/>
+                        <ComboBoxItem Content="Select Template" IsSelected="True" />
+                        <ComboBoxItem Content="Console Application" />
+                        <ComboBoxItem Content="Class library" />
+                        <ComboBoxItem Content="Unit Test Project" />
+                        <ComboBoxItem Content="NUnit 3 Test Project" />
+                        <ComboBoxItem Content="NUnit 3 Test Item" />
+                        <ComboBoxItem Content="xUnit Test Project" />
+                        <ComboBoxItem Content="Razor Page" />
+                        <ComboBoxItem Content="MVC ViewImports" />
+                        <ComboBoxItem Content="MVC ViewStart" />
+                        <ComboBoxItem Content="ASP.NET Core Empty" />
+                        <ComboBoxItem Content="ASP.NET Core Web App (Model-View-Controller)" />
+                        <ComboBoxItem Content="ASP.NET Core Web App" />
+                        <ComboBoxItem Content="ASP.NET Core with Angular" />
+                        <ComboBoxItem Content="ASP.NET Core with React.js" />
+                        <ComboBoxItem Content="ASP.NET Core with React.js and Redux" />
+                        <ComboBoxItem Content="Razor Class Library" />
+                        <ComboBoxItem Content="ASP.NET Core Web API" />
+                        <ComboBoxItem Content="global.json file" />
+                        <ComboBoxItem Content="NuGet Config" />
+                        <ComboBoxItem Content="Web Config" />
+                        <ComboBoxItem Content="Solution File " />
                     </ComboBox>
-                    <TextBox x:Name="ProjectNameBox" HorizontalAlignment="Right" Margin="0,45,270,0" Text="Project Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22"/>
+                    <TextBox x:Name="ProjectNameBox" HorizontalAlignment="Right" Margin="0,45,270,0" Text="Project Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="22" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="OptionsTab" Header="Options" IsEnabled="False">
                 <Grid>
                     <Grid x:Name="options">
-                        <CheckBox x:Name="ArtifactsCheckBox" Content="Artifacts" HorizontalAlignment="Left" Margin="16,50,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
-                        <CheckBox x:Name="BuildCheckBox" Content="Build" HorizontalAlignment="Left" Margin="16,70,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
-                        <CheckBox x:Name="DocsCheckBox" Content="Docs" HorizontalAlignment="Left" Margin="16,90,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
-                        <CheckBox x:Name="SamplesCheckBox" Content="Samples" HorizontalAlignment="Left" Margin="86,50,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1"/>
-                        <CheckBox x:Name="PackagesCheckBox" Content="Packages" HorizontalAlignment="Left" Margin="86,70,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1"/>
-                        <CheckBox x:Name="LibCheckBox" Content="Lib" HorizontalAlignment="Left" Margin="16,110,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2"/>
-                        <CheckBox x:Name="TestCheckBox" Content="Test" HorizontalAlignment="Left" Margin="86,90,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1"/>
+                        <CheckBox x:Name="ArtifactsCheckBox" Content="Artifacts" HorizontalAlignment="Left" Margin="16,50,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" />
+                        <CheckBox x:Name="BuildCheckBox" Content="Build" HorizontalAlignment="Left" Margin="16,70,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" />
+                        <CheckBox x:Name="DocsCheckBox" Content="Docs" HorizontalAlignment="Left" Margin="16,90,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" />
+                        <CheckBox x:Name="SamplesCheckBox" Content="Samples" HorizontalAlignment="Left" Margin="86,50,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1" />
+                        <CheckBox x:Name="PackagesCheckBox" Content="Packages" HorizontalAlignment="Left" Margin="86,70,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1" />
+                        <CheckBox x:Name="LibCheckBox" Content="Lib" HorizontalAlignment="Left" Margin="16,110,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" />
+                        <CheckBox x:Name="TestCheckBox" Content="Test" HorizontalAlignment="Left" Margin="86,90,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.ColumnSpan="2" Grid.Column="1" />
                     </Grid>
-                    <Label Content="Select the Folders you want to be created" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
-                    <Label Content="Add options for &quot;dotnet new&quot; command" HorizontalAlignment="Left" Margin="259,10,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-                    <TextBox x:Name="DotNetNewOptionsBox" HorizontalAlignment="Left" Margin="259,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" IsEnabled="False" TextChanged="DotNetNewOptionsBox_TextChanged" Grid.Column="2"/>
+                    <Label Content="Select the Folders you want to be created" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" />
+                    <Label Content="Add options for &quot;dotnet new&quot; command" HorizontalAlignment="Left" Margin="259,10,0,0" VerticalAlignment="Top" Grid.Column="2" />
+                    <TextBox x:Name="DotNetNewOptionsBox" HorizontalAlignment="Left" Margin="259,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" IsEnabled="False" TextChanged="DotNetNewOptionsBox_TextChanged" Grid.Column="2" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="FinishTab" Header="Finish" Height="22" Margin="0,0,-4,0" VerticalAlignment="Center" IsEnabled="False" >
+            <TabItem x:Name="FinishTab" Header="Finish" Height="22" Margin="0,0,-4,0" VerticalAlignment="Center" IsEnabled="False">
                 <Grid VerticalAlignment="Stretch">
-                    <Label Content="Commands to be executed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                    <Label Content="Commands to be executed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" />
                     <RichTextBox HorizontalAlignment="Left" Margin="0,50,0,0"  Width="394" VerticalAlignment="Top" Height="120" Focusable="False" IsReadOnlyCaretVisible="True">
                         <FlowDocument>
                             <Paragraph>
-                                <Run  x:Name="CommandSummaryBox"/>
+                                <Run  x:Name="CommandSummaryBox" />
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>
-                    <Button x:Name="ExecButton" Content="Execute" HorizontalAlignment="Right" Margin="0,140,0,0" VerticalAlignment="Top" Click="ExecButton_Click"/>
-                    <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Minimum="0" Maximum="1" x:Name="pbStatus" Margin="0,0,0,180"/>
+                    <Button x:Name="ExecButton" Content="Execute" HorizontalAlignment="Right" Margin="0,140,0,0" VerticalAlignment="Top" Click="ExecButton_Click" />
+                    <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Minimum="0" Maximum="1" x:Name="pbStatus" Margin="0,0,0,180" />
                     <RichTextBox VerticalAlignment="Bottom" Height="165" Margin="0,0,0,0" IsReadOnly="True" Padding="2,2,2,2" Focusable="False" Cursor="IBeam" VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True">
                         <FlowDocument>
                             <Paragraph>
-                                <Run x:Name="OutputBox" Text="Console Output"/>
+                                <Run x:Name="OutputBox" Text="Console Output" />
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>

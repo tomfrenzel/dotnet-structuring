@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace dotnet_structuring.library
 {
-    public delegate void ExecutionHandler(object sender, EventLogger e);
+    public delegate void StructuringHandler(object sender, EventLogger e);
 
     public class EventLogger : EventArgs
     {
         public string logs;
     }
 
-    public class Execute
+    public class RunStructuring
     {
-        public event ExecutionHandler LogEvent;
+        public event StructuringHandler LogEvent;
+
         private void FireEvent(string logs)
         {
             EventLogger log = new EventLogger
@@ -33,7 +34,6 @@ namespace dotnet_structuring.library
             List<string> DirectoryOutputList = new List<string>();
             List<string> CommandOutputList = new List<string>();
             string[] output = new string[] { };
-
 
             //Execute structuring script
             //repeat as many times as there are objects inside the List
@@ -53,8 +53,6 @@ namespace dotnet_structuring.library
                         FireEvent("Directory " + result.FullName + " successfully created!");
                     }
                 }
-
-
             }
             DirectoryInfo WorkingDir = new DirectoryInfo(OutputDirectory + @"\src\" + ProjectName);
             if (!WorkingDir.Exists)
@@ -73,7 +71,6 @@ namespace dotnet_structuring.library
                     {
                         // Prepend line numbers to each line of the output.
                         FireEvent(e.Data);
-
                     });
                     p.Start();
 
@@ -83,22 +80,13 @@ namespace dotnet_structuring.library
                     {
                         FireEvent("Done.");
                         p.Kill();
-
                     });
                     p.WaitForExit();
                 });
-
-                //if (test == true)
-                //{
-                //    p.WaitForExit();
-                //}
-
             }
             else
             {
                 FireEvent("A Project with this Name already exists!");
-                FireEvent(Environment.NewLine);
-                FireEvent("Done.");
             }
         }
     }

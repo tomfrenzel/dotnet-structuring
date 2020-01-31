@@ -1,27 +1,12 @@
 ﻿using dotnet_structuring.library;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 
 namespace dotnet_structuring
 {
-
     public partial class MainWindow : Window
     {
         public string PlaceholderText { get; set; }
@@ -32,17 +17,19 @@ namespace dotnet_structuring
         public string NETCommand { get; private set; }
         public string ProjectName { get; private set; }
         public List<string> Directories = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        Templates templates = new Templates();
-        int LogNum;
-        string CurrentLog;
-        private void WireEventHandlers(Execute e)
+        private Templates templates = new Templates();
+        private int LogNum;
+        private string CurrentLog;
+
+        private void WireEventHandlers(RunStructuring e)
         {
-            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
+            StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
         }
 
@@ -68,16 +55,18 @@ namespace dotnet_structuring
                 this.Dispatcher.Invoke(() => pbStatus.Style = style);
             }
         }
+
         public async void ExecButton_Click(object sender, RoutedEventArgs e)
         {
             OutputBox.Text = "";
-            Execute OutputLogs = new Execute();
+            RunStructuring OutputLogs = new RunStructuring();
             this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = true);
             Style style = this.FindResource("ProgressBarWarningStripe") as Style;
             this.Dispatcher.Invoke(() => pbStatus.Style = style);
             WireEventHandlers(OutputLogs);
             await OutputLogs.CreateScript(OutputDirectory, Directories, NETCommand, ProjectName);
         }
+
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
         {
             ProjectType = ProjectTypeSelector.Text;
@@ -123,9 +112,9 @@ namespace dotnet_structuring
             {
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                 PathBox.Text = dialog.SelectedPath.ToString();
-
             }
         }
+
         public void PathBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             OutputDirectory = PathBox.Text;
@@ -135,6 +124,7 @@ namespace dotnet_structuring
                 FinishTab.IsEnabled = true;
             }
         }
+
         public void DotNetNewOptionsBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (DotNetNewOptionsBox.Text != "")
@@ -142,6 +132,7 @@ namespace dotnet_structuring
                 string Options = DotNetNewOptionsBox.Text;
             }
         }
+
         public void Tab_Changed(object sender, SelectionChangedEventArgs e)
         {
             TabItem Tab = Tabs.SelectedItem as TabItem;
@@ -165,10 +156,7 @@ namespace dotnet_structuring
                             CommandSummaryBox.Text += ("Create Directory: " + checkbox.Content.ToString() + Environment.NewLine);
                         }
                     }
-
                 }
-
-
 
                 ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
                 ProjectName = ProjectNameBox.Text;

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace dotnet_structuring
 {
-    class TempDirectory : IDisposable
+    internal class TempDirectory
     {
         public TempDirectory()
         {
@@ -14,17 +14,11 @@ namespace dotnet_structuring
             Directory.CreateDirectory(path);
         }
 
-        readonly string path;
+        private readonly string path;
 
         public static implicit operator string(TempDirectory directory)
         {
             return directory.path;
         }
-        public void Dispose()
-        {
-            Directory.Delete(path, true);
-        }
     }
-
-
 }

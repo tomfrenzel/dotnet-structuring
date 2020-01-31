@@ -1,18 +1,17 @@
 ﻿using dotnet_structuring.library;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.IO;
-using System.Collections.Generic;
 
 namespace dotnet_structuring.console
 {
-    class Program
+    internal class Program
     {
-        static List<string> Directories = new List<string>();
+        private static List<string> Directories = new List<string>();
 
-        static string NETCommand;
+        private static string NETCommand;
+
         public static void Main(string[] args)
         {
             new Program().Setup(args);
@@ -48,55 +47,46 @@ namespace dotnet_structuring.console
                         "Create artifacts Directory")
                     {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                     new Option(
                         "--build",
                         "Create build Directory")
                     {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                     new Option(
                         "--docs",
                         "Create docs Directory")
                     {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                     new Option(
                         "--lib",
                         "Create lib Directory")
                     {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                     new Option(
                         "--samples",
                         "Create samples Directory")
                     {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                     new Option(
                         "--packages",
                         "Create packages Directory")
                         {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                        new Option(
                         "--test",
                         "Create test Directory")
                     {
                         Argument = new Argument<bool>(getDefaultValue: () => false)
-
                     },
                 };
             rootCommand.Add(newCommand);
             rootCommand.Description = "dotnet-structuring";
-
-
 
             newCommand.Handler = CommandHandler.Create(handler);
 
@@ -105,10 +95,9 @@ namespace dotnet_structuring.console
         }
 
         public delegate void SetupDelegate(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
+
         public static void Run(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
         {
-            
-
             if (artifacts)
             {
                 Directories.Add("artifacts");
@@ -140,23 +129,23 @@ namespace dotnet_structuring.console
 
             NETCommand = " new " + template + " -o src/" + name + " -n " + name;
 
-            Execute execute = new Execute();
+            RunStructuring execute = new RunStructuring();
             WireEventHandlers(execute);
             execute.CreateScript(output, Directories, NETCommand, name).Wait();
         }
-        SetupDelegate handler = Run;
 
+        private SetupDelegate handler = Run;
 
-        static string CurrentLog;
-        public static void WireEventHandlers(Execute e)
+        private static string CurrentLog;
+
+        public static void WireEventHandlers(RunStructuring e)
         {
-            ExecutionHandler handler = new ExecutionHandler(OnIncommingEventLog);
+            StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
         }
 
         public static void OnIncommingEventLog(object sender, EventLogger e)
         {
-
             CurrentLog = e.logs;
 
             Console.WriteLine(CurrentLog + Environment.NewLine);
