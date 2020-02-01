@@ -1,6 +1,9 @@
 [![GitHub issues](https://img.shields.io/github/issues/tomfrenzel/dotnet-structuring?style=flat-square)](https://github.com/tomfrenzel/dotnet-structuring/issues)
+[![Azure DevOps builds](https://img.shields.io/azure-devops/build/tomfrenzel/dotnet-structuring/5?label=Azure%20Pipelines&logo=azure-pipelines&style=flat-square)](https://dev.azure.com/tomfrenzel/dotnet-structuring/_build/latest?definitionId=5&branchName=dev)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/tomfrenzel/dotnet-structuring?logo=code-climate&style=flat-square)](https://codeclimate.com/github/tomfrenzel/dotnet-structuring/maintainability)
+[![Codacy grade](https://img.shields.io/codacy/grade/16af892b784c4b049b34622c3949a3d2?style=flat-square)](https://www.codacy.com/manual/tomfrenzel/dotnet-structuring?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomfrenzel/dotnet-structuring&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/github/license/tomfrenzel/dotnet-structuring?style=flat-square)](https://github.com/tomfrenzel/dotnet-structuring/blob/master/LICENSE)
-![Travis (.com)](https://img.shields.io/travis/com/tomfrenzel/dotnet-structuring?style=flat-square)
+
 
 # dotnet-structuring
 
