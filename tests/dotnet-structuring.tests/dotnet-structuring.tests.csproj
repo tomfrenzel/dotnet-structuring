@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>dotnet_structuring.tests</RootNamespace>
-
     <IsPackable>false</IsPackable>
+    <ProjectGuid>de4faf02-0e84-4b84-a8a5-590692fbf37e</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>

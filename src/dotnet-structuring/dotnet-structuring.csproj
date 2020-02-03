@@ -6,6 +6,7 @@
     <RootNamespace>dotnet_structuring</RootNamespace>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <ProjectGuid>5e95923a-1708-4023-b410-f96982aa8afd</ProjectGuid>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
