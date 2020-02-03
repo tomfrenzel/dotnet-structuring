@@ -2,13 +2,14 @@ using dotnet_structuring.library;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.tests
 {
     public class TestSetup
     {
         //Setup Variables
-        private Templates __ = new Templates();
+        private Templates templates = new Templates();
 
         private readonly TempDirectory temp = new TempDirectory();
         public string CurrentLog { get; set; }
@@ -20,7 +21,7 @@ namespace dotnet_structuring.tests
         private static List<string> Directories = new List<string>();
 
         //Setup EventHandler
-        public void WireEventHandlers(RunStructuring e)
+        public void WireEventHandlers(Structuring e)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
@@ -43,21 +44,22 @@ namespace dotnet_structuring.tests
             Directories.Add("packages");
             Directories.Add("test");
 
-            __.SelcectTemplate(i);
-            NETCommand = " new " + __.SelectedTemplate + " " + Options + "-o src/" + ProjectName + " -n " + ProjectName;
-            RunStructuring RunStructuring = new RunStructuring();
+            templates.SelcectTemplate(i);
+            NETCommand = " new " + templates.SelectedTemplate + " " + Options + "-o src/" + ProjectName + " -n " + ProjectName;
+            Structuring RunStructuring = new Structuring();
             WireEventHandlers(RunStructuring);
-            await RunStructuring.CreateScript(OutputDirectory, Directories, NETCommand, ProjectName);
+            await RunStructuring.RunStructuring(OutputDirectory, Directories, NETCommand, ProjectName);
         }
     }
 
-    [Collection("Create All types of .NET Applications")]
+    [Collection("Create all types of .NET Applications")]
+    //The test name equals the Template being created during the Test
     public class FullTest
     {
         private TestSetup _ = new TestSetup();
 
         [Fact]
-        public async void TestConsoleTemplateForExecution()
+        public async void console()
         {
             await _.TestTemplate(1);
             Assert.Equal("Done.", _.CurrentLog);

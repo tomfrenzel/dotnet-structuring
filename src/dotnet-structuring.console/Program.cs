@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.console
 {
@@ -129,16 +130,16 @@ namespace dotnet_structuring.console
 
             NETCommand = " new " + template + " -o src/" + name + " -n " + name;
 
-            RunStructuring execute = new RunStructuring();
+            Structuring execute = new Structuring();
             WireEventHandlers(execute);
-            execute.CreateScript(output, Directories, NETCommand, name).Wait();
+            execute.RunStructuring(output, Directories, NETCommand, name).Wait();
         }
 
         private SetupDelegate handler = Run;
 
         private static string CurrentLog;
 
-        public static void WireEventHandlers(RunStructuring e)
+        public static void WireEventHandlers(Structuring e)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;

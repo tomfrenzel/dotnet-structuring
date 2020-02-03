@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring
 {
@@ -23,11 +24,11 @@ namespace dotnet_structuring
             InitializeComponent();
         }
 
-        private Templates templates = new Templates();
+        private readonly Templates templates = new Templates();
         private int LogNum;
         private string CurrentLog;
 
-        private void WireEventHandlers(RunStructuring e)
+        private void WireEventHandlers(Structuring e)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
@@ -59,12 +60,12 @@ namespace dotnet_structuring
         public async void ExecButton_Click(object sender, RoutedEventArgs e)
         {
             OutputBox.Text = "";
-            RunStructuring OutputLogs = new RunStructuring();
+            Structuring OutputLogs = new Structuring();
             this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = true);
             Style style = this.FindResource("ProgressBarWarningStripe") as Style;
             this.Dispatcher.Invoke(() => pbStatus.Style = style);
             WireEventHandlers(OutputLogs);
-            await OutputLogs.CreateScript(OutputDirectory, Directories, NETCommand, ProjectName);
+            await OutputLogs.RunStructuring(OutputDirectory, Directories, NETCommand, ProjectName);
         }
 
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
@@ -72,6 +73,15 @@ namespace dotnet_structuring
             ProjectType = ProjectTypeSelector.Text;
             if (ProjectType == "New Project")
             {
+                ValidateAccess();
+            }
+        }
+
+        private void ValidateAccess()
+        {
+            if (ProjectType == "New Project")
+            {
+                PathBox.IsEnabled = true;
                 TemplateSelector.IsEnabled = true;
                 ArtifactsCheckBox.IsEnabled = true;
                 BuildCheckBox.IsEnabled = true;
@@ -84,6 +94,7 @@ namespace dotnet_structuring
             }
             else
             {
+                PathBox.IsEnabled = false;
                 TemplateSelector.IsEnabled = false;
                 ArtifactsCheckBox.IsEnabled = false;
                 BuildCheckBox.IsEnabled = false;
@@ -160,7 +171,7 @@ namespace dotnet_structuring
 
                 ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
                 ProjectName = ProjectNameBox.Text;
-                NETCommand = " new " + templates.SelectedTemplate + " " + Options + "-o src/" + ProjectNameBox.Text + " -n " + ProjectNameBox.Text;
+                NETCommand = $" new {templates.SelectedTemplate} {Options} -o src/ {ProjectNameBox.Text} -n {ProjectNameBox.Text}";
                 CommandSummaryBox.Text += ("Execute: dotnet" + NETCommand + Environment.NewLine);
                 CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
             }

@@ -2,23 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.library
 {
-    public delegate void StructuringHandler(object sender, EventLogger e);
-
-    public class EventLogger : EventArgs
-    {
-        public string logs;
-    }
-
-    public class RunStructuring
+    public class Structuring
     {
         public event StructuringHandler LogEvent;
 
-        private void FireEvent(string logs)
+        private void WriteLog(string logs)
         {
             EventLogger log = new EventLogger
             {
@@ -27,7 +20,7 @@ namespace dotnet_structuring.library
             LogEvent.Invoke(this, log);
         }
 
-        public async Task CreateScript(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
+        public async Task RunStructuring(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
             Output = Output + @"\" + ProjectName;
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output);
@@ -37,23 +30,7 @@ namespace dotnet_structuring.library
 
             //Execute structuring script
             //repeat as many times as there are objects inside the List
-            for (int i = 0; i < Directories.Count(); i++)
-            {
-                if (Directories.ElementAt(i) != null)
-                {
-                    var DirectoryBeingCreated = OutputDirectory + @"\" + Directories.ElementAt(i);
-
-                    if (Directory.Exists(DirectoryBeingCreated))
-                    {
-                        FireEvent("Directory " + DirectoryBeingCreated + " already exists");
-                    }
-                    else
-                    {
-                        var result = Directory.CreateDirectory(DirectoryBeingCreated);
-                        FireEvent("Directory " + result.FullName + " successfully created!");
-                    }
-                }
-            }
+            CreateDirectories(Directories, OutputDirectory);
             DirectoryInfo WorkingDir = new DirectoryInfo(OutputDirectory + @"\src\" + ProjectName);
             if (!WorkingDir.Exists)
             {
@@ -70,7 +47,7 @@ namespace dotnet_structuring.library
                     p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
                     {
                         // Prepend line numbers to each line of the output.
-                        FireEvent(e.Data);
+                        WriteLog(e.Data);
                     });
                     p.Start();
 
@@ -78,7 +55,7 @@ namespace dotnet_structuring.library
                     p.EnableRaisingEvents = true;
                     p.Exited += new EventHandler((sender, e) =>
                     {
-                        FireEvent("Done.");
+                        WriteLog("Done.");
                         p.Kill();
                     });
                     p.WaitForExit();
@@ -86,7 +63,28 @@ namespace dotnet_structuring.library
             }
             else
             {
-                FireEvent("A Project with this Name already exists!");
+                WriteLog("A Project with this Name already exists!");
+            }
+        }
+
+        private void CreateDirectories(IEnumerable<string> Directories, DirectoryInfo OutputDirectory)
+        {
+            foreach (string element in Directories)
+            {
+                if (element != null)
+                {
+                    var DirectoryBeingCreated = OutputDirectory + @"\" + element;
+
+                    if (Directory.Exists(DirectoryBeingCreated))
+                    {
+                        WriteLog("Directory " + DirectoryBeingCreated + " already exists");
+                    }
+                    else
+                    {
+                        var result = Directory.CreateDirectory(DirectoryBeingCreated);
+                        WriteLog("Directory " + result.FullName + " successfully created!");
+                    }
+                }
             }
         }
     }
