@@ -20,13 +20,11 @@ namespace dotnet_structuring.library
             LogEvent.Invoke(this, log);
         }
 
-        public async Task RunStructuring(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
+        public async Task AsyncRunStructuring(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
             Output = Output + @"\" + ProjectName;
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output);
-            List<string> DirectoryOutputList = new List<string>();
             List<string> CommandOutputList = new List<string>();
-            string[] output = new string[] { };
 
             //Execute structuring script
             //repeat as many times as there are objects inside the List
@@ -53,11 +51,11 @@ namespace dotnet_structuring.library
 
                     p.BeginOutputReadLine();
                     p.EnableRaisingEvents = true;
-                    p.Exited += new EventHandler((sender, e) =>
+                    p.Exited += (sender, e) =>
                     {
                         WriteLog("Done.");
                         p.Kill();
-                    });
+                    };
                     p.WaitForExit();
                 });
             }

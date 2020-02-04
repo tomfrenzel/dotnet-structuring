@@ -15,9 +15,9 @@ namespace dotnet_structuring
         public int ProccessAmount { get; private set; }
         public string Options { get; private set; }
         public string OutputDirectory { get; private set; }
-        public string NETCommand { get; private set; }
+        public string NetCommand { get; private set; }
         public string ProjectName { get; private set; }
-        public List<string> Directories = new List<string>();
+        private List<string> Directories = new List<string>();
 
         public MainWindow()
         {
@@ -65,7 +65,7 @@ namespace dotnet_structuring
             Style style = this.FindResource("ProgressBarWarningStripe") as Style;
             this.Dispatcher.Invoke(() => pbStatus.Style = style);
             WireEventHandlers(OutputLogs);
-            await OutputLogs.RunStructuring(OutputDirectory, Directories, NETCommand, ProjectName);
+            await OutputLogs.AsyncRunStructuring(OutputDirectory, Directories, NetCommand, ProjectName);
         }
 
         public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
@@ -119,11 +119,9 @@ namespace dotnet_structuring
         //Open "Select Folder" Dialog
         public void SelectPathButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                PathBox.Text = dialog.SelectedPath.ToString();
-            }
+            using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+            PathBox.Text = dialog.SelectedPath.ToString();
         }
 
         public void PathBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -140,7 +138,7 @@ namespace dotnet_structuring
         {
             if (DotNetNewOptionsBox.Text != "")
             {
-                string Options = DotNetNewOptionsBox.Text;
+                Options = DotNetNewOptionsBox.Text;
             }
         }
 
@@ -171,8 +169,8 @@ namespace dotnet_structuring
 
                 ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
                 ProjectName = ProjectNameBox.Text;
-                NETCommand = $" new {templates.SelectedTemplate} {Options} -o src/ {ProjectNameBox.Text} -n {ProjectNameBox.Text}";
-                CommandSummaryBox.Text += ("Execute: dotnet" + NETCommand + Environment.NewLine);
+                NetCommand = $" new {templates.SelectedTemplate} {Options} -o src/ {ProjectNameBox.Text} -n {ProjectNameBox.Text}";
+                CommandSummaryBox.Text += ("Execute: dotnet" + NetCommand + Environment.NewLine);
                 CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
             }
         }

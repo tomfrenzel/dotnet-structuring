@@ -11,7 +11,6 @@ namespace dotnet_structuring.console
     {
         private static List<string> Directories = new List<string>();
 
-        private static string NETCommand;
 
         public static void Main(string[] args)
         {
@@ -99,6 +98,8 @@ namespace dotnet_structuring.console
 
         public static void Run(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
         {
+            string NETCommand;
+
             if (artifacts)
             {
                 Directories.Add("artifacts");
@@ -132,12 +133,10 @@ namespace dotnet_structuring.console
 
             Structuring execute = new Structuring();
             WireEventHandlers(execute);
-            execute.RunStructuring(output, Directories, NETCommand, name).Wait();
+            execute.AsyncRunStructuring(output, Directories, NETCommand, name).Wait();
         }
 
-        private SetupDelegate handler = Run;
-
-        private static string CurrentLog;
+        private readonly SetupDelegate handler = Run;
 
         public static void WireEventHandlers(Structuring e)
         {
@@ -147,7 +146,7 @@ namespace dotnet_structuring.console
 
         public static void OnIncommingEventLog(object sender, EventLogger e)
         {
-            CurrentLog = e.logs;
+            string CurrentLog = e.logs;
 
             Console.WriteLine(CurrentLog + Environment.NewLine);
         }

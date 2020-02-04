@@ -95,6 +95,10 @@
                 case 22:
                     SelectedTemplate = "sln";
                     break;
+
+                default:
+                    SelectedTemplate = "console";
+                    break;
             }
         }
     }
