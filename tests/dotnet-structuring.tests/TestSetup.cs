@@ -1,4 +1,5 @@
 ﻿using dotnet_structuring.library;
+using dotnet_structuring.library.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static dotnet_structuring.library.StructuringDelegate;
@@ -8,8 +9,7 @@ namespace dotnet_structuring.tests
     public class TestSetup
     {
         //Setup Variables
-        private readonly Templates templates = new Templates();
-
+        private readonly Template templates = new Template();
         private readonly TempDirectory temp = new TempDirectory();
         public string CurrentLog { get; set; }
         public string Options { get; private set; }
@@ -43,8 +43,9 @@ namespace dotnet_structuring.tests
             Directories.Add("packages");
             Directories.Add("test");
 
-            templates.SelcectTemplate(i);
-            NETCommand = " new " + templates.SelectedTemplate + " " + Options + "-o src/" + ProjectName + " -n " + ProjectName;
+            string slelctedTemplate = templates.items[i].ShortName;
+
+            NETCommand = " new " + slelctedTemplate + " " + Options + "-o src/" + ProjectName + " -n " + ProjectName;
             Structuring RunStructuring = new Structuring();
             WireEventHandlers(RunStructuring);
             await RunStructuring.AsyncRunStructuring(OutputDirectory, Directories, NETCommand, ProjectName);
