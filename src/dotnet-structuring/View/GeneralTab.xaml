@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
+    <Grid >
         <ComboBox x:Name="ProjectTypeSelector" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="149" IsReadOnly="True" DropDownClosed="ProjectTypeSelector_DropDownClosed">
             <ComboBoxItem Content="New Project" IsSelected="true"/>
             <ComboBoxItem Content="Existing Project" />

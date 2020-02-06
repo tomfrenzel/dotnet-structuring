@@ -36,6 +36,9 @@ namespace dotnet_structuring.View
         public IEnumerable<Template> initializeTemplates = InitializeTemplates.Templates;
         private Template template = new Template();
 
+        GeneralTab generalTab = new GeneralTab();
+        OptionsTab optionsTab = new OptionsTab();
+
         private List<string> Directories = new List<string>();
         public FinishTab()
         {
@@ -43,25 +46,24 @@ namespace dotnet_structuring.View
 
             Directories.Clear();
             CommandSummaryBox.Text = "";
-            //var children = LogicalTreeHelper.GetChildren(options);
+            var children = LogicalTreeHelper.GetChildren(optionsTab.options);
 
-            //foreach (var item in children)
-            //{
-            //    var checkbox = item as CheckBox;
-            //    if (checkbox != null)
-            //    {
-            //        if (checkbox.IsChecked == true)
-            //        {
-            //            Directories.Add(checkbox.Content.ToString());
-            //            CommandSummaryBox.Text += ("Create Directory: " + checkbox.Content.ToString() + Environment.NewLine);
-            //        }
-            //    }
-            //}
-
-            ProjectNameBox.Text = ProjectNameBox.Text.Replace(" ", "_");
-            ProjectName = ProjectNameBox.Text;
-            template = initializeTemplates.First(x => x.Name.Contains(TemplateSelector.Text));
-            NetCommand = $" new {template.ShortName} {Options} -o src/{ProjectNameBox.Text} -n {ProjectNameBox.Text}";
+            foreach (var item in children)
+            {
+                var checkbox = item as CheckBox;
+                if (checkbox != null)
+                {
+                    if (checkbox.IsChecked == true)
+                    {
+                        Directories.Add(checkbox.Content.ToString());
+                        CommandSummaryBox.Text += ("Create Directory: " + checkbox.Content.ToString() + Environment.NewLine);
+                    }
+                }
+            }
+            generalTab.ProjectNameBox.Text = generalTab.ProjectNameBox.Text.Replace(" ", "_");
+            ProjectName = generalTab.ProjectNameBox.Text;
+            template = initializeTemplates.First(x => x.Name.Contains(generalTab.TemplateSelector.Text));
+            NetCommand = $" new {template.ShortName} {Options} -o src/{generalTab.ProjectNameBox.Text} -n {generalTab.ProjectNameBox.Text}";
             CommandSummaryBox.Text += ("Execute: dotnet" + NetCommand + Environment.NewLine);
             CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
         }

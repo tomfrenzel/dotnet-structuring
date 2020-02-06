@@ -12,15 +12,15 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="Tabs" Margin="10,10,10,10" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="Tab_Changed" VerticalAlignment="Stretch">
+        <TabControl x:Name="Tabs" Margin="10,10,10,10" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"  VerticalAlignment="Stretch">
             <TabItem Header="General" IsSelected="True">
-                <view:GeneralTab></view:GeneralTab>            
+                <view:GeneralTab x:Name="generalTab"/>
             </TabItem>
             <TabItem x:Name="OptionsTab" Header="Options" IsEnabled="True">
-                <view:OptionsTab x:Name="optionsTab" />
+                <view:OptionsTab x:Name="optionsTab" UserName="{Binding Path=IncommingData, ElementName=generalTab, Mode=TwoWay}"/>
             </TabItem>
             <TabItem x:Name="FinishTab" Header="Finish" Height="22" Margin="0,0,-4,0" VerticalAlignment="Center" IsEnabled="False">
-
+                <view:FinishTab />
             </TabItem>
         </TabControl>
     </Grid>
