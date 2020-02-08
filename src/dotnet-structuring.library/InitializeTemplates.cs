@@ -1,7 +1,5 @@
 ﻿using dotnet_structuring.library.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace dotnet_structuring.library
 {

@@ -1,14 +1,4 @@
-﻿using dotnet_structuring.library;
-using dotnet_structuring.library.Models;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using static dotnet_structuring.library.StructuringDelegate;
-using dotnet_structuring.View;
-using dotnet_structuring.ViewModel;
+﻿using System.Windows;
 
 namespace dotnet_structuring
 {
@@ -17,6 +7,6 @@ namespace dotnet_structuring
         public MainWindow()
         {
             InitializeComponent();
-    }
+        }
     }
 }

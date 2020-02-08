@@ -11,7 +11,6 @@ namespace dotnet_structuring.console
     {
         private static List<string> Directories = new List<string>();
 
-
         public static void Main(string[] args)
         {
             new Program().Setup(args);

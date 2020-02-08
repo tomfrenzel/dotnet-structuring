@@ -1,6 +1,5 @@
 ﻿using dotnet_structuring.library;
 using dotnet_structuring.library.Models;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;

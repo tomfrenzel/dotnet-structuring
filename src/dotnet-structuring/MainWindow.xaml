@@ -14,10 +14,10 @@
         </Grid.ColumnDefinitions>
         <TabControl x:Name="Tabs" Margin="10,10,10,10" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"  VerticalAlignment="Stretch">
             <TabItem Header="General" IsSelected="True">
-                <view:GeneralTab x:Name="generalTab" ProjectName="{Binding Path=ProjectName, ElementName=finishTab, Mode=TwoWay}" FolderPath="{Binding Path=FolderPath, ElementName=finishTab, Mode=TwoWay}" STemplate="{Binding Path=STemplate, ElementName=finishTab, Mode=TwoWay}" Type="{Binding Path=Type, ElementName=finishTab, Mode=TwoWay}"/>
+                <view:GeneralTab x:Name="generalTab" ProjectName="{Binding Path=ProjectName, ElementName=finishTab, Mode=TwoWay}" FolderPath="{Binding Path=FolderPath, ElementName=finishTab, Mode=TwoWay}" STemplate="{Binding Path=STemplate, ElementName=finishTab, Mode=TwoWay}" Type="{Binding Path=Type, ElementName=finishTab, Mode=TwoWay}" />
             </TabItem>
             <TabItem x:Name="OptionsTab" Header="Options" IsEnabled="True">
-                <view:OptionsTab x:Name="optionsTab" Artifacts="{Binding Path=Artifacts, ElementName=finishTab, Mode=OneWayToSource}" Build="{Binding Path=Build, ElementName=finishTab, Mode=OneWayToSource}" Docs="{Binding Path=Docs, ElementName=finishTab, Mode=OneWayToSource}" Lib="{Binding Path=Lib, ElementName=finishTab, Mode=OneWayToSource}" Packages="{Binding Path=Packages, ElementName=finishTab, Mode=OneWayToSource}" Samples="{Binding Path=Samples, ElementName=finishTab, Mode=OneWayToSource}" Test="{Binding Path=Test, ElementName=finishTab, Mode=OneWayToSource}"/>
+                <view:OptionsTab x:Name="optionsTab" Artifacts="{Binding Path=Artifacts, ElementName=finishTab, Mode=OneWayToSource}" Build="{Binding Path=Build, ElementName=finishTab, Mode=OneWayToSource}" Docs="{Binding Path=Docs, ElementName=finishTab, Mode=OneWayToSource}" Lib="{Binding Path=Lib, ElementName=finishTab, Mode=OneWayToSource}" Packages="{Binding Path=Packages, ElementName=finishTab, Mode=OneWayToSource}" Samples="{Binding Path=Samples, ElementName=finishTab, Mode=OneWayToSource}" Test="{Binding Path=Test, ElementName=finishTab, Mode=OneWayToSource}" />
             </TabItem>
             <TabItem x:Name="FinishTab" Header="Finish" Height="22" Margin="0,0,-4,0" VerticalAlignment="Center" IsEnabled="True">
                 <view:FinishTab x:Name="finishTab" />

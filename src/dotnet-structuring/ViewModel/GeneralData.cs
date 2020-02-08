@@ -2,9 +2,6 @@
 using dotnet_structuring.library.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Text;
 
 namespace dotnet_structuring.ViewModel
 {

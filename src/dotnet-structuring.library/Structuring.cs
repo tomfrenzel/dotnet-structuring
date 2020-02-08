@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace dotnet_structuring.library
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output + @"\" + ProjectName);
             List<string> CommandOutputList = new List<string>();
 
-            if(!OutputDirectory.Exists)
+            if (!OutputDirectory.Exists)
             {
                 Directory.CreateDirectory(OutputDirectory.FullName);
 
