@@ -1,7 +1,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/tomfrenzel/dotnet-structuring)](https://github.com/tomfrenzel/dotnet-structuring/issues)
 [![Build Status](https://dev.azure.com/tomfrenzel/dotnet-structuring/_apis/build/status/dotnet-structuring%20CI?branchName=dev)](https://dev.azure.com/tomfrenzel/dotnet-structuring/_build/latest?definitionId=5&branchName=dev)
 [![codecov](https://codecov.io/gh/tomfrenzel/dotnet-structuring/branch/dev/graph/badge.svg)](https://codecov.io/gh/tomfrenzel/dotnet-structuring)
-[![Maintainability](https://api.codeclimate.com/v1/badges/7d69a0db5c5936f89192/maintainability)](https://codeclimate.com/github/tomfrenzel/dotnet-structuring/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/16af892b784c4b049b34622c3949a3d2)](https://www.codacy.com/manual/tomfrenzel/dotnet-structuring?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomfrenzel/dotnet-structuring&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/github/license/tomfrenzel/dotnet-structuring)](https://github.com/tomfrenzel/dotnet-structuring/blob/master/LICENSE)
 

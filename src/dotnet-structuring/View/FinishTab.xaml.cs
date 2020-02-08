@@ -10,10 +10,6 @@ using static dotnet_structuring.View.GeneralTab;
 
 namespace dotnet_structuring.View
 {
-    /// <summary>
-    /// Interaction logic for FinishTab.xaml
-    /// </summary>
-
     public class Options
     {
         public string Name { get; set; }
@@ -24,12 +20,11 @@ namespace dotnet_structuring.View
     {
         public int ProccessAmount { get; private set; }
 
-        //public string Options { get; private set; }
         public string NetCommand { get; private set; }
 
         private int logNum;
         private string currentLog;
-        public IEnumerable<Template> initializeTemplates = InitializeTemplates.Templates;
+        private IEnumerable<Template> initializeTemplates = InitializeTemplates.Templates;
 
         public static readonly DependencyProperty ProjectNameProperty =
             DependencyProperty.Register("ProjectName", typeof(string), typeof(FinishTab), new UIPropertyMetadata("New Project"));
@@ -130,7 +125,7 @@ namespace dotnet_structuring.View
             set { SetValue(TestsProperty, value); }
         }
 
-        private List<string> Directories = new List<string>();
+        private readonly List<string> Directories = new List<string>();
 
         public FinishTab()
         {
@@ -138,7 +133,6 @@ namespace dotnet_structuring.View
 
             Directories.Clear();
             CommandSummaryBox.Text = "";
-            //var children = LogicalTreeHelper.GetChildren(this);
         }
 
         private void WireEventHandlers(Structuring e)
@@ -223,11 +217,8 @@ namespace dotnet_structuring.View
                 CommandSummaryBox.Text += ("Create Directory: test" + Environment.NewLine);
             }
 
-            //generalTab.ProjectNameBox.Text = generalTab.ProjectNameBox.Text.Replace(" ", "_");
             if (STemplate != null)
             {
-                // template = initializeTemplates.First(x => x.Name.Contains(STemplate.ShortName));
-
                 NetCommand = $" new {STemplate.ShortName} -o src/{ProjectName} -n {ProjectName}";
                 CommandSummaryBox.Text += ("Execute: dotnet" + NetCommand + Environment.NewLine);
                 CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));

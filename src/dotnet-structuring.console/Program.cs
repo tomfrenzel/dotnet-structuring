@@ -9,7 +9,7 @@ namespace dotnet_structuring.console
 {
     internal class Program
     {
-        private static List<string> Directories = new List<string>();
+        private static readonly List<string> Directories = new List<string>();
 
         public static void Main(string[] args)
         {
@@ -87,7 +87,7 @@ namespace dotnet_structuring.console
             rootCommand.Add(newCommand);
             rootCommand.Description = "dotnet-structuring";
 
-            newCommand.Handler = CommandHandler.Create(handler);
+            newCommand.Handler = CommandHandler.Create(@delegate);
 
             // Parse the incoming args and invoke the handler
             rootCommand.InvokeAsync(args).Wait();
@@ -135,12 +135,12 @@ namespace dotnet_structuring.console
             execute.AsyncRunStructuring(output, Directories, NETCommand, name).Wait();
         }
 
-        private readonly SetupDelegate handler = Run;
+        private readonly SetupDelegate @delegate = Run;
 
         public static void WireEventHandlers(Structuring e)
         {
-            StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
+            StructuringHandler structuringHandler = new StructuringHandler(OnIncommingEventLog);
+            e.LogEvent += structuringHandler;
         }
 
         public static void OnIncommingEventLog(object sender, EventLogger e)

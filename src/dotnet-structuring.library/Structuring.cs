@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,18 +20,15 @@ namespace dotnet_structuring.library
             LogEvent.Invoke(this, log);
         }
 
-        public async Task AsyncRunStructuring(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
+        public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output + @"\" + ProjectName);
-            List<string> CommandOutputList = new List<string>();
 
             if (!OutputDirectory.Exists)
             {
                 Directory.CreateDirectory(OutputDirectory.FullName);
 
                 CreateDirectories(Directories, OutputDirectory);
-                DirectoryInfo WorkingDir = new DirectoryInfo(OutputDirectory + @"\src\" + ProjectName);
-
                 await Task.Factory.StartNew(() =>
                 {
                     Process p = new Process();
@@ -83,6 +81,11 @@ namespace dotnet_structuring.library
                     }
                 }
             }
+        }
+
+        public Task AsyncRunStructuring(string folderPath, List<string> directories, string netCommand, string projectName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

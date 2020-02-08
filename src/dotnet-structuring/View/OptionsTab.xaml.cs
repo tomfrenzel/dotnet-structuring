@@ -6,7 +6,7 @@ namespace dotnet_structuring.View
 {
     public partial class OptionsTab : UserControl
     {
-        private OptionsData optionsData = new OptionsData();
+        private readonly OptionsData optionsData = new OptionsData();
 
         public static readonly DependencyProperty ArtifactsProperty =
 DependencyProperty.Register("Artifacts", typeof(bool), typeof(OptionsTab), new UIPropertyMetadata(false));

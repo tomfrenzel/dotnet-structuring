@@ -10,8 +10,6 @@ namespace dotnet_structuring.tests
         //Setup Variables
         private readonly TempDirectory temp = new TempDirectory();
 
-        private readonly EventLogger eventLogger = new EventLogger();
-
         public string CurrentLog { get; set; }
         public string Options { get; private set; }
         public string NETCommand { get; private set; }
@@ -31,7 +29,7 @@ namespace dotnet_structuring.tests
             CurrentLog = e.Logs;
         }
 
-        internal async Task TestTemplate(int i)
+        internal async Task TestTemplateAsync(int i)
         {
             ProjectName = "TestProject";
             OutputDirectory = temp;
