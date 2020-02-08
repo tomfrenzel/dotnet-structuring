@@ -15,29 +15,114 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static dotnet_structuring.library.StructuringDelegate;
+using static dotnet_structuring.View.GeneralTab;
 
 namespace dotnet_structuring.View
 {
     /// <summary>
     /// Interaction logic for FinishTab.xaml
     /// </summary>
+
+    public class Options
+    {
+        public string Name { get; set; }
+        public bool IsChecked { get; set; }
+    }
+
     public partial class FinishTab : UserControl
     {
-        public string PlaceholderText { get; set; }
-        public string ProjectType { get; private set; }
         public int ProccessAmount { get; private set; }
-        public string Options { get; private set; }
-        public string OutputDirectory { get; private set; }
+        //public string Options { get; private set; }
         public string NetCommand { get; private set; }
-        public string ProjectName { get; private set; }
-        public string TemplateName { get; private set; }
         private int logNum;
         private string currentLog;
         public IEnumerable<Template> initializeTemplates = InitializeTemplates.Templates;
-        private Template template = new Template();
 
-        GeneralTab generalTab = new GeneralTab();
-        OptionsTab optionsTab = new OptionsTab();
+        public static readonly DependencyProperty ProjectNameProperty =
+            DependencyProperty.Register("ProjectName", typeof(string), typeof(FinishTab), new UIPropertyMetadata("New Project"));
+
+        public static readonly DependencyProperty FolderPathProperty =
+            DependencyProperty.Register("FolderPath", typeof(string), typeof(FinishTab), new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty TypeProperty =
+    DependencyProperty.Register("Type", typeof(ProjectTypes), typeof(FinishTab), new UIPropertyMetadata(ProjectTypes.New));
+
+        public static readonly DependencyProperty STemplateProperty =
+    DependencyProperty.Register("STemplate", typeof(Template), typeof(FinishTab), new UIPropertyMetadata(InitializeTemplates.Templates[0]));
+
+        public static readonly DependencyProperty ArtifactsProperty =
+    DependencyProperty.Register("Artifacts", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty BuildProperty =
+    DependencyProperty.Register("Build", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty DocsProperty =
+    DependencyProperty.Register("Docs", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty LibProperty =
+    DependencyProperty.Register("Lib", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty PackagesProperty =
+    DependencyProperty.Register("Packages", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty SamplesProperty =
+    DependencyProperty.Register("Samples", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty TestsProperty =
+    DependencyProperty.Register("Test", typeof(bool), typeof(FinishTab), new UIPropertyMetadata(false));
+
+        public ProjectTypes Type
+        {
+            get { return (ProjectTypes)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
+        }
+
+        public string ProjectName
+        {
+            get { return (string)GetValue(ProjectNameProperty); }
+            set { SetValue(ProjectNameProperty, value); }
+        }
+
+        public string FolderPath
+        {
+            get { return (string)GetValue(FolderPathProperty); }
+            set { SetValue(FolderPathProperty, value); }
+        }
+
+        public Template STemplate
+        {
+            get { return (Template)GetValue(STemplateProperty); }
+            set { SetValue(STemplateProperty, value); }
+        }
+        public bool Artifacts
+        {
+            get { return (bool)GetValue(ArtifactsProperty); }
+            set { SetValue(ArtifactsProperty, value); }
+        }
+        public bool Build
+        {
+            get { return (bool)GetValue(BuildProperty); }
+            set { SetValue(BuildProperty, value); }
+        }
+        public bool Docs
+        {
+            get { return (bool)GetValue(DocsProperty); }
+            set { SetValue(DocsProperty, value); }
+        }
+        public bool Lib
+        {
+            get { return (bool)GetValue(LibProperty); }
+            set { SetValue(LibProperty, value); }
+        }
+        public bool Packages
+        {
+            get { return (bool)GetValue(PackagesProperty); }
+            set { SetValue(PackagesProperty, value); }
+        }
+        public bool Samples
+        {
+            get { return (bool)GetValue(SamplesProperty); }
+            set { SetValue(SamplesProperty, value); }
+        }
+        public bool Test
+        {
+            get { return (bool)GetValue(TestsProperty); }
+            set { SetValue(TestsProperty, value); }
+        }
 
         private List<string> Directories = new List<string>();
         public FinishTab()
@@ -46,26 +131,10 @@ namespace dotnet_structuring.View
 
             Directories.Clear();
             CommandSummaryBox.Text = "";
-            var children = LogicalTreeHelper.GetChildren(optionsTab.options);
+            //var children = LogicalTreeHelper.GetChildren(this);
 
-            foreach (var item in children)
-            {
-                var checkbox = item as CheckBox;
-                if (checkbox != null)
-                {
-                    if (checkbox.IsChecked == true)
-                    {
-                        Directories.Add(checkbox.Content.ToString());
-                        CommandSummaryBox.Text += ("Create Directory: " + checkbox.Content.ToString() + Environment.NewLine);
-                    }
-                }
-            }
-            generalTab.ProjectNameBox.Text = generalTab.ProjectNameBox.Text.Replace(" ", "_");
-            ProjectName = generalTab.ProjectNameBox.Text;
-            template = initializeTemplates.First(x => x.Name.Contains(generalTab.TemplateSelector.Text));
-            NetCommand = $" new {template.ShortName} {Options} -o src/{generalTab.ProjectNameBox.Text} -n {generalTab.ProjectNameBox.Text}";
-            CommandSummaryBox.Text += ("Execute: dotnet" + NetCommand + Environment.NewLine);
-            CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
+
+
         }
         private void WireEventHandlers(Structuring e)
         {
@@ -76,35 +145,90 @@ namespace dotnet_structuring.View
         public void OnIncommingEventLog(object sender, EventLogger e)
         {
             logNum++;
-
             this.Dispatcher.Invoke(() =>
             {
-                currentLog = e.logs;
+
+                currentLog = e.Logs;
+                OutputBox.Text += (currentLog + Environment.NewLine);
+                OutputBox.Text = Regex.Replace(OutputBox.Text, @"[\r\n]{2,}", Environment.NewLine);
+
+                if (logNum < ProccessAmount)
+                {
+                    pbStatus.Value++;
+                }
+                if (currentLog == "Done.")
+                {
+                    pbStatus.IsIndeterminate = true;
+                    pbStatus.Value = 1;
+                    Style style = this.FindResource("ProgressBarSuccess") as Style;
+                    pbStatus.Style = style;
+                }
+
             });
-            this.Dispatcher.Invoke(() => OutputBox.Text += (currentLog + Environment.NewLine));
-            this.Dispatcher.Invoke(() => OutputBox.Text = Regex.Replace(OutputBox.Text, @"[\r\n]{2,}", Environment.NewLine));
-            if (logNum < ProccessAmount)
-            {
-                pbStatus.Value++;
-            }
-            if (currentLog == "Done.")
-            {
-                this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = true);
-                this.Dispatcher.Invoke(() => pbStatus.Value = 1);
-                Style style = this.Dispatcher.Invoke(() => this.FindResource("ProgressBarSuccess") as Style);
-                this.Dispatcher.Invoke(() => pbStatus.Style = style);
-            }
+
         }
 
         public async void ExecButton_Click(object sender, RoutedEventArgs e)
         {
             OutputBox.Text = "";
             Structuring OutputLogs = new Structuring();
-            this.Dispatcher.Invoke(() => pbStatus.IsIndeterminate = true);
-            Style style = this.FindResource("ProgressBarWarningStripe") as Style;
-            this.Dispatcher.Invoke(() => pbStatus.Style = style);
+            this.Dispatcher.Invoke(() => { 
+                pbStatus.IsIndeterminate = true;
+                Style style = this.FindResource("ProgressBarWarningStripe") as Style;
+                pbStatus.Style = style;
+            });
             WireEventHandlers(OutputLogs);
-            await OutputLogs.AsyncRunStructuring(OutputDirectory, Directories, NetCommand, ProjectName);
+            await OutputLogs.AsyncRunStructuring(FolderPath, Directories, NetCommand, ProjectName);
+        }
+
+        private void PreviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommandSummaryBox.Text = "";
+            if (Artifacts == true)
+            {
+                Directories.Add("artifacts");
+                CommandSummaryBox.Text += ("Create Directory: artifacts" + Environment.NewLine);
+            }
+            if (Build == true)
+            {
+                Directories.Add("build");
+                CommandSummaryBox.Text += ("Create Directory: build" + Environment.NewLine);
+            }
+            if (Docs == true)
+            {
+                Directories.Add("docs");
+                CommandSummaryBox.Text += ("Create Directory: docs" + Environment.NewLine);
+            }
+            if (Lib == true)
+            {
+                Directories.Add("lib");
+                CommandSummaryBox.Text += ("Create Directory: lib" + Environment.NewLine);
+            }
+            if (Packages == true)
+            {
+                Directories.Add("packages");
+                CommandSummaryBox.Text += ("Create Directory: packages" + Environment.NewLine);
+            }
+            if (Samples == true)
+            {
+                Directories.Add("samples");
+                CommandSummaryBox.Text += ("Create Directory: samples" + Environment.NewLine);
+            }
+            if (Test == true)
+            {
+                Directories.Add("test");
+                CommandSummaryBox.Text += ("Create Directory: test" + Environment.NewLine);
+            }
+
+            //generalTab.ProjectNameBox.Text = generalTab.ProjectNameBox.Text.Replace(" ", "_");
+            if (STemplate != null)
+            {
+                // template = initializeTemplates.First(x => x.Name.Contains(STemplate.ShortName));
+
+                NetCommand = $" new {STemplate.ShortName} -o src/{ProjectName} -n {ProjectName}";
+                CommandSummaryBox.Text += ("Execute: dotnet" + NetCommand + Environment.NewLine);
+                CommandSummaryBox.Text = CommandSummaryBox.Text.Remove(CommandSummaryBox.Text.LastIndexOf(Environment.NewLine));
+            }
         }
     }
 }

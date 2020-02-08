@@ -15,23 +15,23 @@ namespace dotnet_structuring.library
         {
             EventLogger log = new EventLogger
             {
-                logs = logs
+                Logs = logs
             };
             LogEvent.Invoke(this, log);
         }
 
         public async Task AsyncRunStructuring(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
-            Output = Output + @"\" + ProjectName;
-            DirectoryInfo OutputDirectory = new DirectoryInfo(Output);
+            DirectoryInfo OutputDirectory = new DirectoryInfo(Output + @"\" + ProjectName);
             List<string> CommandOutputList = new List<string>();
 
-            //Execute structuring script
-            //repeat as many times as there are objects inside the List
-            CreateDirectories(Directories, OutputDirectory);
-            DirectoryInfo WorkingDir = new DirectoryInfo(OutputDirectory + @"\src\" + ProjectName);
-            if (!WorkingDir.Exists)
+            if(!OutputDirectory.Exists)
             {
+                Directory.CreateDirectory(OutputDirectory.FullName);
+
+                CreateDirectories(Directories, OutputDirectory);
+                DirectoryInfo WorkingDir = new DirectoryInfo(OutputDirectory + @"\src\" + ProjectName);
+
                 await Task.Factory.StartNew(() =>
                 {
                     Process p = new Process();

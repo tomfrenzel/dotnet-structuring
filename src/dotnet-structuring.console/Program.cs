@@ -146,7 +146,7 @@ namespace dotnet_structuring.console
 
         public static void OnIncommingEventLog(object sender, EventLogger e)
         {
-            string CurrentLog = e.logs;
+            string CurrentLog = e.Logs;
 
             Console.WriteLine(CurrentLog + Environment.NewLine);
         }

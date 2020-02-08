@@ -24,5 +24,6 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
+        <Button x:Name="PreviewButton" Content="Preview" HorizontalAlignment="Right" Margin="0,140,68,0" VerticalAlignment="Top" Click="PreviewButton_Click" />
     </Grid>
 </UserControl>
