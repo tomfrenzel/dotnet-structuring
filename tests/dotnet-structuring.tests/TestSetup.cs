@@ -20,6 +20,16 @@ namespace dotnet_structuring.tests
 
         private static List<string> Directories = new List<string>();
 
+        public void WireEventHandlers(Structuring e)
+        {
+            StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
+            e.LogEvent += handler;
+        }
+        public void OnIncommingEventLog(object sender, EventLogger e)
+        {
+            CurrentLog = e.Logs;
+        }
+
         internal async Task TestTemplate(int i)
         {
             ProjectName = "TestProject";
@@ -36,7 +46,7 @@ namespace dotnet_structuring.tests
 
             NETCommand = " new " + slelctedTemplate + " " + Options + "-o src/" + ProjectName + " -n " + ProjectName;
             Structuring RunStructuring = new Structuring();
-            eventLogger.WireEventHandlers(RunStructuring);
+            WireEventHandlers(RunStructuring);
             await RunStructuring.AsyncRunStructuring(OutputDirectory, Directories, NETCommand, ProjectName);
         }
     }
