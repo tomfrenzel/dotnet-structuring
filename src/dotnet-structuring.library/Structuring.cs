@@ -82,10 +82,5 @@ namespace dotnet_structuring.library
                 }
             }
         }
-
-        public Task AsyncRunStructuring(string folderPath, List<string> directories, string netCommand, string projectName)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
