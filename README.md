@@ -46,9 +46,9 @@ Run ```build.bat``` to build the Project. The Output files will be located in th
 ## Usage
 
 The Usage is basically self-explaining. Here are some screenshots of the Program:
-![General](https://github.com/tomfrenzel/dotnet-structuring/samples/screenshots/general.png)
-![Options](https://github.com/tomfrenzel/dotnet-structuring/samples/screenshots/options.png)
-![Finish](https://github.com/tomfrenzel/dotnet-structuring/samples/screenshots/finish.png)
+![General](samples/screenshots/general.png)
+![Options](samples/screenshots/options.png)
+![Finish](samples/screenshots/finish.png)
 
 ## Built With
 
@@ -60,4 +60,4 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
