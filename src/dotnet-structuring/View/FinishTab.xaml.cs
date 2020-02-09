@@ -175,7 +175,7 @@ namespace dotnet_structuring.View
                 pbStatus.Style = style;
             });
             WireEventHandlers(OutputLogs);
-            await OutputLogs.AsyncRunStructuring(FolderPath, Directories, NetCommand, ProjectName);
+            await OutputLogs.RunStructuringAsync(FolderPath, Directories, NetCommand, ProjectName);
         }
 
         private void PreviewButton_Click(object sender, RoutedEventArgs e)

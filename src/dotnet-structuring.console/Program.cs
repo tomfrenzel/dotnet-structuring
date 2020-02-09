@@ -132,7 +132,7 @@ namespace dotnet_structuring.console
 
             Structuring execute = new Structuring();
             WireEventHandlers(execute);
-            execute.AsyncRunStructuring(output, Directories, NETCommand, name).Wait();
+            execute.RunStructuringAsync(output, Directories, NETCommand, name).Wait();
         }
 
         private readonly SetupDelegate @delegate = Run;
