@@ -6,7 +6,8 @@ namespace dotnet_structuring.View
 {
     public partial class OptionsTab : UserControl
     {
-        private readonly OptionsData optionsData = new OptionsData();
+        public string Options { get; set; }
+        public string FolderPath { get; set; }
 
         public static readonly DependencyProperty ArtifactsProperty =
 DependencyProperty.Register("Artifacts", typeof(bool), typeof(OptionsTab), new UIPropertyMetadata(false));
@@ -81,7 +82,7 @@ DependencyProperty.Register("Artifacts", typeof(bool), typeof(OptionsTab), new U
         {
             if (DotNetNewOptionsBox.Text != "")
             {
-                optionsData.Options = DotNetNewOptionsBox.Text;
+                Options = DotNetNewOptionsBox.Text;
             }
         }
     }

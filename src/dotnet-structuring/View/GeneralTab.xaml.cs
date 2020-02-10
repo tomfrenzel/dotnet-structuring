@@ -1,5 +1,6 @@
 ﻿using dotnet_structuring.library;
 using dotnet_structuring.library.Models;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -65,24 +66,11 @@ namespace dotnet_structuring.View
             PathBox.Text = dialog.SelectedPath.ToString();
         }
 
-        //public void ProjectTypeSelector_DropDownClosed(object sender, EventArgs e)
-        //{
-        //    Type = (ProjectTypes)ProjectTypeSelector.SelectedIndex;
-        //    if (Type == ProjectTypes.New)
-        //    {
-        //        ValidateAccess(true);
-        //    }
-        //    else
-        //    {
-        //        ValidateAccess(false);
-        //    }
-        //}
-
-        //private void ValidateAccess(bool enabled)
-        //{
-        //    PathBox.IsEnabled = enabled;
-        //    TemplateSelector.IsEnabled = enabled;
-        //}
+        private void ValidateAccess(bool enabled)
+        {
+            PathBox.IsEnabled = enabled;
+            TemplateSelector.IsEnabled = enabled;
+        }
 
         private void PathBox_TextChanged(object sender, TextChangedEventArgs e)
         {
