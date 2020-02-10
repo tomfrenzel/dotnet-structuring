@@ -128,7 +128,7 @@ namespace dotnet_structuring.console
                 Directories.Add("test");
             }
 
-            NETCommand = " new " + template + " -o src/" + name + " -n " + name;
+            NETCommand = $" new {template} -o src/{name} -n {name}";
 
             Structuring execute = new Structuring();
             WireEventHandlers(execute);
