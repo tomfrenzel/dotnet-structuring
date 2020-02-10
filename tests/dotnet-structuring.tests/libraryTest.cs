@@ -10,164 +10,158 @@ namespace dotnet_structuring.tests
         private readonly TestSetup testSetup = new TestSetup();
 
         [Fact]
-        public async Task Console()
+        public async Task ConsoleAsync()
         {
-            await testSetup.TestTemplateAsync(1);
+            await testSetup.TestTemplateAsync(1).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Classlib()
+        public async Task ClasslibAsync()
         {
-            await testSetup.TestTemplateAsync(2);
+            await testSetup.TestTemplateAsync(2).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Mstest()
+        public async Task MstestAsync()
         {
-            await testSetup.TestTemplateAsync(3);
+            await testSetup.TestTemplateAsync(3).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Nunit()
+        public async Task NunitAsync()
         {
-            await testSetup.TestTemplateAsync(4);
+            await testSetup.TestTemplateAsync(4).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Nunittest()
+        public async Task NunittestAsync()
         {
-            await testSetup.TestTemplateAsync(5);
+            await testSetup.TestTemplateAsync(5).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Xunit()
+        public async Task XunitAsync()
         {
-            await testSetup.TestTemplateAsync(6);
+            await testSetup.TestTemplateAsync(6).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Page()
+        public async Task PageAsync()
         {
-            await testSetup.TestTemplateAsync(7);
+            await testSetup.TestTemplateAsync(7).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Viewimports()
+        public async Task ViewimportsAsync()
         {
-            await testSetup.TestTemplateAsync(8);
+            await testSetup.TestTemplateAsync(8).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Viewstart()
+        public async Task ViewstartAsync()
         {
-            await testSetup.TestTemplateAsync(9);
+            await testSetup.TestTemplateAsync(9).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Web()
+        public async Task webAsync()
         {
-            await testSetup.TestTemplateAsync(10);
+            await testSetup.TestTemplateAsync(10).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Mvc()
+        public async Task MvcAsync()
         {
-            await testSetup.TestTemplateAsync(11);
+            await testSetup.TestTemplateAsync(11).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Console2()
+        public async Task Console2Async()
         {
-            await testSetup.TestTemplateAsync(12);
+            await testSetup.TestTemplateAsync(12).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Webapp()
+        public async Task WebappAsync()
         {
-            await testSetup.TestTemplateAsync(13);
+            await testSetup.TestTemplateAsync(13).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Angular()
+        public async Task AngularAsync()
         {
-            await testSetup.TestTemplateAsync(14);
+            await testSetup.TestTemplateAsync(14).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task React()
+        public async Task ReactAsync()
         {
-            await testSetup.TestTemplateAsync(15);
+            await testSetup.TestTemplateAsync(15).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Reactredux()
+        public async Task ReactreduxAsync()
         {
-            await testSetup.TestTemplateAsync(16);
+            await testSetup.TestTemplateAsync(16).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Razorclasslib()
+        public async Task RazorclasslibAsync()
         {
-            await testSetup.TestTemplateAsync(17);
+            await testSetup.TestTemplateAsync(17).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Webapi()
+        public async Task WebapiAsync()
         {
-            await testSetup.TestTemplateAsync(18);
+            await testSetup.TestTemplateAsync(18).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Globaljson()
+        public async Task GlobaljsonAsync()
         {
-            await testSetup.TestTemplateAsync(19);
+            await testSetup.TestTemplateAsync(19).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Nugetconfig()
+        public async Task NugetconfigAsync()
         {
-            await testSetup.TestTemplateAsync(20);
+            await testSetup.TestTemplateAsync(20).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Webconfig()
+        public async Task WebconfigAsync()
         {
-            await testSetup.TestTemplateAsync(21);
+            await testSetup.TestTemplateAsync(21).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public async Task Sln()
+        public async Task SlnAsync()
         {
-            await testSetup.TestTemplateAsync(22);
+            await testSetup.TestTemplateAsync(22).ConfigureAwait(false);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
-    }
-
-    [Collection("Trigger else Statements")]
-    public class TriggerElse
-    {
-        private readonly TestSetup testSetup = new TestSetup();
 
         [Fact]
         public async Task DoubleTestAsync()

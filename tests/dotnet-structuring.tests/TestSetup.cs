@@ -1,4 +1,5 @@
 ﻿using dotnet_structuring.library;
+using dotnet_structuring.library.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static dotnet_structuring.library.StructuringDelegate;
@@ -9,6 +10,7 @@ namespace dotnet_structuring.tests
     {
         //Setup Variables
         private readonly TempDirectory temp = new TempDirectory();
+        private readonly EventLogger eventLogger = new EventLogger();
 
         public string CurrentLog { get; set; }
         public string Options { get; private set; }
@@ -23,7 +25,6 @@ namespace dotnet_structuring.tests
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
         }
-
         public void OnIncommingEventLog(object sender, EventLogger e)
         {
             CurrentLog = e.Logs;

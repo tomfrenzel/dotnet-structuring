@@ -20,15 +20,15 @@ namespace dotnet_structuring.library
             LogEvent.Invoke(this, log);
         }
 
-        public async Task RunStructuringAsync(string Output, List<string> Directories, string NETCommand, string ProjectName)
+        public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
         {
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output + @"\" + ProjectName);
 
             if (!OutputDirectory.Exists)
             {
                 Directory.CreateDirectory(OutputDirectory.FullName);
-
                 CreateDirectories(Directories, OutputDirectory);
+
                 await Task.Factory.StartNew(() =>
                 {
                     Process p = new Process();
@@ -62,7 +62,7 @@ namespace dotnet_structuring.library
             }
         }
 
-        private void CreateDirectories(List<string> Directories, DirectoryInfo OutputDirectory)
+        private void CreateDirectories(IEnumerable<string> Directories, DirectoryInfo OutputDirectory)
         {
             foreach (string element in Directories)
             {
