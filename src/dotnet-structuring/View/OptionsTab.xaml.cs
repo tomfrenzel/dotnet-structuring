@@ -1,5 +1,4 @@
-﻿using dotnet_structuring.ViewModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace dotnet_structuring.View
