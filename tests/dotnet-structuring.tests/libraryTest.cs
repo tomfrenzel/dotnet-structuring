@@ -10,156 +10,156 @@ namespace dotnet_structuring.tests
         private readonly TestSetup testSetup = new TestSetup();
 
         [Fact]
-        public void Console()
+        public async Task Console()
         {
-            testSetup.TestTemplate(1);
+            await testSetup.TestTemplateAsync(1);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Classlib()
+        public async Task Classlib()
         {
-            testSetup.TestTemplate(2);
+            await testSetup.TestTemplateAsync(2);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Mstest()
+        public async Task Mstest()
         {
-            testSetup.TestTemplate(3);
+            await testSetup.TestTemplateAsync(3);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Nunit()
+        public async Task Nunit()
         {
-            testSetup.TestTemplate(4);
+            await testSetup.TestTemplateAsync(4);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Nunittest()
+        public async Task Nunittest()
         {
-            testSetup.TestTemplate(5);
+            await testSetup.TestTemplateAsync(5);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Xunit()
+        public async Task Xunit()
         {
-            testSetup.TestTemplate(6);
+            await testSetup.TestTemplateAsync(6);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Page()
+        public async Task Page()
         {
-            testSetup.TestTemplate(7);
+            await testSetup.TestTemplateAsync(7);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Viewimports()
+        public async Task Viewimports()
         {
-            testSetup.TestTemplate(8);
+            await testSetup.TestTemplateAsync(8);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Viewstart()
+        public async Task Viewstart()
         {
-            testSetup.TestTemplate(9);
+            await testSetup.TestTemplateAsync(9);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Web()
+        public async Task Web()
         {
-            testSetup.TestTemplate(10);
+            await testSetup.TestTemplateAsync(10);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Mvc()
+        public async Task Mvc()
         {
-            testSetup.TestTemplate(11);
+            await testSetup.TestTemplateAsync(11);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Console2()
+        public async Task Console2()
         {
-            testSetup.TestTemplate(12);
+            await testSetup.TestTemplateAsync(12);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Webapp()
+        public async Task Webapp()
         {
-            testSetup.TestTemplate(13);
+            await testSetup.TestTemplateAsync(13);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Angular()
+        public async Task Angular()
         {
-            testSetup.TestTemplate(14);
+            await testSetup.TestTemplateAsync(14);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void React()
+        public async Task React()
         {
-            testSetup.TestTemplate(15);
+            await testSetup.TestTemplateAsync(15);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Reactredux()
+        public async Task Reactredux()
         {
-            testSetup.TestTemplate(16);
+            await testSetup.TestTemplateAsync(16);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Razorclasslib()
+        public async Task Razorclasslib()
         {
-            testSetup.TestTemplate(17);
+            await testSetup.TestTemplateAsync(17);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Webapi()
+        public async Task Webapi()
         {
-            testSetup.TestTemplate(18);
+            await testSetup.TestTemplateAsync(18);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Globaljson()
+        public async Task Globaljson()
         {
-            testSetup.TestTemplate(19);
+            await testSetup.TestTemplateAsync(19);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Nugetconfig()
+        public async Task Nugetconfig()
         {
-            testSetup.TestTemplate(20);
+            await testSetup.TestTemplateAsync(20);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Webconfig()
+        public async Task Webconfig()
         {
-            testSetup.TestTemplate(21);
+            await testSetup.TestTemplateAsync(21);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
 
         [Fact]
-        public void Sln()
+        public async Task Sln()
         {
-            testSetup.TestTemplate(22);
+            await testSetup.TestTemplateAsync(22);
             Assert.Equal("Done.", testSetup.CurrentLog);
         }
     }
@@ -170,10 +170,10 @@ namespace dotnet_structuring.tests
         private readonly TestSetup testSetup = new TestSetup();
 
         [Fact]
-        public void DoubleTest()
+        public async Task DoubleTestAsync()
         {
-            testSetup.TestTemplate(1);
-            testSetup.TestTemplate(1);
+            await testSetup.TestTemplateAsync(1);
+            await testSetup.TestTemplateAsync(1);
             Assert.Equal("A Project with this Name already exists!", testSetup.CurrentLog);
         }
     }

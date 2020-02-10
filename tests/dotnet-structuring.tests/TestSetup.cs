@@ -29,7 +29,7 @@ namespace dotnet_structuring.tests
             CurrentLog = e.Logs;
         }
 
-        internal void TestTemplate(int i)
+        internal async Task TestTemplateAsync(int i)
         {
             ProjectName = "TestProject";
             OutputDirectory = temp;
@@ -46,7 +46,7 @@ namespace dotnet_structuring.tests
             NETCommand = " new " + slelctedTemplate + " " + Options + "-o src/" + ProjectName + " -n " + ProjectName;
             Structuring RunStructuring = new Structuring();
             WireEventHandlers(RunStructuring);
-            RunStructuring.RunStructuringAsync(OutputDirectory, Directories, NETCommand, ProjectName).Wait();
+            await RunStructuring.RunStructuringAsync(OutputDirectory, Directories, NETCommand, ProjectName);
         }
     }
 }
