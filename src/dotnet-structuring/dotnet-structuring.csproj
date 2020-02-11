@@ -5,6 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>dotnet_structuring</RootNamespace>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ProjectGuid>5e95923a-1708-4023-b410-f96982aa8afd</ProjectGuid>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -27,8 +29,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Codecov" Version="1.9.0" />
-    <PackageReference Include="Ookii.Dialogs" Version="1.0.0" />
+    <PackageReference Include="HandyControl" Version="2.3.0" />
+    <PackageReference Include="RunProcessAsTask" Version="1.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet-structuring.library\dotnet-structuring.library.csproj" />
   </ItemGroup>
 
 </Project>

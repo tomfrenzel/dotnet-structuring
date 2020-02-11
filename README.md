@@ -1,6 +1,9 @@
-[![GitHub issues](https://img.shields.io/github/issues/tomfrenzel/dotnet-structuring?style=flat-square)](https://github.com/tomfrenzel/dotnet-structuring/issues)
-[![GitHub license](https://img.shields.io/github/license/tomfrenzel/dotnet-structuring?style=flat-square)](https://github.com/tomfrenzel/dotnet-structuring/blob/master/LICENSE)
-![Travis (.com)](https://img.shields.io/travis/com/tomfrenzel/dotnet-structuring?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/tomfrenzel/dotnet-structuring)](https://github.com/tomfrenzel/dotnet-structuring/issues)
+[![Build Status](https://dev.azure.com/tomfrenzel/dotnet-structuring/_apis/build/status/dotnet-structuring%20CI?branchName=dev)](https://dev.azure.com/tomfrenzel/dotnet-structuring/_build/latest?definitionId=5&branchName=dev)
+[![codecov](https://codecov.io/gh/tomfrenzel/dotnet-structuring/branch/dev/graph/badge.svg)](https://codecov.io/gh/tomfrenzel/dotnet-structuring)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/16af892b784c4b049b34622c3949a3d2)](https://www.codacy.com/manual/tomfrenzel/dotnet-structuring?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomfrenzel/dotnet-structuring&amp;utm_campaign=Badge_Grade)
+[![GitHub license](https://img.shields.io/github/license/tomfrenzel/dotnet-structuring)](https://github.com/tomfrenzel/dotnet-structuring/blob/master/LICENSE)
+
 
 # dotnet-structuring
 
@@ -43,9 +46,9 @@ Run ```build.bat``` to build the Project. The Output files will be located in th
 ## Usage
 
 The Usage is basically self-explaining. Here are some screenshots of the Program:
-![General](https://github.com/tomfrenzel/dotnet-structuring/blob/master/samples/screenshots/general.png)
-![Options](https://github.com/tomfrenzel/dotnet-structuring/blob/master/samples/screenshots/options.png)
-![Finish](https://github.com/tomfrenzel/dotnet-structuring/blob/master/samples/screenshots/finish.png)
+![General](samples/screenshots/general.png)
+![Options](samples/screenshots/options.png)
+![Finish](samples/screenshots/finish.png)
 
 ## Built With
 
@@ -57,4 +60,4 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
