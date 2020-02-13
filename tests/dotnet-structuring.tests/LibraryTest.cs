@@ -32,7 +32,7 @@ namespace dotnet_structuring.tests
             CurrentLog = e.Logs;
         }
 
-        internal async Task TestTemplateAsync(string selectedTemplate)
+        internal async Task TestTemplateAsync(string SelectedTemplate)
         {
             ProjectName = "TestProject";
             OutputDirectory = tempPath;
@@ -46,7 +46,7 @@ namespace dotnet_structuring.tests
 
             Directory.CreateDirectory(tempPath);
 
-            NetCommand = $" new {selectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";
+            NetCommand = $" new {SelectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";
             WireEventHandlers(Structuring);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
         }
