@@ -21,13 +21,13 @@ namespace dotnet_structuring.tests
         private static readonly List<string> directories = new List<string>();
         private readonly string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
-        public void WireEventHandlers(Structuring e)
+        internal void WireEventHandlers(Structuring e)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, EventLogger e)
+        internal void OnIncommingEventLog(object sender, EventLogger e)
         {
             CurrentLog = e.Logs;
         }
