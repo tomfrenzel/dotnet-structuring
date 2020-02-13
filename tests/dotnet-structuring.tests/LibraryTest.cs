@@ -61,7 +61,7 @@ namespace dotnet_structuring.tests
 
         [Theory]
         [MemberData(nameof(TemplatesGettingTested))]
-        public async Task Test1(Template Template)
+        public async Task TestTemplates(Template Template)
         {
             await TestTemplateAsync(Template.ShortName);
             Assert.Equal("Done.", CurrentLog);
