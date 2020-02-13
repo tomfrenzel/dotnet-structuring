@@ -9,7 +9,7 @@ using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.tests
 {
-    public class LibraryTest
+    public class LibraryTest : IDisposable
     {
         private Structuring Structuring = new Structuring();
 
@@ -65,6 +65,12 @@ namespace dotnet_structuring.tests
         {
             await TestTemplateAsync(Template.ShortName);
             Assert.Equal("Done.", CurrentLog);
+            CurrentLog = string.Empty;
+        }
+
+        public void Dispose()
+        {
+            Directory.Delete(tempPath);
         }
     }
 }
