@@ -70,7 +70,7 @@ namespace dotnet_structuring.tests
 
         public void Dispose()
         {
-            Directory.Delete(tempPath);
+            Directory.Delete(tempPath, true);
         }
     }
 }
