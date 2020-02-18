@@ -34,7 +34,6 @@ namespace dotnet_structuring.tests
 
         internal async Task TestTemplateAsync(string SelectedTemplate)
         {
-            throw new Exception("blup");
             ProjectName = "TestProject";
             OutputDirectory = tempPath;
             directories.Add("artifacts");
