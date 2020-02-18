@@ -6,12 +6,50 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 using static dotnet_structuring.library.StructuringDelegate;
+using Moq;
+using System.Diagnostics;
 
 namespace dotnet_structuring.tests
 {
     public class LibraryTest : IDisposable
     {
-        private Structuring Structuring = new Structuring();
+        private class FakeProcess : Process
+        {
+            public FakeProcess()
+            {
+            }
+            public EventHandler<string> calledMethods;
+            public new EventHandler Exited;
+            public new bool Start()
+            {
+                calledMethods(this, "Start");
+                EventHandler blup = this.Exited;
+                if(blup != null)
+                {
+                    blup(this, null);
+                }
+                else
+                {
+                    throw new ArgumentException("a event handler for exited is required");
+                }                 
+                return true;
+            }
+
+            public new void WaitForExit()
+            {
+                calledMethods(this, "WaitForExit");
+                return;
+            }
+
+            public new void Kill()
+            {
+                calledMethods(this, "Kill");
+                return;
+            }
+
+        }
+
+        
 
         public string CurrentLog { get; set; }
         public string NetCommand { get; private set; }
@@ -32,7 +70,7 @@ namespace dotnet_structuring.tests
             CurrentLog = e.Logs;
         }
 
-        internal async Task TestTemplateAsync(string SelectedTemplate)
+        internal async Task TestTemplateAsync(string SelectedTemplate, Process process)
         {
             ProjectName = "TestProject";
             OutputDirectory = tempPath;
@@ -46,9 +84,10 @@ namespace dotnet_structuring.tests
 
             Directory.CreateDirectory(tempPath);
 
-            NetCommand = $" new {SelectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";
+            NetCommand = $" new {SelectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";            
+            var Structuring = new Structuring(process);
             WireEventHandlers(Structuring);
-            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
+            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);            
         }
 
         public static IEnumerable<object[]> TemplatesGettingTested()
@@ -60,20 +99,36 @@ namespace dotnet_structuring.tests
         }
 
         [Theory]
+        [Trait("Category", "UnitTest ")]
         [MemberData(nameof(TemplatesGettingTested))]
         public async Task TestTemplates(Template Template)
         {
-            await TestTemplateAsync(Template.ShortName);
+            //var mock = new Mock<Process>();
+            //mock.Setup(service => service.Start()).Returns;
+
+            FakeProcess process = new FakeProcess();
+            List<string> calledMethods = new List<string>();
+            process.calledMethods = (sender, e) =>
+            {
+                calledMethods.Add(e);
+            };
+            await TestTemplateAsync(Template.ShortName, process);
             Assert.Equal("Done.", CurrentLog);
+            Assert.Equal("dotnet", process.StartInfo.FileName);
+            Assert.Contains($"new {Template.ShortName}", process.StartInfo.Arguments);
+           // Assert.Contains("Start", calledMethods);
             CurrentLog = string.Empty;
         }
 
         [Fact]
+        [Trait ("Category", "IntegrationTest")]
         public async Task TestExeptions()
         {
+            Process process = new Process();
+
             Template Template = InitializeTemplates.Templates[1];
-            await TestTemplateAsync(Template.ShortName);
-            await TestTemplateAsync(Template.ShortName);
+            await TestTemplateAsync(Template.ShortName, process);
+            await TestTemplateAsync(Template.ShortName, process);
             Assert.Equal("A Project with this Name already exists!", CurrentLog);
             CurrentLog = string.Empty;
         }

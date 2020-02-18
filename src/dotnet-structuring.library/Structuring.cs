@@ -7,7 +7,22 @@ using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.library {
     public class Structuring {
+        private readonly Process baseProcess;
+
         public event StructuringHandler LogEvent;
+
+        public Structuring(Process baseProcess= null)
+        {
+            if(baseProcess != null)
+            {
+                this.baseProcess = baseProcess;
+            }
+            else
+            {
+                this.baseProcess = new Process();
+            }
+            
+        }
 
         private void WriteLog (string logs) {
             EventLogger log = new EventLogger {
@@ -24,26 +39,26 @@ namespace dotnet_structuring.library {
                 CreateDirectories (Directories, OutputDirectory);
 
                 await Task.Factory.StartNew (() => {
-                    Process p = new Process ();
 
-                    p.StartInfo.WorkingDirectory = OutputDirectory.FullName;
-                    p.StartInfo.FileName = "dotnet";
-                    p.StartInfo.Arguments = NETCommand;
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.OutputDataReceived += new DataReceivedEventHandler ((sender, e) => {
+
+                    baseProcess.StartInfo.WorkingDirectory = OutputDirectory.FullName;
+                    baseProcess.StartInfo.FileName = "dotnet";
+                    baseProcess.StartInfo.Arguments = NETCommand;
+                    baseProcess.StartInfo.UseShellExecute = false;
+                    baseProcess.StartInfo.RedirectStandardOutput = true;
+                    baseProcess.StartInfo.CreateNoWindow = true;
+                    baseProcess.OutputDataReceived += new DataReceivedEventHandler ((sender, e) => {
                         // Prepend line numbers to each line of the output.
                         WriteLog (e.Data);
                     });
 
-                    p.EnableRaisingEvents = true;
-                    p.Exited += (sender, e) => {
+                    baseProcess.EnableRaisingEvents = true;
+                    baseProcess.Exited += (sender, e) => {
                         WriteLog ("Done.");
-                        p.Kill ();
+                        baseProcess.Kill();
                     };
-                    p.Start ();                    
-                    p.WaitForExit ();
+                    baseProcess.Start();
+                    baseProcess.WaitForExit ();
                 });
             } else {
                 WriteLog ("A Project with this Name already exists!");
