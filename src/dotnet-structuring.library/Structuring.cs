@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -44,8 +44,6 @@ namespace dotnet_structuring.library
                         // Prepend line numbers to each line of the output.
                         WriteLog(e.Data);
                     });
-                    p.Start();
-
                     p.BeginOutputReadLine();
                     p.EnableRaisingEvents = true;
                     p.Exited += (sender, e) =>
@@ -53,6 +51,8 @@ namespace dotnet_structuring.library
                         WriteLog("Done.");
                         p.Kill();
                     };
+                    p.Start();
+                    
                     p.WaitForExit();
                 });
             }
