@@ -68,6 +68,15 @@ namespace dotnet_structuring.tests
             CurrentLog = string.Empty;
         }
 
+        [Fact]
+        public async Task TestExeptions()
+        {
+            Template Template = InitializeTemplates.Templates[1];
+            await TestTemplateAsync(Template.ShortName);
+            await TestTemplateAsync(Template.ShortName);
+            Assert.Equal("Done.", CurrentLog);
+            CurrentLog = string.Empty;
+        }
         public void Dispose()
         {
             Directory.Delete(tempPath, true);
