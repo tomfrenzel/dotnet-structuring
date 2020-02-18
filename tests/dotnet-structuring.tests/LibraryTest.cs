@@ -74,7 +74,7 @@ namespace dotnet_structuring.tests
             Template Template = InitializeTemplates.Templates[1];
             await TestTemplateAsync(Template.ShortName);
             await TestTemplateAsync(Template.ShortName);
-            Assert.Equal("Done.", CurrentLog);
+            Assert.Equal("A Project with this Name already exists!", CurrentLog);
             CurrentLog = string.Empty;
         }
         public void Dispose()
