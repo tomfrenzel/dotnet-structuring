@@ -42,8 +42,7 @@ namespace dotnet_structuring.library {
                         WriteLog ("Done.");
                         p.Kill ();
                     };
-                    p.Start ();
-                    p.BeginOutputReadLine ();
+                    p.Start ();                    
                     p.WaitForExit ();
                 });
             } else {
