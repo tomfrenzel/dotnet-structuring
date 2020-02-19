@@ -69,7 +69,6 @@ namespace dotnet_structuring.tests
         {
             CustomProcess process = new CustomProcess();
             await TestTemplateAsync(Template.ShortName, process);
-            Assert.Equal("Done.", CurrentLog);
             Assert.Equal("dotnet", process.StartInfo.FileName);
             Assert.Contains($"new {Template.ShortName}", process.StartInfo.Arguments);
            // Assert.Contains("Start", calledMethods);

@@ -1,8 +1,6 @@
 ﻿using dotnet_structuring.library.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace dotnet_structuring.library.Models
 {
@@ -10,19 +8,22 @@ namespace dotnet_structuring.library.Models
     {
         public CustomProcess() : base()
         {
-
         }
+
+        public string CustomProcessName => "CustomProcess";
+
         public new bool Start()
         {
-            
-                throw new ArgumentException("a event handler for exited is required");
-            
             return true;
         }
+
+        public new void WaitForExit()
+        {
+        }
+
         void ICustomProcess.OnExited()
         {
             throw new NotImplementedException();
         }
-
     }
 }

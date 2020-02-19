@@ -220,5 +220,7 @@ namespace dotnet_structuring.library.Interfaces
         bool WaitForInputIdle(int milliseconds);
 
         void OnExited();
+
+        string CustomProcessName { get; }
     }
 }
