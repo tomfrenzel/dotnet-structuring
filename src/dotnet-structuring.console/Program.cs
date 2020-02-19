@@ -1,4 +1,5 @@
 ﻿using dotnet_structuring.library;
+using dotnet_structuring.library.Models;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
@@ -129,7 +130,7 @@ namespace dotnet_structuring.console
             }
 
             NETCommand = $" new {template} -o src/{name} -n {name}";
-
+            StandardProcess process = new StandardProcess();
             Structuring execute = new Structuring(process);
             WireEventHandlers(execute);
             execute.RunStructuringAsync(output, Directories, NETCommand, name).Wait();

@@ -166,8 +166,9 @@ namespace dotnet_structuring.View
 
         public async void ExecButton_Click(object sender, RoutedEventArgs e)
         {
+            StandardProcess process = new StandardProcess();
             OutputBox.Text = "";
-            Structuring OutputLogs = new Structuring();
+            Structuring OutputLogs = new Structuring(process);
             this.Dispatcher.Invoke(() =>
             {
                 pbStatus.IsIndeterminate = true;
