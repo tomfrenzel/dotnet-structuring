@@ -57,6 +57,7 @@ namespace dotnet_structuring.library
                         baseProcess.Kill();
                     };
                     baseProcess.Start();
+                    baseProcess.BeginOutputReadLine();
                     baseProcess.WaitForExit();
                 });
             }
