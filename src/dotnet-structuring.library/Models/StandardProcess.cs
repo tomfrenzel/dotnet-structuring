@@ -9,10 +9,5 @@ namespace dotnet_structuring.library.Models
         public StandardProcess() : base()
         {
         }
-        public string CustomProcessName => "StandardProcess";
-        void ICustomProcess.OnExited()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

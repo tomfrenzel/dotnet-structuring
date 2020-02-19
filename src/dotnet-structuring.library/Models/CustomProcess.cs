@@ -10,8 +10,6 @@ namespace dotnet_structuring.library.Models
         {
         }
 
-        public string CustomProcessName => "CustomProcess";
-
         public new bool Start()
         {
             return true;
@@ -19,11 +17,6 @@ namespace dotnet_structuring.library.Models
 
         public new void WaitForExit()
         {
-        }
-
-        void ICustomProcess.OnExited()
-        {
-            throw new NotImplementedException();
         }
     }
 }
