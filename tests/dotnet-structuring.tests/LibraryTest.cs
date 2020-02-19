@@ -63,7 +63,7 @@ namespace dotnet_structuring.tests
         }
 
         [Theory]
-        [Trait("Category", "UnitTest ")]
+        [Trait("Category", "UnitTest")]
         [MemberData(nameof(TemplatesGettingTested))]
         public async Task TestTemplates(Template Template)
         {
