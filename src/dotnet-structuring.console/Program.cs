@@ -130,7 +130,7 @@ namespace dotnet_structuring.console
 
             NETCommand = $" new {template} -o src/{name} -n {name}";
 
-            Structuring execute = new Structuring();
+            Structuring execute = new Structuring(process);
             WireEventHandlers(execute);
             execute.RunStructuringAsync(output, Directories, NETCommand, name).Wait();
         }

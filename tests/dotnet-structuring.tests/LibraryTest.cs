@@ -8,49 +8,13 @@ using Xunit;
 using static dotnet_structuring.library.StructuringDelegate;
 using Moq;
 using System.Diagnostics;
+using dotnet_structuring.library.Interfaces;
 
 namespace dotnet_structuring.tests
 {
     public class LibraryTest : IDisposable
     {
-        private class FakeProcess : Process
-        {
-            public FakeProcess()
-            {
-            }
-            public EventHandler<string> calledMethods;
-            public new EventHandler Exited;
-            public new bool Start()
-            {
-                calledMethods(this, "Start");
-                EventHandler blup = this.Exited;
-                if(blup != null)
-                {
-                    blup(this, null);
-                }
-                else
-                {
-                    throw new ArgumentException("a event handler for exited is required");
-                }                 
-                return true;
-            }
-
-            public new void WaitForExit()
-            {
-                calledMethods(this, "WaitForExit");
-                return;
-            }
-
-            public new void Kill()
-            {
-                calledMethods(this, "Kill");
-                return;
-            }
-
-        }
-
-        
-
+        private readonly ICustomProcess process;
         public string CurrentLog { get; set; }
         public string NetCommand { get; private set; }
         public string ProjectName { get; private set; }
@@ -70,7 +34,7 @@ namespace dotnet_structuring.tests
             CurrentLog = e.Logs;
         }
 
-        internal async Task TestTemplateAsync(string SelectedTemplate, Process process)
+        internal async Task TestTemplateAsync(string SelectedTemplate, ICustomProcess process)
         {
             ProjectName = "TestProject";
             OutputDirectory = tempPath;
@@ -124,7 +88,7 @@ namespace dotnet_structuring.tests
         [Trait ("Category", "IntegrationTest")]
         public async Task TestExeptions()
         {
-            Process process = new Process();
+            StandardProcess process = new StandardProcess();
 
             Template Template = InitializeTemplates.Templates[1];
             await TestTemplateAsync(Template.ShortName, process);

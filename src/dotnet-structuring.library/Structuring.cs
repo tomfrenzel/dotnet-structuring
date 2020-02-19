@@ -1,3 +1,5 @@
+using dotnet_structuring.library.Interfaces;
+using dotnet_structuring.library.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,24 +8,23 @@ using System.Threading.Tasks;
 using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.library {
+    
     public class Structuring {
-        private readonly Process baseProcess;
+        private readonly ICustomProcess baseProcess;
 
         public event StructuringHandler LogEvent;
-
-        public Structuring(Process baseProcess= null)
+        public Structuring(ICustomProcess baseProcess)
         {
             if(baseProcess != null)
             {
-                this.baseProcess = baseProcess;
+                this.baseProcess = new CustomProcess();
             }
             else
             {
-                this.baseProcess = new Process();
+                this.baseProcess = new StandardProcess();
             }
             
         }
-
         private void WriteLog (string logs) {
             EventLogger log = new EventLogger {
                 Logs = logs
