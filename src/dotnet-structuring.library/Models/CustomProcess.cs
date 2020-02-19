@@ -1,10 +1,9 @@
 ﻿using dotnet_structuring.library.Interfaces;
-using System;
 using System.Diagnostics;
 
 namespace dotnet_structuring.library.Models
 {
-    public class CustomProcess : Process, ICustomProcess
+    public class CustomProcess : Process, IProcess
     {
         public CustomProcess() : base()
         {
@@ -16,6 +15,10 @@ namespace dotnet_structuring.library.Models
         }
 
         public new void WaitForExit()
+        {
+        }
+
+        public new void BeginOutputReadLine()
         {
         }
     }

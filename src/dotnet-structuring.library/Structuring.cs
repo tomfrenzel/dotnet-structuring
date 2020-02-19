@@ -9,11 +9,11 @@ namespace dotnet_structuring.library
 {
     public class Structuring
     {
-        private readonly ICustomProcess baseProcess;
+        private readonly IProcess baseProcess;
 
         public event StructuringHandler LogEvent;
 
-        public Structuring(ICustomProcess baseProcess)
+        public Structuring(IProcess baseProcess)
         {
             this.baseProcess = baseProcess;
         }

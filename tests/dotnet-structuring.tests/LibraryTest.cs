@@ -14,7 +14,7 @@ namespace dotnet_structuring.tests
 {
     public class LibraryTest : IDisposable
     {
-        private readonly ICustomProcess process;
+        private readonly IProcess process;
         public string CurrentLog { get; set; }
         public string NetCommand { get; private set; }
         public string ProjectName { get; private set; }
@@ -34,7 +34,7 @@ namespace dotnet_structuring.tests
             CurrentLog = e.Logs;
         }
 
-        internal async Task TestTemplateAsync(string SelectedTemplate, ICustomProcess process)
+        internal async Task TestTemplateAsync(string SelectedTemplate, IProcess process)
         {
             ProjectName = "TestProject";
             OutputDirectory = tempPath;

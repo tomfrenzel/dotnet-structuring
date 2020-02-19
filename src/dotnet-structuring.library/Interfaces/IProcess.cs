@@ -6,7 +6,7 @@ using System.IO;
 
 namespace dotnet_structuring.library.Interfaces
 {
-    public interface ICustomProcess : IDisposable
+    public interface IProcess : IDisposable
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         ProcessPriorityClass PriorityClass { get; set; }

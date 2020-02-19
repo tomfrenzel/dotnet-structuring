@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace dotnet_structuring.library.Models
 {
-    public class StandardProcess : Process, ICustomProcess
+    public class StandardProcess : Process, IProcess
     {
         public StandardProcess() : base()
         {
