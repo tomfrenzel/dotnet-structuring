@@ -67,15 +67,7 @@ namespace dotnet_structuring.tests
         [MemberData(nameof(TemplatesGettingTested))]
         public async Task TestTemplates(Template Template)
         {
-            //var mock = new Mock<Process>();
-            //mock.Setup(service => service.Start()).Returns;
-
-            FakeProcess process = new FakeProcess();
-            List<string> calledMethods = new List<string>();
-            process.calledMethods = (sender, e) =>
-            {
-                calledMethods.Add(e);
-            };
+            CustomProcess process = new CustomProcess();
             await TestTemplateAsync(Template.ShortName, process);
             Assert.Equal("Done.", CurrentLog);
             Assert.Equal("dotnet", process.StartInfo.FileName);
