@@ -12,7 +12,7 @@ namespace dotnet_structuring.tests
 {
     public class LibraryTest
     {
-        private Logging Logging = new Logging();
+        private readonly Logging logging = new Logging();
         public string NetCommand { get; private set; }
         public string ProjectName { get; private set; }
         public string OutputDirectory { get; private set; }
@@ -49,7 +49,7 @@ namespace dotnet_structuring.tests
             var Structuring = new Structuring(Process);
 
             // Act
-            Logging.WireEventHandlers(Structuring);
+            logging.WireEventHandlers(Structuring);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
 
             // Assert
@@ -57,7 +57,7 @@ namespace dotnet_structuring.tests
             Assert.Contains($"new {Template.ShortName}", Process.StartInfo.Arguments);
 
             // Cleanup
-            Logging.CurrentLog = string.Empty;
+            logging.CurrentLog = string.Empty;
             Directory.Delete(tempPath, true);
         }
 
@@ -82,15 +82,15 @@ namespace dotnet_structuring.tests
             var Structuring = new Structuring(Process);
 
             // Act
-            Logging.WireEventHandlers(Structuring);
+            logging.WireEventHandlers(Structuring);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
 
             // Assert
-            Assert.Equal("A Project with this Name already exists!", Logging.CurrentLog);
+            Assert.Equal("A Project with this Name already exists!", logging.CurrentLog);
 
             // Cleanup
-            Logging.CurrentLog = string.Empty;
+            logging.CurrentLog = string.Empty;
             Directory.Delete(tempPath, true);
         }
     }
