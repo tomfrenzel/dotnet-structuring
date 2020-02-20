@@ -1,6 +1,7 @@
 [![Build Status](https://dev.azure.com/tomfrenzel/dotnet-structuring/_apis/build/status/dotnet-structuring%20CI?branchName=master)](https://dev.azure.com/tomfrenzel/dotnet-structuring/_build/latest?definitionId=11&branchName=master)
 [![GitHub issues](https://img.shields.io/github/issues/tomfrenzel/dotnet-structuring)](https://github.com/tomfrenzel/dotnet-structuring/issues)
 [![GitHub license](https://img.shields.io/github/license/tomfrenzel/dotnet-structuring)](https://github.com/tomfrenzel/dotnet-structuring/blob/master/LICENSE)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/tomfrenzel/dotnet-structuring?include_prereleases&sort=semver)](https://github.com/tomfrenzel/dotnet-structuring/releases/latest)
 [![Coverage Status](https://coveralls.io/repos/github/tomfrenzel/dotnet-structuring/badge.svg?branch=master)](https://coveralls.io/github/tomfrenzel/dotnet-structuring?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/16af892b784c4b049b34622c3949a3d2)](https://www.codacy.com/manual/tomfrenzel/dotnet-structuring?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomfrenzel/dotnet-structuring&amp;utm_campaign=Badge_Grade)
 
