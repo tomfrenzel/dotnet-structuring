@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using static dotnet_structuring.library.StructuringDelegate;
+using static dotnet_structuring.library.Helpers.Logging.Logging;
 using static dotnet_structuring.View.GeneralTab;
 
 namespace dotnet_structuring.View
@@ -135,18 +135,18 @@ namespace dotnet_structuring.View
             CommandSummaryBox.Text = "";
         }
 
-        private void WireEventHandlers(Structuring e)
+        public void WireEventHandlers(Structuring e)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
             e.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, EventLogger e)
+        public void OnIncommingEventLog(object sender, string e)
         {
             logNum++;
             this.Dispatcher.Invoke(() =>
             {
-                currentLog = e.Logs;
+                currentLog = e;
                 OutputBox.Text += (currentLog + Environment.NewLine);
                 OutputBox.Text = Regex.Replace(OutputBox.Text, @"[\r\n]{2,}", Environment.NewLine);
 

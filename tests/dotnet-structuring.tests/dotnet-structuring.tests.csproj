@@ -34,4 +34,8 @@
     <ProjectReference Include="..\..\src\dotnet-structuring.library\dotnet-structuring.library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

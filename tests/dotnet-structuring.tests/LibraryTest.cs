@@ -1,4 +1,5 @@
 using dotnet_structuring.library;
+using dotnet_structuring.library.Helpers.Logging;
 using dotnet_structuring.library.Interfaces;
 using dotnet_structuring.library.Models;
 using System;
@@ -6,51 +7,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
-using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.tests
 {
-    public class LibraryTest : IDisposable
+    public class LibraryTest
     {
-        private readonly IProcess process;
-        public string CurrentLog { get; set; }
+        private Logging Logging = new Logging();
         public string NetCommand { get; private set; }
         public string ProjectName { get; private set; }
         public string OutputDirectory { get; private set; }
         private string path { get; set; }
         private static readonly List<string> directories = new List<string>();
         private readonly string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-
-        internal void WireEventHandlers(Structuring e)
-        {
-            StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
-        }
-
-        internal void OnIncommingEventLog(object sender, EventLogger e)
-        {
-            CurrentLog = e.Logs;
-        }
-
-        internal async Task TestTemplateAsync(string SelectedTemplate, IProcess process)
-        {
-            ProjectName = "TestProject";
-            OutputDirectory = tempPath;
-            directories.Add("artifacts");
-            directories.Add("build");
-            directories.Add("docs");
-            directories.Add("lib");
-            directories.Add("samples");
-            directories.Add("packages");
-            directories.Add("test");
-
-            Directory.CreateDirectory(tempPath);
-
-            NetCommand = $" new {SelectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";
-            var Structuring = new Structuring(process);
-            WireEventHandlers(Structuring);
-            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
-        }
 
         public static IEnumerable<object[]> TemplatesGettingTested()
         {
@@ -65,29 +33,64 @@ namespace dotnet_structuring.tests
         [MemberData(nameof(TemplatesGettingTested))]
         public async Task TestTemplatesAsync(Template Template)
         {
-            CustomProcess process = new CustomProcess();
-            await TestTemplateAsync(Template.ShortName, process);
-            Assert.Equal("dotnet", process.StartInfo.FileName);
-            Assert.Contains($"new {Template.ShortName}", process.StartInfo.Arguments);
-            // Assert.Contains("Start", calledMethods);
-            CurrentLog = string.Empty;
+            // Arrange
+            CustomProcess Process = new CustomProcess();
+            ProjectName = "TestProject";
+            OutputDirectory = tempPath;
+            directories.Add("artifacts");
+            directories.Add("build");
+            directories.Add("docs");
+            directories.Add("lib");
+            directories.Add("samples");
+            directories.Add("packages");
+            directories.Add("test");
+            Directory.CreateDirectory(tempPath);
+            NetCommand = $" new {Template.ShortName}  -o src/ {ProjectName} -n {ProjectName}";
+            var Structuring = new Structuring(Process);
+            Logging.WireEventHandlers(Structuring);
+
+            // Act
+            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
+
+            // Assert
+            Assert.Equal("dotnet", Process.StartInfo.FileName);
+            Assert.Contains($"new {Template.ShortName}", Process.StartInfo.Arguments);
+
+            // Cleanup
+            Logging.CurrentLog = string.Empty;
+            Directory.Delete(tempPath, true);
         }
 
         [Fact]
         [Trait("Category", "IntegrationTest")]
         public async Task ExecutionTestAsync()
         {
-            StandardProcess process = new StandardProcess();
-
+            // Arrange
+            StandardProcess Process = new StandardProcess();
             Template Template = InitializeTemplates.Templates[1];
-            await TestTemplateAsync(Template.ShortName, process);
-            await TestTemplateAsync(Template.ShortName, process);
-            Assert.Equal("A Project with this Name already exists!", CurrentLog);
-            CurrentLog = string.Empty;
-        }
+            ProjectName = "TestProject";
+            OutputDirectory = tempPath;
+            directories.Add("artifacts");
+            directories.Add("build");
+            directories.Add("docs");
+            directories.Add("lib");
+            directories.Add("samples");
+            directories.Add("packages");
+            directories.Add("test");
+            Directory.CreateDirectory(tempPath);
+            NetCommand = $" new {Template.ShortName}  -o src/ {ProjectName} -n {ProjectName}";
+            var Structuring = new Structuring(Process);
+            Logging.WireEventHandlers(Structuring);
 
-        public void Dispose()
-        {
+            // Act
+            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
+            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
+
+            // Assert
+            Assert.Equal("A Project with this Name already exists!", Logging.CurrentLog);
+
+            // Cleanup
+            Logging.CurrentLog = string.Empty;
             Directory.Delete(tempPath, true);
         }
     }

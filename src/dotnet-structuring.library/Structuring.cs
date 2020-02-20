@@ -1,9 +1,9 @@
+using dotnet_structuring.library.Helpers.Logging;
 using dotnet_structuring.library.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.library
 {
@@ -11,7 +11,7 @@ namespace dotnet_structuring.library
     {
         private readonly IProcess baseProcess;
 
-        public event StructuringHandler LogEvent;
+        public event Logging.StructuringHandler LogEvent;
 
         public Structuring(IProcess baseProcess)
         {
@@ -20,11 +20,7 @@ namespace dotnet_structuring.library
 
         private void WriteLog(string logs)
         {
-            EventLogger log = new EventLogger
-            {
-                Logs = logs
-            };
-            LogEvent.Invoke(this, log);
+            LogEvent.Invoke(this, logs);
         }
 
         public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
