@@ -47,9 +47,9 @@ namespace dotnet_structuring.tests
             Directory.CreateDirectory(tempPath);
             NetCommand = $" new {Template.ShortName}  -o src/ {ProjectName} -n {ProjectName}";
             var Structuring = new Structuring(Process);
-            Logging.WireEventHandlers(Structuring);
 
             // Act
+            Logging.WireEventHandlers(Structuring);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
 
             // Assert
@@ -80,9 +80,9 @@ namespace dotnet_structuring.tests
             Directory.CreateDirectory(tempPath);
             NetCommand = $" new {Template.ShortName}  -o src/ {ProjectName} -n {ProjectName}";
             var Structuring = new Structuring(Process);
-            Logging.WireEventHandlers(Structuring);
 
             // Act
+            Logging.WireEventHandlers(Structuring);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
             await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
 

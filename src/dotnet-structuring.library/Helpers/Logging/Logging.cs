@@ -10,10 +10,10 @@ namespace dotnet_structuring.library.Helpers.Logging
 
         public string CurrentLog { get; set; }
 
-        public void WireEventHandlers(Structuring s)
+        public void WireEventHandlers(Structuring structuring)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
-            s.LogEvent += handler;
+            structuring.LogEvent += handler;
         }
 
         public void OnIncommingEventLog(object sender, string log)

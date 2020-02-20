@@ -135,10 +135,10 @@ namespace dotnet_structuring.View
             CommandSummaryBox.Text = "";
         }
 
-        public void WireEventHandlers(Structuring e)
+        public void WireEventHandlers(Structuring structuring)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
+            structuring.LogEvent += handler;
         }
 
         public void OnIncommingEventLog(object sender, string log)
