@@ -65,7 +65,7 @@ namespace dotnet_structuring.tests
         [Theory]
         [Trait("Category", "UnitTest")]
         [MemberData(nameof(TemplatesGettingTested))]
-        public async Task TestTemplates(Template Template)
+        public async Task TestTemplatesAsync(Template Template)
         {
             CustomProcess process = new CustomProcess();
             await TestTemplateAsync(Template.ShortName, process);
@@ -77,7 +77,7 @@ namespace dotnet_structuring.tests
 
         [Fact]
         [Trait ("Category", "IntegrationTest")]
-        public async Task TestExeptions()
+        public async Task ExecutionTestAsync()
         {
             StandardProcess process = new StandardProcess();
 
