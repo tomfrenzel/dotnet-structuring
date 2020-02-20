@@ -8,7 +8,6 @@ namespace dotnet_structuring.library.Helpers.Logging
     {
         public delegate void StructuringHandler(object sender, string e);
 
-        public string Logs { get; set; }
         public string CurrentLog { get; set; }
 
         public void WireEventHandlers(Structuring e)
