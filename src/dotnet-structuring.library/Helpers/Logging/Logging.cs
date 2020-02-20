@@ -6,19 +6,19 @@ namespace dotnet_structuring.library.Helpers.Logging
 {
     public class Logging
     {
-        public delegate void StructuringHandler(object sender, string e);
+        public delegate void StructuringHandler(object sender, string log);
 
         public string CurrentLog { get; set; }
 
-        public void WireEventHandlers(Structuring e)
+        public void WireEventHandlers(Structuring s)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
+            s.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, string e)
+        public void OnIncommingEventLog(object sender, string log)
         {
-            CurrentLog = e;
+            CurrentLog = log;
         }
     }
 }

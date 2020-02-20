@@ -141,12 +141,12 @@ namespace dotnet_structuring.View
             e.LogEvent += handler;
         }
 
-        public void OnIncommingEventLog(object sender, string e)
+        public void OnIncommingEventLog(object sender, string log)
         {
             logNum++;
             this.Dispatcher.Invoke(() =>
             {
-                currentLog = e;
+                currentLog = log;
                 OutputBox.Text += (currentLog + Environment.NewLine);
                 OutputBox.Text = Regex.Replace(OutputBox.Text, @"[\r\n]{2,}", Environment.NewLine);
 
