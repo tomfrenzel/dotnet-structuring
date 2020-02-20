@@ -1,4 +1,5 @@
 using dotnet_structuring.library;
+using dotnet_structuring.library.Interfaces;
 using dotnet_structuring.library.Models;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 using static dotnet_structuring.library.StructuringDelegate;
-using Moq;
-using System.Diagnostics;
-using dotnet_structuring.library.Interfaces;
 
 namespace dotnet_structuring.tests
 {
@@ -48,10 +46,10 @@ namespace dotnet_structuring.tests
 
             Directory.CreateDirectory(tempPath);
 
-            NetCommand = $" new {SelectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";            
+            NetCommand = $" new {SelectedTemplate}  -o src/ {ProjectName} -n {ProjectName}";
             var Structuring = new Structuring(process);
             WireEventHandlers(Structuring);
-            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);            
+            await Structuring.RunStructuringAsync(OutputDirectory, directories, NetCommand, ProjectName);
         }
 
         public static IEnumerable<object[]> TemplatesGettingTested()
@@ -71,12 +69,12 @@ namespace dotnet_structuring.tests
             await TestTemplateAsync(Template.ShortName, process);
             Assert.Equal("dotnet", process.StartInfo.FileName);
             Assert.Contains($"new {Template.ShortName}", process.StartInfo.Arguments);
-           // Assert.Contains("Start", calledMethods);
+            // Assert.Contains("Start", calledMethods);
             CurrentLog = string.Empty;
         }
 
         [Fact]
-        [Trait ("Category", "IntegrationTest")]
+        [Trait("Category", "IntegrationTest")]
         public async Task ExecutionTestAsync()
         {
             StandardProcess process = new StandardProcess();
@@ -87,6 +85,7 @@ namespace dotnet_structuring.tests
             Assert.Equal("A Project with this Name already exists!", CurrentLog);
             CurrentLog = string.Empty;
         }
+
         public void Dispose()
         {
             Directory.Delete(tempPath, true);

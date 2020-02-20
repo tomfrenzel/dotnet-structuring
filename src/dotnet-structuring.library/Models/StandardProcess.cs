@@ -1,5 +1,4 @@
 ﻿using dotnet_structuring.library.Interfaces;
-using System;
 using System.Diagnostics;
 
 namespace dotnet_structuring.library.Models
