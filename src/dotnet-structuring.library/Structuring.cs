@@ -1,4 +1,4 @@
-using dotnet_structuring.library.Helpers.Logging;
+using dotnet_structuring.library.Helpers;
 using dotnet_structuring.library.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,7 +23,7 @@ namespace dotnet_structuring.library
             LogEvent.Invoke(this, logs);
         }
 
-        public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
+        public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NetCommand, string ProjectName)
         {
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output + @"\" + ProjectName);
 
@@ -36,7 +36,7 @@ namespace dotnet_structuring.library
                 {
                     baseProcess.StartInfo.WorkingDirectory = OutputDirectory.FullName;
                     baseProcess.StartInfo.FileName = "dotnet";
-                    baseProcess.StartInfo.Arguments = NETCommand;
+                    baseProcess.StartInfo.Arguments = NetCommand;
                     baseProcess.StartInfo.UseShellExecute = false;
                     baseProcess.StartInfo.RedirectStandardOutput = true;
                     baseProcess.StartInfo.CreateNoWindow = true;

@@ -1,11 +1,11 @@
 ﻿using dotnet_structuring.library.Interfaces;
 using System.Diagnostics;
 
-namespace dotnet_structuring.library.Models
+namespace dotnet_structuring.tests.Helpers
 {
-    public class CustomProcess : Process, IProcess
+    public class TestProcess : Process, IProcess
     {
-        public CustomProcess() : base()
+        public TestProcess() : base()
         {
         }
 

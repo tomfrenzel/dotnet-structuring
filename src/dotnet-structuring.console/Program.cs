@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using static dotnet_structuring.library.Helpers.Logging.Logging;
+using static dotnet_structuring.library.Helpers.Logging;
 
 namespace dotnet_structuring.console
 {
@@ -138,17 +138,15 @@ namespace dotnet_structuring.console
 
         private readonly SetupDelegate @delegate = Run;
 
-        public static void WireEventHandlers(Structuring e)
+        public static void WireEventHandlers(Structuring structuring)
         {
             StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
-            e.LogEvent += handler;
+            structuring.LogEvent += handler;
         }
 
-        public static void OnIncommingEventLog(object sender, string e)
+        public static void OnIncommingEventLog(object sender, string eventMessage)
         {
-            string CurrentLog = e;
-
-            Console.WriteLine(CurrentLog + Environment.NewLine);
+            Console.WriteLine(eventMessage + Environment.NewLine);
         }
     }
 }

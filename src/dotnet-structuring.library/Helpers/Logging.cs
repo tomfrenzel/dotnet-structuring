@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace dotnet_structuring.library.Helpers.Logging
+namespace dotnet_structuring.library.Helpers
 {
     public class Logging
     {

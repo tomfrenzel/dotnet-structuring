@@ -1,7 +1,8 @@
 using dotnet_structuring.library;
-using dotnet_structuring.library.Helpers.Logging;
+using dotnet_structuring.library.Helpers;
 using dotnet_structuring.library.Interfaces;
 using dotnet_structuring.library.Models;
+using dotnet_structuring.tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +35,7 @@ namespace dotnet_structuring.tests
         public async Task TestTemplatesAsync(Template Template)
         {
             // Arrange
-            CustomProcess Process = new CustomProcess();
+            TestProcess Process = new TestProcess();
             ProjectName = "TestProject";
             OutputDirectory = tempPath;
             directories.Add("artifacts");

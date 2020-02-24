@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using static dotnet_structuring.library.Helpers.Logging.Logging;
+using static dotnet_structuring.library.Helpers.Logging;
 using static dotnet_structuring.View.GeneralTab;
 
 namespace dotnet_structuring.View
