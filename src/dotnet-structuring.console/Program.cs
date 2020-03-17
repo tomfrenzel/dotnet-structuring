@@ -1,9 +1,10 @@
 ﻿using dotnet_structuring.library;
+using dotnet_structuring.library.Models;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using static dotnet_structuring.library.StructuringDelegate;
+using static dotnet_structuring.library.Helpers.Logging;
 
 namespace dotnet_structuring.console
 {
@@ -129,25 +130,23 @@ namespace dotnet_structuring.console
             }
 
             NETCommand = $" new {template} -o src/{name} -n {name}";
-
-            Structuring execute = new Structuring();
+            StandardProcess process = new StandardProcess();
+            Structuring execute = new Structuring(process);
             WireEventHandlers(execute);
             execute.RunStructuringAsync(output, Directories, NETCommand, name).Wait();
         }
 
         private readonly SetupDelegate @delegate = Run;
 
-        public static void WireEventHandlers(Structuring e)
+        public static void WireEventHandlers(Structuring structuring)
         {
-            StructuringHandler structuringHandler = new StructuringHandler(OnIncommingEventLog);
-            e.LogEvent += structuringHandler;
+            StructuringHandler handler = new StructuringHandler(OnIncommingEventLog);
+            structuring.LogEvent += handler;
         }
 
-        public static void OnIncommingEventLog(object sender, EventLogger e)
+        public static void OnIncommingEventLog(object sender, string eventMessage)
         {
-            string CurrentLog = e.Logs;
-
-            Console.WriteLine(CurrentLog + Environment.NewLine);
+            Console.WriteLine(eventMessage + Environment.NewLine);
         }
     }
 }

@@ -1,26 +1,29 @@
-﻿using System;
+using dotnet_structuring.library.Helpers;
+using dotnet_structuring.library.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using static dotnet_structuring.library.StructuringDelegate;
 
 namespace dotnet_structuring.library
 {
     public class Structuring
     {
-        public event StructuringHandler LogEvent;
+        private readonly IProcess baseProcess;
+
+        public event Logging.StructuringHandler LogEvent;
+
+        public Structuring(IProcess baseProcess)
+        {
+            this.baseProcess = baseProcess;
+        }
 
         private void WriteLog(string logs)
         {
-            EventLogger log = new EventLogger
-            {
-                Logs = logs
-            };
-            LogEvent.Invoke(this, log);
+            LogEvent.Invoke(this, logs);
         }
 
-        public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NETCommand, string ProjectName)
+        public async Task RunStructuringAsync(string Output, IEnumerable<string> Directories, string NetCommand, string ProjectName)
         {
             DirectoryInfo OutputDirectory = new DirectoryInfo(Output + @"\" + ProjectName);
 
@@ -31,29 +34,27 @@ namespace dotnet_structuring.library
 
                 await Task.Factory.StartNew(() =>
                 {
-                    Process p = new Process();
-
-                    p.StartInfo.WorkingDirectory = OutputDirectory.FullName;
-                    p.StartInfo.FileName = "dotnet";
-                    p.StartInfo.Arguments = NETCommand;
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                    baseProcess.StartInfo.WorkingDirectory = OutputDirectory.FullName;
+                    baseProcess.StartInfo.FileName = "dotnet";
+                    baseProcess.StartInfo.Arguments = NetCommand;
+                    baseProcess.StartInfo.UseShellExecute = false;
+                    baseProcess.StartInfo.RedirectStandardOutput = true;
+                    baseProcess.StartInfo.CreateNoWindow = true;
+                    baseProcess.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
                     {
                         // Prepend line numbers to each line of the output.
                         WriteLog(e.Data);
                     });
-                    p.Start();
 
-                    p.BeginOutputReadLine();
-                    p.EnableRaisingEvents = true;
-                    p.Exited += (sender, e) =>
+                    baseProcess.EnableRaisingEvents = true;
+                    baseProcess.Exited += (sender, e) =>
                     {
                         WriteLog("Done.");
-                        p.Kill();
+                        baseProcess.Kill();
                     };
-                    p.WaitForExit();
+                    baseProcess.Start();
+                    baseProcess.BeginOutputReadLine();
+                    baseProcess.WaitForExit();
                 });
             }
             else
