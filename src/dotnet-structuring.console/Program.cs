@@ -21,110 +21,119 @@ namespace dotnet_structuring.console
         {
             // Create a root command with some options
             var rootCommand = new RootCommand();
-
+            var teamplateOption = new Option(
+                             "--template",
+                             "Choose a Template of the 'dotnet new' command")
+            {
+                Argument = new Argument<string>(getDefaultValue: () => "console")
+            };
+            var nameOption = new Option(
+                        "--name",
+                        "Name of the Project being created")
+            {
+                Argument = new Argument<string>(getDefaultValue: () => "NewApp")
+            };
+            var outputOption = new Option(
+                        "--output",
+                        "Output Directory")
+            {
+                Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop")
+            };
+            var artifactsOption = new Option(
+                        "-a",
+                        "Create artifacts Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => false)
+            };
+            var buildOption = new Option(
+                        "-b",
+                        "Create build Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => false)
+            };
+            var docsOption = new Option(
+                        "-d",
+                        "Create docs Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => true),
+            };
+            var libOption = new Option(
+                        "-l",
+                        "Create lib Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => false)
+                
+            };
+            var samplesOption = new Option(
+                        "-s",
+                        "Create samples Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => false)
+            };
+            var packagesOption = new Option(
+                        "-p",
+                        "Create packages Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => false)
+            };
+            var testOption = new Option(
+                        "-t",
+                        "Create test Directory")
+            {
+                Argument = new Argument<bool>(getDefaultValue: () => false)
+            };
             var newCommand = new Command("new")
                 {
-                    new Option(
-                        "-template",
-                        "Choose a Template of the 'dotnet new' command")
-                    {
-                        Argument = new Argument<string>(getDefaultValue: () => "console")
-                    },
-                    new Option(
-                        "-name",
-                        "Name of the Project being created")
-                    {
-                        Argument = new Argument<string>(getDefaultValue: () => "NewApp")
-                    },
-                    new Option(
-                        "-output",
-                        "Output Directory")
-                    {
-                        Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop")
-                    },
-                    new Option(
-                        "--artifacts",
-                        "Create artifacts Directory")
-                    {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
-                    new Option(
-                        "--build",
-                        "Create build Directory")
-                    {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
-                    new Option(
-                        "--docs",
-                        "Create docs Directory")
-                    {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
-                    new Option(
-                        "--lib",
-                        "Create lib Directory")
-                    {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
-                    new Option(
-                        "--samples",
-                        "Create samples Directory")
-                    {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
-                    new Option(
-                        "--packages",
-                        "Create packages Directory")
-                        {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
-                       new Option(
-                        "--test",
-                        "Create test Directory")
-                    {
-                        Argument = new Argument<bool>(getDefaultValue: () => false)
-                    },
+                teamplateOption,
+                nameOption,
+                outputOption,
+                artifactsOption,
+                buildOption,
+                docsOption,
+                libOption,
+                samplesOption,
+                packagesOption,
+                testOption
                 };
             rootCommand.Add(newCommand);
             rootCommand.Description = "dotnet-structuring";
-
             newCommand.Handler = CommandHandler.Create(@delegate);
 
             // Parse the incoming args and invoke the handler
             rootCommand.InvokeAsync(args).Wait();
         }
 
-        public delegate void SetupDelegate(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
+        public delegate void SetupDelegate(string template, string name, string output, bool a, bool b, bool d, bool l, bool s, bool p, bool t);
 
-        public static void Run(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
+        public static void Run(string template, string name, string output, bool a, bool b, bool d, bool l, bool s, bool p, bool t)
         {
             string NETCommand;
 
-            if (artifacts)
+            if (a)
             {
                 Directories.Add("artifacts");
             }
-            if (build)
+            if (b)
             {
                 Directories.Add("build");
             }
-            if (docs)
+            if (d)
             {
                 Directories.Add("docs");
             }
-            if (lib)
+            if (l)
             {
                 Directories.Add("lib");
             }
-            if (samples)
+            if (s)
             {
                 Directories.Add("samples");
             }
-            if (packages)
+            if (p)
             {
                 Directories.Add("packages");
             }
-            if (test)
+            if (t)
             {
                 Directories.Add("test");
             }

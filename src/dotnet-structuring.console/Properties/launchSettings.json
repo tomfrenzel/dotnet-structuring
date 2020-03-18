@@ -2,7 +2,7 @@
   "profiles": {
     "dotnet-structuring.console": {
       "commandName": "Project",
-      "commandLineArgs": "new --build"
+      "commandLineArgs": "new -dla --packages"
     }
   }
 }
