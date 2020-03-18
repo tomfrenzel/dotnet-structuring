@@ -45,43 +45,49 @@ namespace dotnet_structuring.console
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
+            artifactsOption.AddAlias("--artifacts");
             var buildOption = new Option(
                         "-b",
                         "Create build Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
+            buildOption.AddAlias("--build");
             var docsOption = new Option(
                         "-d",
                         "Create docs Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => true),
             };
+            docsOption.AddAlias("--docs");
             var libOption = new Option(
                         "-l",
                         "Create lib Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
-                
             };
+            libOption.AddAlias("--lib");
             var samplesOption = new Option(
                         "-s",
                         "Create samples Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
+            samplesOption.AddAlias("--samples");
             var packagesOption = new Option(
                         "-p",
                         "Create packages Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
+            packagesOption.AddAlias("--packages");
             var testOption = new Option(
                         "-t",
                         "Create test Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
+            testOption.AddAlias("--test");
             var newCommand = new Command("new")
                 {
                 teamplateOption,
