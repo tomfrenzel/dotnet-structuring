@@ -7,7 +7,7 @@ dotnet run
 ```
 
 ## Build & Run the Program
-1. Run `build.bat`
+1. Run `build.bat` from the root directory of this repo
 2. Go to /artifacts/wpf
 3. Execute `dotnet-structuring.exe`
    

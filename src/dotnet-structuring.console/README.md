@@ -6,7 +6,7 @@ cd /src/dotnet-structuring.console/
 dotnet run new -h
 ```
 ## Build & Run the Program
-1. Run `build.bat`
+1. Run `build.bat` from the root directory of this repo
 2. Go to /artifacts/console
 3. Execute `dotnet-structuring.console.exe` from the command line
    
