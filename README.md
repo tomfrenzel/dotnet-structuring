@@ -16,8 +16,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
 #### Users
 * dotnet core Runtime 3.1.x ([Windows x64](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.1.0-windows-x64-installer) / [Windows x86](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.1.0-windows-x86-installer))
 
@@ -30,14 +28,10 @@ This is an example of how to list things you need to use the software and how to
 ```sh
 git clone https://github.com/tomfrenzel/dotnet-structuring.git
 ```
-3. Install required Packages
+2. Install required Packages
 ```sh
 cd YOUR_WORKING_DIRECTORY
 dotnet restore
-```
-4. Run the Program
-```sh
-dotnet run
 ```
 
 ### Build
@@ -46,10 +40,10 @@ Run ```build.bat``` to build the Project. The Output files will be located in th
 
 ## Usage
 
-The Usage is basically self-explaining. Here are some screenshots of the Program:
-![General](samples/screenshots/general.png)
-![Options](samples/screenshots/options.png)
-![Finish](samples/screenshots/finish.png)
+The Usage is basically self-explaining.
+
+[WPF Application](src/dotnet-structuring/)  
+[Console Application](src/dotnet-structuring.console/)
 
 ## Built With
 
