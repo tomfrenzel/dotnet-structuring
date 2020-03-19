@@ -36,47 +36,47 @@ namespace dotnet_structuring.console
                 Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop")
             };
 
-            var artifactsOption = new Option("-a", "Create artifacts Directory")
+            var artifactsOption = new Option("--artifacts", "Create artifacts Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
-            artifactsOption.AddAlias("--artifacts");
+            artifactsOption.AddAlias("-a");
 
-            var buildOption = new Option("-b", "Create build Directory")
+            var buildOption = new Option("--build", "Create build Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
-            buildOption.AddAlias("--build");
+            buildOption.AddAlias("-b");
 
-            var docsOption = new Option("-d", "Create docs Directory")
+            var docsOption = new Option("--docs", "Create docs Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => true),
             };
-            docsOption.AddAlias("--docs");
+            docsOption.AddAlias("-d");
 
-            var libOption = new Option("-l", "Create lib Directory")
+            var libOption = new Option("--lib", "Create lib Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
-            libOption.AddAlias("--lib");
+            libOption.AddAlias("-l");
 
-            var samplesOption = new Option("-s", "Create samples Directory")
+            var samplesOption = new Option("--samples", "Create samples Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
-            samplesOption.AddAlias("--samples");
+            samplesOption.AddAlias("-s");
 
-            var packagesOption = new Option("-p", "Create packages Directory")
+            var packagesOption = new Option("--packages", "Create packages Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
-            packagesOption.AddAlias("--packages");
+            packagesOption.AddAlias("-p");
 
-            var testOption = new Option("-t", "Create test Directory")
+            var testOption = new Option("--test", "Create test Directory")
             {
                 Argument = new Argument<bool>(getDefaultValue: () => false)
             };
-            testOption.AddAlias("--test");
+            testOption.AddAlias("-t");
             var newCommand = new Command("new")
                 {
                 teamplateOption,
@@ -98,37 +98,37 @@ namespace dotnet_structuring.console
             rootCommand.InvokeAsync(args).Wait();
         }
 
-        public delegate void SetupDelegate(string template, string name, string output, bool a, bool b, bool d, bool l, bool s, bool p, bool t);
+        public delegate void SetupDelegate(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test);
 
-        public static void Run(string template, string name, string output, bool a, bool b, bool d, bool l, bool s, bool p, bool t)
+        public static void Run(string template, string name, string output, bool artifacts, bool build, bool docs, bool lib, bool samples, bool packages, bool test)
         {
             string NETCommand;
 
-            if (a)
+            if (artifacts)
             {
                 Directories.Add("artifacts");
             }
-            if (b)
+            if (build)
             {
                 Directories.Add("build");
             }
-            if (d)
+            if (docs)
             {
                 Directories.Add("docs");
             }
-            if (l)
+            if (lib)
             {
                 Directories.Add("lib");
             }
-            if (s)
+            if (samples)
             {
                 Directories.Add("samples");
             }
-            if (p)
+            if (packages)
             {
                 Directories.Add("packages");
             }
-            if (t)
+            if (test)
             {
                 Directories.Add("test");
             }
