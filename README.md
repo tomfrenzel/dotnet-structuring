@@ -17,9 +17,11 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 #### Users
+
 * dotnet core Runtime 3.1.x ([Windows x64](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.1.0-windows-x64-installer) / [Windows x86](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.1.0-windows-x86-installer))
 
 #### Developers
+
 * dotnet core SDK 3.1.x ([Windows x64](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.100-windows-x64-installer) / [Windows x86](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.100-windows-x86-installer))
 
 ### Installation
