@@ -1,9 +1,7 @@
 mode: ContinuousDelivery
 tag-prefix: '[vV]'  
 assembly-versioning-scheme: MajorMinorPatch
-branches:
-  master:
-    tag: beta
+branches: {}
 ignore:
   sha: []
 merge-message-formats: {}
