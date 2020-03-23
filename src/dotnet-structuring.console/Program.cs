@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.IO;
 using static dotnet_structuring.library.Helpers.Logging;
 
 namespace dotnet_structuring.console
@@ -33,7 +34,7 @@ namespace dotnet_structuring.console
 
             var outputOption = new Option("--output", "Output Directory")
             {
-                Argument = new Argument<string>(getDefaultValue: () => @"C:\Develop")
+                Argument = new Argument<string>(getDefaultValue: () => Directory.GetCurrentDirectory())
             };
 
             var artifactsOption = new Option("--artifacts", "Create artifacts Directory")
