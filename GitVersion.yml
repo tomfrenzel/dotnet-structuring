@@ -1,5 +1,6 @@
 mode: ContinuousDelivery
-tag-prefix: '[vV]'
+tag-prefix: '[vV]'  
+assembly-versioning-scheme: MajorMinorPatch
 branches: {}
 ignore:
   sha: []
