@@ -7,6 +7,11 @@
     <ProjectGuid>2a6be53e-d0bd-4f80-b15c-7c9324f8bf80</ProjectGuid>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20071.2" />
   </ItemGroup>
